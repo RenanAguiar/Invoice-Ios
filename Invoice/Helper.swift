@@ -119,13 +119,11 @@ func makeRequestPost<T>(endpoint: String,
                         view: UIView,
                         completionHandler: @escaping (ApiContainer<T>?, Error?) -> ()) {
     
-    
-    
-  //  let baseEndPoint = "https://rca.pro.br/"
-   // let baseEndPoint = "http://blog.local:4711/"
-    
     let fullEndPoint = baseEndPoint + endpoint
+    let token = DAKeychain.shared["token"]
     
+
+
     ViewControllerUtils().showActivityIndicator(uiView: view)
 
     guard let url = URL(string: fullEndPoint) else {
@@ -135,30 +133,26 @@ func makeRequestPost<T>(endpoint: String,
         return
     }
     
-    
-    
-
-    
     var urlRequest = URLRequest(url: url)
     let session = URLSession.shared
     urlRequest.httpMethod = requestType
     urlRequest.httpBody = requestBody
     urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
     urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-    
-    let token = DAKeychain.shared["token"]
-
-
+    urlRequest.timeoutInterval = 5
     urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
-
-    print(urlRequest)
     
     let task = session.dataTask(with: urlRequest, completionHandler: {
         (data, response, error) in
-
         ViewControllerUtils().hideActivityIndicator(uiView: view)
         guard let responseData = data else {
+            print(error!._code)
+            if(error!._code == -1001) {
+                print("time out")
+                          
+            }
             print("Error: did not receive data")
+            
             completionHandler(nil, error)
             return
         }
@@ -178,9 +172,7 @@ func makeRequestPost<T>(endpoint: String,
         }
         
     })
-    
     task.resume()
-    
 }
 
 @discardableResult

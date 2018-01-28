@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         login_email.text = value
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
-      
+        
         
     }
     
@@ -27,7 +27,6 @@ class ViewController: UIViewController {
     
     
     
-   
     
     @IBAction func btnLog2(_ sender: Any) {
         
@@ -57,8 +56,8 @@ class ViewController: UIViewController {
                             
                             
                             if(responseMeta.sucess == "yes") {
-                                DAKeychain.shared["email"] = (user.email) // Store
-                                DAKeychain.shared["token"] = (responseData.message) // Store
+                                DAKeychain.shared["email"] = (user.email)
+                                DAKeychain.shared["token"] = (responseData.message)
                                 DispatchQueue.main.async(execute: {
                                     let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabBarClients") as UIViewController
                                     self.present(viewController, animated: true, completion: nil)
@@ -74,7 +73,7 @@ class ViewController: UIViewController {
                                 })
                             }
         } )
-    
+        
     }
 }
 
