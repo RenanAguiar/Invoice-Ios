@@ -9,7 +9,7 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-
+    
     
     
     
@@ -21,17 +21,17 @@ class SignUpViewController: UIViewController {
     
     @IBAction func btnCancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-
+        
     }
     
     
     @IBAction func btnCreate(_ sender: Any) {
         
         
-         let signUp = SignUp(businessName: txtBusinessName.text!,
-                             email : txtEmail.text!,
-            password: txtPassword.text!,
-             passwordConfirmation : txtPasswordConfirmation.text!)
+        let signUp = SignUp(businessName: txtBusinessName.text!,
+                            email : txtEmail.text!,
+                            password: txtPassword.text!,
+                            passwordConfirmation : txtPasswordConfirmation.text!)
         
         var jsonData = Data()
         
@@ -43,7 +43,7 @@ class SignUpViewController: UIViewController {
             
         }
         
-      
+        
         
         makeRequestPost(endpoint: "api/sign_up",
                         requestType: "POST",
@@ -56,10 +56,10 @@ class SignUpViewController: UIViewController {
                                 return
                             }
                             
-                           let a = (response?.result)!
+                            let a = (response?.result)!
                             let b = (response?.meta)!
                             print(b)
-                             print(a[0])
+                            print(a[0])
                             if(b.sucess == "yes") {
                                 
                                 //DAKeychain.shared["email"] = (user.email) // Store
@@ -99,21 +99,21 @@ class SignUpViewController: UIViewController {
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

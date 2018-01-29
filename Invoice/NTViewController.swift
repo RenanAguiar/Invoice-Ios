@@ -17,11 +17,12 @@ class NTViewController: UITableViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var txtPostalCode: UITextField!
     @IBOutlet weak var lblContacts: UILabel!
     
-    let numberOfRowsAtSection: [Int] = [5, 2]
+    let numberOfRowsAtSection: [Int] = [4, 2]
     
     var meal: Contact?
     var meal2: Client?
     var client = Client(name:"", client_id: nil, postal_code: "", province: "", city: "", address: "")
+    var selectedProvince: String?
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -40,7 +41,8 @@ class NTViewController: UITableViewController, UIPickerViewDelegate, UIPickerVie
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //  self.view.endEditing(true)
         // txtProvince.text = arrProvinceAbbr[row]
-        txtProvince.text = provinces[row].abbrev
+        txtProvince.text = provinces[row].name
+        //txtProvince.text = provinces[row].abbrev
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +53,7 @@ class NTViewController: UITableViewController, UIPickerViewDelegate, UIPickerVie
             txtCity.text = client.city
             txtAddress.text = client.address
             txtPostalCode.text = client.postal_code
+            selectedProvince = client.province
             
         }
         else {
@@ -68,7 +71,8 @@ class NTViewController: UITableViewController, UIPickerViewDelegate, UIPickerVie
         let name = txtName.text ?? ""
         let address = txtAddress.text ?? ""
         let city = txtCity.text ?? ""
-        let province = txtProvince.text ?? ""
+     //   let province = txtProvince.text ?? ""
+        let province = selectedProvince ?? ""
         let postal_code = txtPostalCode.text ?? ""
         var endPoint: String
         

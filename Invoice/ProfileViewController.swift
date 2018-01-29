@@ -37,17 +37,17 @@ var rootVC : UIViewController?
     
     
     
-    @IBAction func btnRead(_ sender: Any) {
-        let value = DAKeychain.shared["token"] // Fetch
-        print(value!)
-    }
-    
-    
-    
-    @IBAction func btnStore(_ sender: Any) {
-        DAKeychain.shared["token"] = "confidential data" // Store
-    }
-    
+//    @IBAction func btnRead(_ sender: Any) {
+//        let value = DAKeychain.shared["token"] // Fetch
+//        print(value!)
+//    }
+//    
+//    
+//    
+//    @IBAction func btnStore(_ sender: Any) {
+//        DAKeychain.shared["token"] = "confidential data" // Store
+//    }
+//    
     
     
     

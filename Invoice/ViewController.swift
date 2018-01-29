@@ -2,52 +2,42 @@
 import UIKit
 import WebKit
 
-
-//https://medium.com/@sourleangchhean/ios-customized-activity-indicator-with-swift-3-0-2-f26f7dd6a064
-
 class ViewController: UIViewController {
     
-    @IBOutlet weak var login_email: UITextField!
-    @IBOutlet weak var login_password: UITextField!
-    @IBOutlet weak var myActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let value = DAKeychain.shared["email"]
-        login_email.text = value
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-        
-        
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let email = DAKeychain.shared["email"]
+        emailTextField.text = email
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+   
+
     
-    
-    
-    @IBAction func btnLog2(_ sender: Any) {
+    @IBAction func doLogin(_ sender: Any) {
         
-        let user = User(email: login_email.text!, password : login_password.text!)
-        
-        var jsonData = Data()
-        let jsonEncoder = JSONEncoder()
-        do {
-            jsonData = try jsonEncoder.encode(user)
-        }
-        catch {
-        }
+        let user = User(email: emailTextField.text!, password : passwordTextField.text!)
+        let requestBody = makeJSONData(user)
         
         makeRequestPost(endpoint: "api/login",
                         requestType: "POST",
-                        requestBody: jsonData,
+                        requestBody: requestBody,
                         view: view,
                         completionHandler: { (response : ApiContainer<Response>?, error : Error?) in
                             if let error = error {
                                 print("error calling POST on /todos")
                                 print(error)
+                                self.showAlert(title: "Server Error", message: "Please, try again!")
                                 return
                             }
                             
@@ -65,12 +55,7 @@ class ViewController: UIViewController {
                             }
                             else
                             {
-                                DispatchQueue.main.async(execute: {
-                                    let myAlert = UIAlertController(title: "Error", message: "Invalid E-mail or Password", preferredStyle: .alert)
-                                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                                    myAlert.addAction(okAction)
-                                    self.present(myAlert, animated: true, completion: nil)
-                                })
+                                self.showAlert(title: "Error", message: "Invalid E-mail or Password")
                             }
         } )
         

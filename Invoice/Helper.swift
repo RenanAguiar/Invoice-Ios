@@ -2,6 +2,20 @@
 import Foundation
 import UIKit
 
+
+
+func  makeJSONData<T: Codable>(_ value: T) -> Data {
+    var jsonData = Data()
+    let jsonEncoder = JSONEncoder()
+    
+    do {
+        jsonData = try jsonEncoder.encode(value)
+    }
+    catch {
+    }
+    return jsonData
+}
+
 extension UIViewController {
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message:
@@ -13,15 +27,15 @@ extension UIViewController {
     
     
     
-    func showAlert2(title: String, message: String) {
-         DispatchQueue.main.async(execute: {
-        let alertController = UIAlertController(title: title, message:
-            message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in
-        }))
-        self.present(alertController, animated: true, completion: nil)
-    }
-        )}
+//    func showAlert2(title: String, message: String) {
+//         DispatchQueue.main.async(execute: {
+//        let alertController = UIAlertController(title: title, message:
+//            message, preferredStyle: .alert)
+//        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in
+//        }))
+//        self.present(alertController, animated: true, completion: nil)
+//    }
+//        )}
     
 }
 
