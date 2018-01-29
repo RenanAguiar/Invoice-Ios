@@ -21,11 +21,11 @@ class ProfileViewController: UIViewController {
     
     @IBAction func btnLogout(_ sender: Any) {
         
-        //https://medium.com/@paul.allies/ios-swift4-login-logout-branching-4cdbc1f51e2c
+        
         
 
 var rootVC : UIViewController?
-        rootVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "viewLogin") as! ViewController
+        rootVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "viewLogin") as! LoginViewController
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = rootVC

@@ -13,7 +13,7 @@
 		5189D6642010F96000568BE9 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D6632010F96000568BE9 /* ContactDetailViewController.swift */; };
 		518EBCB9201EF3A80017FB89 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 518EBCB8201EF3A80017FB89 /* README.md */; };
 		5197F89B1FDC8F5A007A8869 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5197F89A1FDC8F5A007A8869 /* AppDelegate.swift */; };
-		5197F89D1FDC8F5A007A8869 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5197F89C1FDC8F5A007A8869 /* ViewController.swift */; };
+		5197F89D1FDC8F5A007A8869 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5197F89C1FDC8F5A007A8869 /* LoginViewController.swift */; };
 		5197F8A01FDC8F5A007A8869 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5197F89E1FDC8F5A007A8869 /* Main.storyboard */; };
 		5197F8A21FDC8F5A007A8869 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5197F8A11FDC8F5A007A8869 /* Assets.xcassets */; };
 		5197F8A51FDC8F5A007A8869 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5197F8A31FDC8F5A007A8869 /* LaunchScreen.storyboard */; };
@@ -36,7 +36,7 @@
 		518EBCB8201EF3A80017FB89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5197F8971FDC8F5A007A8869 /* Invoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5197F89A1FDC8F5A007A8869 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5197F89C1FDC8F5A007A8869 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5197F89C1FDC8F5A007A8869 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5197F89F1FDC8F5A007A8869 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5197F8A11FDC8F5A007A8869 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5197F8A41FDC8F5A007A8869 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				5197F89A1FDC8F5A007A8869 /* AppDelegate.swift */,
-				5197F89C1FDC8F5A007A8869 /* ViewController.swift */,
+				5197F89C1FDC8F5A007A8869 /* LoginViewController.swift */,
 				5197F89E1FDC8F5A007A8869 /* Main.storyboard */,
 				5189D661200E738F00568BE9 /* ContactsViewController.swift */,
 				5197F8A11FDC8F5A007A8869 /* Assets.xcassets */,
@@ -188,7 +188,7 @@
 				51CD87E2200522EF00B5F0F1 /* CustomActivityIndicator.swift in Sources */,
 				51D79C801FF9551D00F2CC4A /* SignUpViewController.swift in Sources */,
 				510877092005D2AF003F0E85 /* ViewControllerUtils.swift in Sources */,
-				5197F89D1FDC8F5A007A8869 /* ViewController.swift in Sources */,
+				5197F89D1FDC8F5A007A8869 /* LoginViewController.swift in Sources */,
 				5197F89B1FDC8F5A007A8869 /* AppDelegate.swift in Sources */,
 				5189D6642010F96000568BE9 /* ContactDetailViewController.swift in Sources */,
 				51EDFC951FDDE4300026C910 /* ClientsViewController.swift in Sources */,
