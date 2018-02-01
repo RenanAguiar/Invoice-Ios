@@ -21,7 +21,7 @@ class ClientsViewController:  UITableViewController {
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
      
         
-        if let sourceViewController = sender.source as? NTViewController, let meal = sourceViewController.meal2 {
+        if let sourceViewController = sender.source as? ClientViewController, let meal = sourceViewController.meal2 {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
            
@@ -82,7 +82,7 @@ class ClientsViewController:  UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if  segue.identifier == "ShowDetail",
-            let destination = segue.destination as? NTViewController,
+            let destination = segue.destination as? ClientViewController,
             // let destination = segue.destination as? ClientDetailViewController,
             let blogIndex = tableView.indexPathForSelectedRow?.row
         {

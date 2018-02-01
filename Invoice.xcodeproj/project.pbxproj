@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		510877092005D2AF003F0E85 /* ViewControllerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510877082005D2AF003F0E85 /* ViewControllerUtils.swift */; };
-		5189D660200E642A00568BE9 /* NTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D65F200E642A00568BE9 /* NTViewController.swift */; };
+		5189D660200E642A00568BE9 /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D65F200E642A00568BE9 /* ClientViewController.swift */; };
 		5189D662200E738F00568BE9 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D661200E738F00568BE9 /* ContactsViewController.swift */; };
 		5189D6642010F96000568BE9 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D6632010F96000568BE9 /* ContactDetailViewController.swift */; };
 		518EBCB9201EF3A80017FB89 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 518EBCB8201EF3A80017FB89 /* README.md */; };
@@ -25,12 +25,12 @@
 		51EDFC951FDDE4300026C910 /* ClientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EDFC941FDDE4300026C910 /* ClientsViewController.swift */; };
 		51EDFCA31FDE57AF0026C910 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EDFCA21FDE57AF0026C910 /* Helper.swift */; };
 		51EDFCC31FE19B030026C910 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EDFCC21FE19B030026C910 /* Structs.swift */; };
-		51EDFCC51FE1EA670026C910 /* ClientDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EDFCC41FE1EA670026C910 /* ClientDetailViewController.swift */; };
+		51EDFCC51FE1EA670026C910 /* _ClientDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EDFCC41FE1EA670026C910 /* _ClientDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		510877082005D2AF003F0E85 /* ViewControllerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerUtils.swift; sourceTree = "<group>"; };
-		5189D65F200E642A00568BE9 /* NTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTViewController.swift; sourceTree = "<group>"; };
+		5189D65F200E642A00568BE9 /* ClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewController.swift; sourceTree = "<group>"; };
 		5189D661200E738F00568BE9 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		5189D6632010F96000568BE9 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		518EBCB8201EF3A80017FB89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -49,7 +49,7 @@
 		51EDFC941FDDE4300026C910 /* ClientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsViewController.swift; sourceTree = "<group>"; };
 		51EDFCA21FDE57AF0026C910 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		51EDFCC21FE19B030026C910 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
-		51EDFCC41FE1EA670026C910 /* ClientDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientDetailViewController.swift; sourceTree = "<group>"; };
+		51EDFCC41FE1EA670026C910 /* _ClientDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _ClientDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,13 +93,13 @@
 				51EDFC941FDDE4300026C910 /* ClientsViewController.swift */,
 				51EDFCA21FDE57AF0026C910 /* Helper.swift */,
 				51EDFCC21FE19B030026C910 /* Structs.swift */,
-				51EDFCC41FE1EA670026C910 /* ClientDetailViewController.swift */,
+				51EDFCC41FE1EA670026C910 /* _ClientDetailViewController.swift */,
 				51D79C7B1FF6BC5C00F2CC4A /* ProfileViewController.swift */,
 				51D79C7D1FF779CF00F2CC4A /* DAKeychain.swift */,
 				51D79C7F1FF9551D00F2CC4A /* SignUpViewController.swift */,
 				51CD87E1200522EF00B5F0F1 /* CustomActivityIndicator.swift */,
 				510877082005D2AF003F0E85 /* ViewControllerUtils.swift */,
-				5189D65F200E642A00568BE9 /* NTViewController.swift */,
+				5189D65F200E642A00568BE9 /* ClientViewController.swift */,
 				5189D6632010F96000568BE9 /* ContactDetailViewController.swift */,
 				51E0E2B72015A75F00AD0EDA /* Style.swift */,
 			);
@@ -181,8 +181,8 @@
 			files = (
 				51EDFCC31FE19B030026C910 /* Structs.swift in Sources */,
 				5189D662200E738F00568BE9 /* ContactsViewController.swift in Sources */,
-				51EDFCC51FE1EA670026C910 /* ClientDetailViewController.swift in Sources */,
-				5189D660200E642A00568BE9 /* NTViewController.swift in Sources */,
+				51EDFCC51FE1EA670026C910 /* _ClientDetailViewController.swift in Sources */,
+				5189D660200E642A00568BE9 /* ClientViewController.swift in Sources */,
 				51E0E2B82015A75F00AD0EDA /* Style.swift in Sources */,
 				51D79C7C1FF6BC5C00F2CC4A /* ProfileViewController.swift in Sources */,
 				51CD87E2200522EF00B5F0F1 /* CustomActivityIndicator.swift in Sources */,

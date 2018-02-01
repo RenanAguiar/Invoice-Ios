@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NTViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtAddress: UITextField!

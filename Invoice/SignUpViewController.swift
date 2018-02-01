@@ -55,16 +55,6 @@ class SignUpViewController: UIViewController {
                             password: passwordTextField.text!,
                             passwordConfirmation : passwordConfirmationTextField.text!)
         
-//        var jsonData = Data()
-//
-//        let jsonEncoder = JSONEncoder()
-//        do {
-//            jsonData = try jsonEncoder.encode(signUp)
-//        }
-//        catch {
-//
-//        }
-        
          let requestBody = makeJSONData(signUp)
         
         makeRequestPost(endpoint: "api/sign_up",
