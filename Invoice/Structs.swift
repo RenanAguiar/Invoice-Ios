@@ -7,6 +7,13 @@
 //
 
 import Foundation
+import UIKit
+
+
+struct formValidation {
+    let textField: UITextField
+    let label: UILabel
+}
 
 
 struct ApiContainer<T: Codable>: Codable {
