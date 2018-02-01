@@ -2,7 +2,7 @@
 import UIKit
 import WebKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -10,6 +10,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+   
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,10 +22,23 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-   
 
+    // MARK: UITextFieldDelegate
     
-    @IBAction func doLogin(_ sender: Any) {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case emailTextField:
+            passwordTextField.becomeFirstResponder()
+        case passwordTextField:
+            textField.resignFirstResponder()
+            doLogin(nil)
+        default:
+            textField.resignFirstResponder()
+        }
+        return false
+    }
+    
+    @IBAction func doLogin(_ sender: Any?) {
         
         let user = User(email: emailTextField.text!, password : passwordTextField.text!)
         let requestBody = makeJSONData(user)
