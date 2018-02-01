@@ -63,6 +63,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		514234E420238890002CD1F9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5197F89C1FDC8F5A007A8869 /* LoginViewController.swift */,
+				5189D661200E738F00568BE9 /* ContactsViewController.swift */,
+				51EDFC941FDDE4300026C910 /* ClientsViewController.swift */,
+				51D79C7B1FF6BC5C00F2CC4A /* ProfileViewController.swift */,
+				51D79C7F1FF9551D00F2CC4A /* SignUpViewController.swift */,
+				5189D65F200E642A00568BE9 /* ClientViewController.swift */,
+				5189D6632010F96000568BE9 /* ContactDetailViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		514234E520238910002CD1F9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				51EDFCC21FE19B030026C910 /* Structs.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		514234E620238952002CD1F9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				51D79C7D1FF779CF00F2CC4A /* DAKeychain.swift */,
+				51CD87E1200522EF00B5F0F1 /* CustomActivityIndicator.swift */,
+				510877082005D2AF003F0E85 /* ViewControllerUtils.swift */,
+				51EDFCA21FDE57AF0026C910 /* Helper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5197F88E1FDC8F5A007A8869 = {
 			isa = PBXGroup;
 			children = (
@@ -83,24 +116,15 @@
 		5197F8991FDC8F5A007A8869 /* Invoice */ = {
 			isa = PBXGroup;
 			children = (
+				514234E620238952002CD1F9 /* Helpers */,
+				514234E520238910002CD1F9 /* Models */,
+				514234E420238890002CD1F9 /* Controllers */,
 				5197F89A1FDC8F5A007A8869 /* AppDelegate.swift */,
-				5197F89C1FDC8F5A007A8869 /* LoginViewController.swift */,
 				5197F89E1FDC8F5A007A8869 /* Main.storyboard */,
-				5189D661200E738F00568BE9 /* ContactsViewController.swift */,
 				5197F8A11FDC8F5A007A8869 /* Assets.xcassets */,
 				5197F8A31FDC8F5A007A8869 /* LaunchScreen.storyboard */,
 				5197F8A61FDC8F5A007A8869 /* Info.plist */,
-				51EDFC941FDDE4300026C910 /* ClientsViewController.swift */,
-				51EDFCA21FDE57AF0026C910 /* Helper.swift */,
-				51EDFCC21FE19B030026C910 /* Structs.swift */,
 				51EDFCC41FE1EA670026C910 /* _ClientDetailViewController.swift */,
-				51D79C7B1FF6BC5C00F2CC4A /* ProfileViewController.swift */,
-				51D79C7D1FF779CF00F2CC4A /* DAKeychain.swift */,
-				51D79C7F1FF9551D00F2CC4A /* SignUpViewController.swift */,
-				51CD87E1200522EF00B5F0F1 /* CustomActivityIndicator.swift */,
-				510877082005D2AF003F0E85 /* ViewControllerUtils.swift */,
-				5189D65F200E642A00568BE9 /* ClientViewController.swift */,
-				5189D6632010F96000568BE9 /* ContactDetailViewController.swift */,
 				51E0E2B72015A75F00AD0EDA /* Style.swift */,
 			);
 			path = Invoice;

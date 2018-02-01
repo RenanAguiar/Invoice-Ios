@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
    
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         let email = DAKeychain.shared["email"]
         emailTextField.text = email
@@ -22,6 +23,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
+
 
     // MARK: UITextFieldDelegate
     
@@ -42,6 +44,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let user = User(email: emailTextField.text!, password : passwordTextField.text!)
         let requestBody = makeJSONData(user)
+        
+ 
         
         makeRequestPost(endpoint: "api/login",
                         requestType: "POST",

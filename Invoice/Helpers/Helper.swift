@@ -2,8 +2,15 @@
 import Foundation
 import UIKit
 
-
-
+/**
+ It converts a struct to JSON Data
+ 
+ This method accepts a struct and converts it to JSON Data.
+ 
+ :param: value The struct.
+ 
+ :returns:   Data JSON data.
+ */
 func  makeJSONData<T: Codable>(_ value: T) -> Data {
     var jsonData = Data()
     let jsonEncoder = JSONEncoder()
@@ -17,6 +24,16 @@ func  makeJSONData<T: Codable>(_ value: T) -> Data {
 }
 
 extension UIViewController {
+    /**
+     It shows an Alert
+     
+     This method accepts a title and a message.
+     
+     :param: title The title.
+     
+     :param: message The message.
+
+     */
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message:
             message, preferredStyle: .alert)
@@ -25,17 +42,6 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    
-    
-//    func showAlert2(title: String, message: String) {
-//         DispatchQueue.main.async(execute: {
-//        let alertController = UIAlertController(title: title, message:
-//            message, preferredStyle: .alert)
-//        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in
-//        }))
-//        self.present(alertController, animated: true, completion: nil)
-//    }
-//        )}
     
 }
 
@@ -62,10 +68,8 @@ let baseEndPoint = "http://blog.local:4711/"
 func makeRequest<T>(endpoint: String,
                     parameters: [String: String?],
                     completionHandler: @escaping (ApiContainer<T>?, Error?) -> ()) {
+   
     let token = DAKeychain.shared["token"]
-    
-   // let baseEndPoint = "https://rca.pro.br/"
-   // let baseEndPoint = "http://blog.local:4711/"
     let fullEndPoint = baseEndPoint + endpoint
     
     guard var urlComponents = URLComponents(string: fullEndPoint) else {
@@ -90,7 +94,6 @@ func makeRequest<T>(endpoint: String,
         return
     }
     
-    print(url)
     var urlRequest = URLRequest(url: url)
     let session = URLSession.shared
     
@@ -141,7 +144,6 @@ func makeRequestPost<T>(endpoint: String,
     ViewControllerUtils().showActivityIndicator(uiView: view)
 
     guard let url = URL(string: fullEndPoint) else {
-        print("Error: cannot create URL")
         let error = BackendError.urlError(reason: "Could not create URL")
         completionHandler(nil, error)
         return
@@ -226,10 +228,6 @@ func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true
 }
     return activityIndicatorView
 }
-
-
-
-
 
 
 func getRandomColor(view: UIView) {
