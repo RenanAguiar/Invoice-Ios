@@ -88,6 +88,10 @@ struct Client: Codable {
         
     }
     
+    var nameFirstLetter: String {
+        return String(self.name[self.name.startIndex]).uppercased()
+    }
+    
 }
 
 

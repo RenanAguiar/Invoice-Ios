@@ -11,124 +11,131 @@ import Foundation
 
 class ClientsViewController:  UITableViewController {
     
-    
+    var sortedFirstLetters: [String] = []
+    var sections: [[Client]] = [[]]
     var tableArray = [Client]()
-    var meal: Client?
-  
+    var client: Client?
     var refresher: UIRefreshControl!
-   
     
-    @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
-     
+    @IBOutlet var noClientsView: UIView!
+    
+    @IBAction func unwindToClients(sender: UIStoryboardSegue) {
         
-        if let sourceViewController = sender.source as? ClientViewController, let meal = sourceViewController.meal2 {
+        if let sourceViewController = sender.source as? ClientViewController,  let client = sourceViewController.client {
             
+            
+           // tableView.beginUpdates()
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-           
-                // Update an existing meal.
-                tableArray[selectedIndexPath.row] = meal
-              
+                // Update an existing client.
+                tableArray[selectedIndexPath.row] = client
                 tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
-                
             }
             else {
-                // Add a new meal.
-       
-                let newIndexPath = IndexPath(row: tableArray.count, section: 0)
-                tableArray.append(meal)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            
+                // Add a client.
+               // let newIndexPath = IndexPath(row: tableArray.count, section: 0)
+                tableArray.append(client)
+               // print(tableArray)
+               // tableView.insertRows(at: [newIndexPath], with: .automatic)
+                //tableView.beginUpdates()
+                //tableView.insertRows(at: [IndexPath(row: tableArray.count-1, section: 1)], with: .automatic)
+                //tableView.endUpdates()
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
             }
-            tableArray.sort() { $0.name < $1.name }
-          
+           // tableView.endUpdates()
+            
+            let firstLetters = self.tableArray.map { $0.nameFirstLetter }
+            let uniqueFirstLetters = Array(Set(firstLetters))
+            
+            self.sortedFirstLetters = uniqueFirstLetters.sorted()
+            self.sections = self.sortedFirstLetters.map { firstLetter in
+                return self.tableArray
+                    .filter { $0.nameFirstLetter == firstLetter }
+                    .sorted { $0.name < $1.name }
+            }
+            
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+            
+            
         }
     }
-    
-    
 
-
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-
-        getClients()
-        tableArray.sort() { $0.name < $1.name }
-        refreshControl.endRefreshing()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        let rect = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-//tableView.tableFooterView = UIView(frame: rect)
-        self.refreshControl?.addTarget(self, action: #selector(ClientsViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
-
-        
-        //  self.tableView.dataSource = self
-        //  self.tableView.delegate = self
-        
-        getClients()
-        
-
-       
-        
-    }
-    
-    @objc func completeBorougArray() {
-        getClients()
-       // tableView.reloadData()
-        refresher.endRefreshing()
-    }
-    
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if  segue.identifier == "ShowDetail",
-            let destination = segue.destination as? ClientViewController,
-            // let destination = segue.destination as? ClientDetailViewController,
-            let blogIndex = tableView.indexPathForSelectedRow?.row
-        {
-            let client = tableArray[blogIndex]
-
-            destination.client = client
+        let secondScene = segue.destination as! ClientViewController
+        if segue.identifier == "ShowDetail", let indexPath = self.tableView.indexPathForSelectedRow {
+            let currentPhoto = sections[indexPath.section][indexPath.row]
+            secondScene.client = currentPhoto
         }
-        
         else if segue.identifier == "AddItem" {
-             print("add")
+            print("add")
         }
-            
-
-            
         else {
             fatalError("The selected cell is not being displayed by the table")
         }
-        
+    }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        getClients()
+        refreshControl.endRefreshing()
     }
     
 }
 
-
-
 extension ClientsViewController {
+  
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.refreshControl?.addTarget(self, action: #selector(ClientsViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
+        tableView.backgroundView = noClientsView
+        getClients() //for only the 1st time ==> when view is created ==> ok ish
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        getClients() // not a good idea to make a request to the server everytime the view appears on the screen.
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if(self.tableArray.count > 0) {
+            return sortedFirstLetters[section]
+        }
+        else {
+            return ""
+        }
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        print(sortedFirstLetters)
+         return sortedFirstLetters
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        let name = sections[indexPath.section][indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
-        
-        let item = tableArray[indexPath.row]
-        cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = item.city + " - " + item.province
+        cell.textLabel?.text = name.name
+        cell.detailTextLabel?.text = name.city + " - " + name.province
         return cell
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tableArray.count
+        if(sections[section].count > 0) {
+            tableView.backgroundView = nil
+        }
+        return sections[section].count
     }
     
     func getClients() {
-//        var params: [String: Any] = ["key 1": 1, "key 2": "value2"]
+        
         makeRequest(endpoint: "api/clients/all",
                     parameters: [:],
-                //    params: params,
                     completionHandler: { (container : ApiContainer<Client>?, error : Error?) in
                         if let error = error {
                             print("error calling POST on /getClients")
@@ -136,13 +143,25 @@ extension ClientsViewController {
                             return
                         }
                         self.tableArray = (container?.result)!
+                    
+                        self.prepareData()
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
         } )
     }
     
+    //sorts and makes the index
+    func prepareData() {
+        let firstLetters = self.tableArray.map { $0.nameFirstLetter }
+        let uniqueFirstLetters = Array(Set(firstLetters))
+        
+        self.sortedFirstLetters = uniqueFirstLetters.sorted()
+        self.sections = self.sortedFirstLetters.map { firstLetter in
+            return self.tableArray
+                .filter { $0.nameFirstLetter == firstLetter }
+                .sorted { $0.name < $1.name }
+        }
+    }
     
 }
-
-

@@ -584,8 +584,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
+                    <connections>
+                        <outlet property="noClientsView" destination="lFu-t4-Aph" id="h19-uf-gvl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dBu-9k-Gda" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="lFu-t4-Aph">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Clients" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQb-p5-POs">
+                            <rect key="frame" x="80.5" y="54" width="79" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="dQb-p5-POs" firstAttribute="centerY" secondItem="lFu-t4-Aph" secondAttribute="centerY" id="mCc-AL-tul"/>
+                        <constraint firstItem="dQb-p5-POs" firstAttribute="centerX" secondItem="lFu-t4-Aph" secondAttribute="centerX" id="wsf-Ed-2B2"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="VCS-kG-x7S"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="2726" y="-195"/>
         </scene>
@@ -818,13 +839,13 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="lblContacts" destination="6m8-OD-eDo" id="XQr-wL-WGW"/>
-                        <outlet property="txtAddress" destination="0gF-Cv-CHp" id="t6v-MY-gpu"/>
-                        <outlet property="txtCity" destination="Vvd-uY-CZH" id="2Ex-kF-7fV"/>
-                        <outlet property="txtName" destination="dp3-5F-i22" id="QaF-3x-p5w"/>
-                        <outlet property="txtPostalCode" destination="0gn-lA-fQE" id="0Of-ro-Nd2"/>
-                        <outlet property="txtProvince" destination="4fL-fg-OCf" id="wHN-K2-MaB"/>
-                        <segue destination="hXc-lK-Kuk" kind="unwind" identifier="unwindToClients" unwindAction="unwindToMealListWithSender:" id="mpL-1S-X2h"/>
+                        <outlet property="addressTextField" destination="0gF-Cv-CHp" id="t6v-MY-gpu"/>
+                        <outlet property="cityTextField" destination="Vvd-uY-CZH" id="2Ex-kF-7fV"/>
+                        <outlet property="contactsLabel" destination="6m8-OD-eDo" id="XQr-wL-WGW"/>
+                        <outlet property="nameTextField" destination="dp3-5F-i22" id="QaF-3x-p5w"/>
+                        <outlet property="postalCodeTextField" destination="0gn-lA-fQE" id="0Of-ro-Nd2"/>
+                        <outlet property="provinceTextField" destination="4fL-fg-OCf" id="wHN-K2-MaB"/>
+                        <segue destination="hXc-lK-Kuk" kind="unwind" identifier="unwindToClients" unwindAction="unwindToClientsWithSender:" id="mpL-1S-X2h"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rR6-BZ-Nj9" userLabel="First Responder" sceneMemberID="firstResponder"/>

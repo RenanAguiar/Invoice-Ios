@@ -74,6 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             else
                             {
                                 self.showAlert(title: "Error", message: "Invalid E-mail or Password")
+                                return
                             }
         } )
         

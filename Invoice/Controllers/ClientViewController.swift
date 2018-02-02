@@ -1,5 +1,5 @@
 //
-//  NTViewController.swift
+//  
 //  tes
 //
 //  Created by Renan Aguiar on 2018-01-16.
@@ -9,92 +9,53 @@
 import UIKit
 
 class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
-    @IBOutlet weak var txtName: UITextField!
-    @IBOutlet weak var txtAddress: UITextField!
-    @IBOutlet weak var txtCity: UITextField!
-    @IBOutlet weak var txtProvince: UITextField!
-    @IBOutlet weak var txtPostalCode: UITextField!
-    @IBOutlet weak var lblContacts: UILabel!
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var provinceTextField: UITextField!
+    @IBOutlet weak var postalCodeTextField: UITextField!
+    @IBOutlet weak var contactsLabel: UILabel!
     
     let numberOfRowsAtSection: [Int] = [4, 2]
-    
-    var meal: Contact?
-    var meal2: Client?
-    var client = Client(name:"", client_id: nil, postal_code: "", province: "", city: "", address: "")
+    var client: Client?
     var selectedProvince: String?
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //return arrProvinceName.count
-        return provinces.count
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        // return arrProvinceName[row]
-        return provinces[row].name
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //  self.view.endEditing(true)
-        // txtProvince.text = arrProvinceAbbr[row]
-        txtProvince.text = provinces[row].name
-        //txtProvince.text = provinces[row].abbrev
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
-        if (client.client_id) != nil {
+        
+        self.title = "New"
+        if (client?.client_id) != nil {
             self.title = "Edit"
-            txtName.text = client.name
-            txtProvince.text = client.province
-            txtCity.text = client.city
-            txtAddress.text = client.address
-            txtPostalCode.text = client.postal_code
-            selectedProvince = client.province
-            
+            nameTextField.text = client?.name
+            provinceTextField.text = client?.province
+            cityTextField.text = client?.city
+            addressTextField.text = client?.address
+            postalCodeTextField.text = client?.postal_code
+            selectedProvince = client?.province
         }
-        else {
-            self.title = "New"
-        }
-        print("hh")
     }
-    
-//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return CGFloat.leastNormalMagnitude
-//    }
     
     
     @objc func save(sender: UIButton!) {
-        let name = txtName.text ?? ""
-        let address = txtAddress.text ?? ""
-        let city = txtCity.text ?? ""
-     //   let province = txtProvince.text ?? ""
+        let name = nameTextField.text ?? ""
+        let address = addressTextField.text ?? ""
+        let city = cityTextField.text ?? ""
         let province = selectedProvince ?? ""
-        let postal_code = txtPostalCode.text ?? ""
+        let postal_code = postalCodeTextField.text ?? ""
         var endPoint: String
         
-        if (client.client_id) != nil {
+        if (client?.client_id) != nil {
             endPoint = "api/clients/update"
         } else {
             endPoint = "api/clients/add"
         }
         
-        meal2 = Client(name:name, client_id: client.client_id, postal_code: postal_code, province: province, city: city, address: address)
-        var jsonData = Data()
-        let jsonEncoder = JSONEncoder()
-        do {
-            jsonData = try jsonEncoder.encode(meal2)
-        }
-        catch {
-        }
-        
+        client = Client(name:name, client_id: client?.client_id, postal_code: postal_code, province: province, city: city, address: address)
+        let requestBody = makeJSONData(client)
         
         makeRequestPost(endpoint: endPoint,
                         requestType: "POST",
-                        requestBody: jsonData,
+                        requestBody: requestBody,
                         view: view,
                         completionHandler: { (response : ApiContainer<Client>?, error : Error?) in
                             if let error = error {
@@ -103,15 +64,14 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
                                 return
                             }
                             let b = (response?.meta)!
-                            print(b.sucess)
                             let a = (response?.result[0])
                             let client_id = a?.client_id
-                            self.meal?.client_id = client_id
+                            self.client?.client_id = client_id
                             
                             if(b.sucess == "yes") {
                                 
-                                
-                                let alert = UIAlertController(title: "Order Placed!", message: "Thank you for your order.\nWe'll ship it to you soon!", preferredStyle: .alert)
+                                //change message and use the custom func like on error.
+                                let alert = UIAlertController(title: "Success!", message: "All good", preferredStyle: .alert)
                                 let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
                                     (_)in
                                     self.performSegue(withIdentifier: "unwindToClients", sender: self)
@@ -119,21 +79,15 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
                                 
                                 alert.addAction(OKAction)
                                 DispatchQueue.main.async(execute: {
-                                    self.present(alert, animated: true, completion: nil)
-                                    
+                                    self.present(alert, animated: true, completion: nil)                                    
                                 })
                                 
                                 
                             }
                             else
                             {
-                                DispatchQueue.main.async(execute: {
-                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Client", preferredStyle: .alert)
-                                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                                    myAlert.addAction(okAction)
-                                    self.present(myAlert, animated: true, completion: nil)
-                                })
-                                return
+                                self.showAlert(title: "Error", message: "Error Creating Client")
+                                //return
                             }
         } )
     }
@@ -141,19 +95,14 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
-tableView.sectionHeaderHeight = 50.0;
+        tableView.sectionHeaderHeight = 50.0;
         
-              navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save))
         
         
         let thePicker = UIPickerView()
-        txtProvince.inputView = thePicker
+        provinceTextField.inputView = thePicker
         thePicker.delegate = self
-        
-        
-        
-        
-        
         
         // ToolBar
         let toolBar = UIToolbar()
@@ -168,48 +117,36 @@ tableView.sectionHeaderHeight = 50.0;
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(ClientDetailViewController.cancelClick))
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
-        txtProvince.inputAccessoryView = toolBar
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        provinceTextField.inputAccessoryView = toolBar
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    
     @objc func doneClick() {
-        txtProvince.resignFirstResponder()
+        provinceTextField.resignFirstResponder()
     }
     @objc func cancelClick() {
-        txtProvince.resignFirstResponder()
+        provinceTextField.resignFirstResponder()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-       // return 5
-        
         var rows: Int = 0
-        
         if section < numberOfRowsAtSection.count {
             rows = numberOfRowsAtSection[section]
         }
-        
         return rows
     }
-
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -217,26 +154,39 @@ tableView.sectionHeaderHeight = 50.0;
         backItem.title = "Client"
         navigationItem.backBarButtonItem = backItem
         
-        
-        if  segue.identifier == "unwindToClients" {
-            print("trem bao")
+        if  segue.identifier == "unwindToClients",
+            let destination = segue.destination as? ClientsViewController
+        {
+            destination.client = client
         }
-        
-        
         
         if  segue.identifier == "showContacts",
             let destination = segue.destination as? ContactsViewController
         {
-            
-            print("rosa")
-            print(client)
-            print("rosa")
             destination.client = client
-
         }
         
     }
-    
-    
 
+    
+    // MARK: - Picker view
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView( _ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return provinces.count
+    }
+    
+    func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return provinces[row].name
+    }
+    
+    func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        provinceTextField.text = provinces[row].name
+    }
+    
+    
+    
+    
 }

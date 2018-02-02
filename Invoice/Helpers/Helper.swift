@@ -35,13 +35,14 @@ extension UIViewController {
 
      */
     func showAlert(title: String, message: String) {
+        DispatchQueue.main.async {
         let alertController = UIAlertController(title: title, message:
             message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in
         }))
-        present(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
     }
-    
+    }
     
 }
 
@@ -65,7 +66,8 @@ extension UIViewController {
 //let baseEndPoint = "https://rca.pro.br/"
 let baseEndPoint = "http://blog.local:4711/"
 
-func makeRequest<T>(endpoint: String,
+func makeRequest<T>(httpMethod: String = "GET",
+                    endpoint: String,
                     parameters: [String: String?],
                     completionHandler: @escaping (ApiContainer<T>?, Error?) -> ()) {
    
@@ -97,8 +99,8 @@ func makeRequest<T>(endpoint: String,
     var urlRequest = URLRequest(url: url)
     let session = URLSession.shared
     
-    urlRequest.httpMethod = "GET"
-    
+  //  urlRequest.httpMethod = "GET"
+    urlRequest.httpMethod = httpMethod
     urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
     urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
     
@@ -155,7 +157,7 @@ func makeRequestPost<T>(endpoint: String,
     urlRequest.httpBody = requestBody
     urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
     urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-    urlRequest.timeoutInterval = 5
+   // urlRequest.timeoutInterval = 5
     urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
     
     let task = session.dataTask(with: urlRequest, completionHandler: {
