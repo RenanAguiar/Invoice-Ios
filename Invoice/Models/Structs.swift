@@ -35,12 +35,12 @@ struct User : Codable {
 enum BackendError: Error {
     case urlError(reason: String)
     case objectSerialization(reason: String)
+    case objectDeletion(reason: String)
 }
 
 struct Meta: Codable {
     let sucess: String
     let message: String!
-  //  let token: String
 }
 
 

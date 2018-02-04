@@ -20,6 +20,80 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     let numberOfRowsAtSection: [Int] = [4, 2]
     var client: Client?
     var selectedProvince: String?
+    var wasDeleted: Bool? = false
+    
+    
+    @IBAction func deleteClientConfirm(_ sender: Any) {
+        showDelete()
+    }
+    
+    
+    func deleteClient() {
+        
+        let client_id : String! = "\(client!.client_id!)"
+        var endPoint: String
+        
+        endPoint = "api/clients/"+client_id+"/delete"
+        
+        makeDelete(httpMethod: "DELETE",endpoint: endPoint,
+                    parameters: [:],
+            completionHandler: { (container : Meta?, error : BackendError?) in
+                if let error = error {
+                    print("error on /delete")
+                    let message: String
+                    switch error {
+                    case let .objectDeletion(reason):
+                        message = reason
+                    default:
+                       // message = error.localizeDescription
+                        message = "ERROR"
+                    }
+                    self.showAlert(title: "Error", message: message)
+                    return
+                }
+                self.wasDeleted = true
+
+                //change message and use the custom func like on error.
+                let alert = UIAlertController(title: "Success!", message: "Client Deleted.", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
+                    (_)in
+                    self.performSegue(withIdentifier: "unwindToClients", sender: self)
+                })
+                alert.addAction(OKAction)
+                
+                DispatchQueue.main.async(execute: {
+                    self.present(alert, animated: true, completion: nil)
+                })
+                
+                }  )
+        
+    }
+    
+    func showDelete() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        
+        let  deleteButton = UIAlertAction(title: "Delete Client", style: .destructive, handler: { (action) -> Void in
+            print("Delete button tapped")
+            self.deleteClient()
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        alertController.addAction(deleteButton)
+        alertController.addAction(cancelButton)
+        
+        self.navigationController!.present(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -43,6 +117,7 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         let province = selectedProvince ?? ""
         let postal_code = postalCodeTextField.text ?? ""
         var endPoint: String
+       
         
         if (client?.client_id) != nil {
             endPoint = "api/clients/update"

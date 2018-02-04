@@ -95,7 +95,7 @@ func makeRequest<T>(httpMethod: String = "GET",
         print("Cannot construct URL")
         return
     }
-    
+    print(url)
     var urlRequest = URLRequest(url: url)
     let session = URLSession.shared
     
@@ -117,6 +117,7 @@ func makeRequest<T>(httpMethod: String = "GET",
             return
         }
         
+        if(httpMethod == "GET") {
         do {
             let response = try JSONDecoder().decode(ApiContainer<T>.self, from: responseData)
             completionHandler(response, nil)
@@ -125,7 +126,28 @@ func makeRequest<T>(httpMethod: String = "GET",
             print("error trying to convert data to JSON2")
             print(error)
             completionHandler(nil, error)
+            }}
+        else {
+            if let httpResponse = response as? HTTPURLResponse{
+                print(httpResponse.statusCode)
+              //  print(httpResponse)
+                if httpResponse.statusCode == 200{
+                    print("deleted")
+                    return
+                }
+                else if (httpResponse.statusCode == 404) {
+                    print("not found")
+                    return
+                }
+                else {
+                    print("something made an error")
+                    return
+                }
+            }
         }
+        
+        
+        
     })
     task.resume()
 }
@@ -192,6 +214,92 @@ func makeRequestPost<T>(endpoint: String,
     })
     task.resume()
 }
+
+
+
+
+
+
+
+
+
+
+func makeDelete(httpMethod: String = "DELETE",
+                    endpoint: String,
+                    parameters: [String: String?],
+                    completionHandler: @escaping (Meta?, BackendError?) -> ()) {
+    
+    let token = DAKeychain.shared["token"]
+    let fullEndPoint = baseEndPoint + endpoint
+    
+    guard var urlComponents = URLComponents(string: fullEndPoint) else {
+        print("Invalid endpoint")
+        return
+    }
+    
+    // Build an array containing the parameters the user specified
+    var queryItems = parameters.map { key, value in URLQueryItem(name: key, value: value) }
+    
+    // Optional: Add default values for parameters that the user missed
+    if !queryItems.contains(where: { $0.name == "token" }) {
+        queryItems.append(URLQueryItem(name: "token", value: token))
+    }
+    
+    // Add these parameters to the URLComponents
+    urlComponents.queryItems = queryItems
+    
+    // And here's your final URL
+    guard let url = urlComponents.url else {
+        print("Cannot construct URL")
+        return
+    }
+    print(url)
+    var urlRequest = URLRequest(url: url)
+    let session = URLSession.shared
+    
+    //  urlRequest.httpMethod = "GET"
+    urlRequest.httpMethod = httpMethod
+    urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+    
+
+    let task = session.dataTask(with: urlRequest, completionHandler: {
+        (data, response, error) in
+        guard error == nil else {
+            //completionHandler(nil, error as? BackendError)
+            let error = BackendError.objectDeletion(reason: "Server Error")
+            completionHandler(nil, error)
+            return
+        }
+        
+
+     
+            if let httpResponse = response as? HTTPURLResponse{
+                if httpResponse.statusCode == 200{
+                    print("deleted")
+                    let response = Meta(sucess: "yes", message: "deleted")
+                    completionHandler(response, nil)
+                    return
+                }
+                else if (httpResponse.statusCode == 404) {
+                    let error = BackendError.objectDeletion(reason: "not found")
+                    completionHandler(nil, error)
+                    return
+                }
+                else {
+                    let error = BackendError.objectDeletion(reason: "can't delete")
+                    completionHandler(nil, error)
+                    return
+                }
+            }
+      
+        
+        
+        
+    })
+    task.resume()
+}
+
 
 @discardableResult
 func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) -> UIActivityIndicatorView {

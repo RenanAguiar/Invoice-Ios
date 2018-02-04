@@ -15,16 +15,21 @@ class ClientsViewController:  UITableViewController {
     var sections: [[Client]] = [[]]
     var tableArray = [Client]()
     var client: Client?
+    var wasDeleted: Bool?
     var refresher: UIRefreshControl!
     
     @IBOutlet var noClientsView: UIView!
     
     @IBAction func unwindToClients(sender: UIStoryboardSegue) {
         
-        if let sourceViewController = sender.source as? ClientViewController,  let client = sourceViewController.client {
+        if let sourceViewController = sender.source as? ClientViewController,  let client = sourceViewController.client, let wasDeleted = sourceViewController.wasDeleted {
             
             
-           // tableView.beginUpdates()
+            if(wasDeleted) {
+                print("Delteted")
+            }
+  
+            else {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 // Update an existing client.
                 tableArray[selectedIndexPath.row] = client
@@ -43,7 +48,7 @@ class ClientsViewController:  UITableViewController {
                                 self.tableView.reloadData()
                             }
             }
-           // tableView.endUpdates()
+            }
             
             let firstLetters = self.tableArray.map { $0.nameFirstLetter }
             let uniqueFirstLetters = Array(Set(firstLetters))
@@ -78,6 +83,7 @@ class ClientsViewController:  UITableViewController {
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        refreshControl.beginRefreshing()
         getClients()
         refreshControl.endRefreshing()
     }
@@ -133,7 +139,7 @@ extension ClientsViewController {
     }
     
     func getClients() {
-        
+        print("called server")
         makeRequest(endpoint: "api/clients/all",
                     parameters: [:],
                     completionHandler: { (container : ApiContainer<Client>?, error : Error?) in

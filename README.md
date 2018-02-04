@@ -5,5 +5,8 @@ https://medium.com/@sourleangchhean/ios-customized-activity-indicator-with-swift
 
 https://medium.com/@paul.allies/ios-swift4-login-logout-branching-4cdbc1f51e2c
 
+https://cocoacasts.com/five-simple-tips-to-make-user-friendly-forms-on-ios
+
+
 
 
