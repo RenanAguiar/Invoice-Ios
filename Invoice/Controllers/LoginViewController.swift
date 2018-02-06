@@ -44,7 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let user = User(email: emailTextField.text!, password : passwordTextField.text!)
         let requestBody = makeJSONData(user)
-        
+        self.view.endEditing(true)
  
         
         makeRequestPost(endpoint: "api/login",

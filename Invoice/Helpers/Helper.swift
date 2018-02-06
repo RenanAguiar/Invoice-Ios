@@ -104,7 +104,7 @@ func makeRequest<T>(httpMethod: String = "GET",
     urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
     urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
     
-    
+
     let task = session.dataTask(with: urlRequest, completionHandler: {
         (data, response, error) in
         guard let responseData = data else {
@@ -272,8 +272,6 @@ func makeDelete(httpMethod: String = "DELETE",
             return
         }
         
-
-     
             if let httpResponse = response as? HTTPURLResponse{
                 if httpResponse.statusCode == 200{
                     print("deleted")
