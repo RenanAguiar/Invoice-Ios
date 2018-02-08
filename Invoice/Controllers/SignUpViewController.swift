@@ -10,19 +10,14 @@ import UIKit
 
 class SignUpViewController: UIViewController {
     
-    
     @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordConfirmationTextField: UITextField!
-    
-    @IBOutlet weak var businessNameValidationLabel: UILabel!
-    @IBOutlet weak var emailValidationLabel: UILabel!
-    @IBOutlet weak var passwordValidationLabel: UILabel!
-    @IBOutlet weak var passwordConfirmationValidationLabel: UILabel!
-    
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet var validationLabel: [UILabel]!
+    
+    
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -33,15 +28,15 @@ class SignUpViewController: UIViewController {
         clearValidationLabels()
         
         
-
+        
         
         let itemsToValidade = [
-            formValidation(textField: businessNameTextField, label: businessNameValidationLabel),
-            formValidation(textField: emailTextField, label: emailValidationLabel),
-            formValidation(textField: passwordTextField, label: passwordValidationLabel),
-            formValidation(textField: passwordConfirmationTextField, label: passwordConfirmationValidationLabel)
+            formValidation(textField: businessNameTextField, label: validationLabel[0]),
+            formValidation(textField: emailTextField, label: validationLabel[1]),
+            formValidation(textField: passwordTextField, label: validationLabel[2]),
+            formValidation(textField: passwordConfirmationTextField, label: validationLabel[3])
         ]
-
+        
         
         if(!checkValidation(itemsToValidade)) {
             self.showAlert(title: "Error", message: "Check error.")
@@ -55,7 +50,7 @@ class SignUpViewController: UIViewController {
                             password: passwordTextField.text!,
                             passwordConfirmation : passwordConfirmationTextField.text!)
         
-         let requestBody = makeJSONData(signUp)
+        let requestBody = makeJSONData(signUp)
         
         makeRequestPost(endpoint: "api/sign_up",
                         requestType: "POST",
@@ -63,40 +58,31 @@ class SignUpViewController: UIViewController {
                         view: view,
                         completionHandler: { (response : ApiContainer<Login>?, error : Error?) in
                             if let error = error {
-                                print("error calling POST on /todos")
                                 print(error)
+                                self.showAlert(title: "Error", message: "Server error.")
                                 return
                             }
                             
-                            let a = (response?.result)!
-                            let b = (response?.meta)!
-                            print(b)
-                            print(a[0])
-                            if(b.sucess == "yes") {
-                                
-                                //DAKeychain.shared["email"] = (user.email) // Store
-                                DAKeychain.shared["token"] = (a[0].token) // Store
+                            let result = (response?.result)!
+                            let meta = (response?.meta)!
+                            if(meta.sucess == "yes") {
+                                DAKeychain.shared["token"] = (result[0].token) // Store
                                 DispatchQueue.main.async(execute: {
                                     let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabBarClients") as UIViewController
-                                    self.present(viewController, animated: false, completion: nil)
+                                    self.present(viewController, animated: true, completion: nil)
                                 })
                                 print("created")
                             }
                             else
                             {
-                                DispatchQueue.main.async(execute: {
-                                    let myAlert = UIAlertController(title: "Error", message: "Error creating user", preferredStyle: .alert)
-                                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                                    myAlert.addAction(okAction)
-                                    self.present(myAlert, animated: true, completion: nil)
-                                })
+                                    self.showAlert(title: "Error", message: "Error creating user.")
                             }
         } )
         
     }
     
     
-
+    
     
     func checkValidation(_ fields:[formValidation]) -> Bool {
         
@@ -109,17 +95,17 @@ class SignUpViewController: UIViewController {
                 field.label.isHidden = valid
                 hasError = true
             }
-           
+            
         }
         
-
+        
         return !hasError
     }
     
     
-
     
-
+    
+    
     fileprivate func validate(_ textField: UITextField) -> (Bool, String?) {
         guard let text = textField.text else {
             return (false, nil)
@@ -143,22 +129,20 @@ class SignUpViewController: UIViewController {
             label.isHidden = true
         }
         
-
+        
     }
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         clearValidationLabels()
-        
         for label in self.validationLabel {
-           label.textColor = UIColor.red
+            label.textColor = UIColor.red
         }
-      
+
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-       
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -167,6 +151,6 @@ class SignUpViewController: UIViewController {
     }
     
     
-
+    
     
 }
