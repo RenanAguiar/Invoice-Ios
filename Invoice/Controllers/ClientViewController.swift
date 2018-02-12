@@ -17,7 +17,9 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var postalCodeTextField: UITextField!
     @IBOutlet weak var contactsLabel: UILabel!
     
+    var thePicker = UIPickerView()
     let numberOfRowsAtSection: [Int] = [4, 2]
+    
     var client: Client?
     var selectedProvince: String?
     var wasDeleted: Bool? = false
@@ -72,7 +74,6 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     func showDelete() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        
         let  deleteButton = UIAlertAction(title: "Delete Client", style: .destructive, handler: { (action) -> Void in
             print("Delete button tapped")
             self.deleteClient()
@@ -86,8 +87,6 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         alertController.addAction(cancelButton)
         
         self.navigationController!.present(alertController, animated: true, completion: nil)
-        
-        
     }
     
     
@@ -96,19 +95,29 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
         self.title = "New"
         if (client?.client_id) != nil {
             self.title = "Edit"
             nameTextField.text = client?.name
-            provinceTextField.text = client?.province
             cityTextField.text = client?.city
             addressTextField.text = client?.address
             postalCodeTextField.text = client?.postal_code
-            selectedProvince = client?.province
+            
+            selectPickerViewRow()
+
+            
+            
         }
     }
     
+    func selectPickerViewRow() {
+        selectedProvince = client?.province
+        if let province = selectedProvince,
+            let index = provinces.index(where: { $0.abbrev == province }) {
+            thePicker.selectRow(index, inComponent: 0, animated: false)
+            provinceTextField.text = provinces[index].name
+        }
+    }
     
     @objc func save(sender: UIButton!) {
         let name = nameTextField.text ?? ""
@@ -126,6 +135,8 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         }
         
         client = Client(name:name, client_id: client?.client_id, postal_code: postal_code, province: province, city: city, address: address)
+        
+
         let requestBody = makeJSONData(client)
         
         makeRequestPost(endpoint: endPoint,
@@ -174,8 +185,6 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save))
         
-        
-        let thePicker = UIPickerView()
         provinceTextField.inputView = thePicker
         thePicker.delegate = self
         
@@ -200,6 +209,7 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         provinceTextField.resignFirstResponder()
     }
     @objc func cancelClick() {
+        selectPickerViewRow()
         provinceTextField.resignFirstResponder()
     }
     
@@ -259,6 +269,7 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         provinceTextField.text = provinces[row].name
+        selectedProvince = provinces[row].abbrev
     }
     
     
