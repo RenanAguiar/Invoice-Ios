@@ -9,57 +9,17 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-
-
-
-    
+       
     @IBAction func btnLogout(_ sender: Any) {
-        
-        
-        
-
-var rootVC : UIViewController?
+        var rootVC : UIViewController?
         rootVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "viewLogin") as! LoginViewController
-        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = rootVC
-
-        
     }
     
     
-    
-    
-    
-//    @IBAction func btnRead(_ sender: Any) {
-//        let value = DAKeychain.shared["token"] // Fetch
-//        print(value!)
-//    }
-//    
-//    
-//    
-//    @IBAction func btnStore(_ sender: Any) {
-//        DAKeychain.shared["token"] = "confidential data" // Store
-//    }
-//    
-    
-    
-    
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-       
-    }
-    
-
-
 }

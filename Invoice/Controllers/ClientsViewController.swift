@@ -6,7 +6,6 @@ class ClientsViewController:  UITableViewController {
     
     var sortedFirstLetters: [String] = []
     var sections: [[Client]] = [[]]
-    //  var tableArray = [Client]()
     var clients : [Client] = [Client]()
     var client: Client?
     var wasDeleted: Bool?
@@ -15,87 +14,17 @@ class ClientsViewController:  UITableViewController {
     @IBOutlet weak var noClientsLabel: UILabel!
     @IBOutlet var noClientsView: UIView!
     
-    @IBAction func unwindToClients(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? ClientViewController,
-            let client = sourceViewController.client,
-            let wasDeleted = sourceViewController.wasDeleted {
-            
-            if(wasDeleted) {
-                if let index = self.clients.index(where: { (item) -> Bool in
-                    item.client_id == client.client_id
-                }) {
-                    self.clients.remove(at: index)
-                    print("Delteted")
-                }
-                
-            }
-            else {
-                if self.clients.contains(where: { (item) -> Bool in
-                    item.client_id == client.client_id
-                }) {
-                    if let index = self.clients.index(where: { (item) -> Bool in
-                        item.client_id == client.client_id
-                    }) {
-                        self.clients[index] = client
-                        print("update")
-                    }
-                }
-                else {
-                    // Add a client.
-                    clients.append(client)
-                    print("add")
-                }
-            }
-            
-            self.prepareData()
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            
-            
-            
-            
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let clientViewController = segue.destination as! ClientViewController
-        if segue.identifier == "ShowDetail", let indexPath = self.tableView.indexPathForSelectedRow {
-            let selectedClient = sections[indexPath.section][indexPath.row]
-            clientViewController.client = selectedClient
-        }
-        else if segue.identifier == "AddItem" {
-            print("add")
-        }
-        else {
-            fatalError("The selected cell is not being displayed by the table")
-        }
-    }
-    
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        getClients()
-    }
-    
-}
-
-extension ClientsViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(ClientsViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
-        tableView.backgroundView = nil
-        noClientsLabel.text = ""
-        getClients() //for only the 1st time ==> when view is created ==> ok ish
+        tableView.backgroundView = noClientsView
+        getClients()
     }
     
+
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if(self.clients.count > 0) {
-            return sortedFirstLetters[section]
-        }
-        else {
-            return ""
-        }
+        return self.clients.count > 0 ? sortedFirstLetters[section] : "";
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -103,6 +32,16 @@ extension ClientsViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+        // return sections.count
+        
+        if sections.count == 0 {
+            tableView.separatorStyle = .none
+            tableView.backgroundView?.isHidden = false
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
+        }
+        print(sections.count)
         return sections.count
     }
     
@@ -119,8 +58,68 @@ extension ClientsViewController {
         return sections[section].count
     }
     
+    @IBAction func unwindToClients(sender: UIStoryboardSegue) {
+        if let clientViewController = sender.source as? ClientViewController,
+            let client = clientViewController.client,
+            let wasDeleted = clientViewController.wasDeleted {
+            
+            if(wasDeleted) {
+                if let index = self.clients.index(where: { (item) -> Bool in
+                    item.client_id == client.client_id
+                }) {
+                    self.clients.remove(at: index)
+                }
+            }
+            else {
+                if self.clients.contains(where: { (item) -> Bool in
+                    item.client_id == client.client_id
+                }) {
+                    if let index = self.clients.index(where: { (item) -> Bool in
+                        item.client_id == client.client_id
+                    }) {
+                        self.clients[index] = client
+                    }
+                }
+                else {
+                    // Add a client.
+                    clients.append(client)
+                }
+            }
+            
+            self.prepareData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let clientViewController = segue.destination as! ClientViewController
+        if segue.identifier == "ShowDetailClientViewController", let indexPath = self.tableView.indexPathForSelectedRow {
+            let selectedClient = sections[indexPath.section][indexPath.row]
+            clientViewController.client = selectedClient
+        }
+        else if segue.identifier == "ShowAddClientViewController" {
+            print("add")
+        }
+        else {
+            fatalError("The selected cell is not being displayed by the table")
+        }
+    }
+
+    
+}
+
+extension ClientsViewController {
+    
+
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        getClients()
+    }
+    
+    
     func getClients() {
-        print("called server")
         self.refreshControl?.beginRefreshing()
         self.tableView.setContentOffset(CGPoint(x:0, y:-100), animated: true)
         
@@ -136,16 +135,6 @@ extension ClientsViewController {
                         
                         self.prepareData()
                         DispatchQueue.main.async {
-                            if(self.clients.isEmpty)
-                            {
-                                self.noClientsLabel.text = "bNo Clients"
-                                self.tableView.backgroundView?.isHidden = false
-                                self.noClientsLabel.text = ""
-                                print("all")
-                            }
-                            else{
-                                print("nothing")
-                            }
                             self.tableView.reloadData()
                             self.refreshControl?.endRefreshing()
                         }
@@ -164,5 +153,4 @@ extension ClientsViewController {
                 .sorted { $0.name < $1.name }
         }
     }
-    
 }

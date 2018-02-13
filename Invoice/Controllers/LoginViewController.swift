@@ -2,7 +2,7 @@
 import UIKit
 import WebKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -10,23 +10,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-   
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         let email = DAKeychain.shared["email"]
         emailTextField.text = email
-    }
+    }    
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+}
 
 
-    // MARK: UITextFieldDelegate
-    
+// MARK: - Text Field Delegate
+extension LoginViewController:  UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case emailTextField:
@@ -39,13 +34,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         return false
     }
+}
+
+
+extension LoginViewController {
     
     @IBAction func doLogin(_ sender: Any?) {
-        
         let user = User(email: emailTextField.text!, password : passwordTextField.text!)
         let requestBody = makeJSONData(user)
         self.view.endEditing(true)
- 
         
         makeRequestPost(endpoint: "api/login",
                         requestType: "POST",
@@ -61,7 +58,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             
                             let responseMeta = (response?.meta)!
                             let responseData = (response?.result[0])!
-                            
                             
                             if(responseMeta.sucess == "yes") {
                                 DAKeychain.shared["email"] = (user.email)
@@ -79,5 +75,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         } )
         
     }
+    
 }
 

@@ -1,11 +1,3 @@
-//
-//  UserViewController.swift
-//  tes
-//
-//  Created by Renan Aguiar on 2017-12-31.
-//  Copyright © 2017 Renan Aguiar. All rights reserved.
-//
-
 import UIKit
 
 class SignUpViewController: UIViewController {
@@ -18,18 +10,27 @@ class SignUpViewController: UIViewController {
     @IBOutlet var validationLabel: [UILabel]!
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        clearValidationLabels()
+        for label in self.validationLabel {
+            label.textColor = UIColor.red
+        }
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+    }
+    
+}
+
+
+extension SignUpViewController {
+    
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func create(_ sender: Any) {
-        
         clearValidationLabels()
-        
-        
-        
-        
         let itemsToValidade = [
             formValidation(textField: businessNameTextField, label: validationLabel[0]),
             formValidation(textField: emailTextField, label: validationLabel[1]),
@@ -37,13 +38,10 @@ class SignUpViewController: UIViewController {
             formValidation(textField: passwordConfirmationTextField, label: validationLabel[3])
         ]
         
-        
         if(!checkValidation(itemsToValidade)) {
             self.showAlert(title: "Error", message: "Check error.")
             return
         }
-        
-        
         
         let signUp = SignUp(businessName: businessNameTextField.text!,
                             email : emailTextField.text!,
@@ -75,7 +73,7 @@ class SignUpViewController: UIViewController {
                             }
                             else
                             {
-                                    self.showAlert(title: "Error", message: "Error creating user.")
+                                self.showAlert(title: "Error", message: "Error creating user.")
                             }
         } )
         
@@ -85,7 +83,6 @@ class SignUpViewController: UIViewController {
     
     
     func checkValidation(_ fields:[formValidation]) -> Bool {
-        
         var hasError = false
         for field in fields {
             let (valid, message) = validate(field.textField)
@@ -95,18 +92,11 @@ class SignUpViewController: UIViewController {
                 field.label.isHidden = valid
                 hasError = true
             }
-            
         }
-        
-        
         return !hasError
     }
-    
-    
-    
-    
-    
-    fileprivate func validate(_ textField: UITextField) -> (Bool, String?) {
+       
+    func validate(_ textField: UITextField) -> (Bool, String?) {
         guard let text = textField.text else {
             return (false, nil)
         }
@@ -123,34 +113,10 @@ class SignUpViewController: UIViewController {
     }
     
     func clearValidationLabels() {
-        
         for label in self.validationLabel {
             label.text = ""
             label.isHidden = true
         }
-        
-        
     }
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        clearValidationLabels()
-        for label in self.validationLabel {
-            label.textColor = UIColor.red
-        }
-
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    
     
 }

@@ -103,28 +103,12 @@ class ContactDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 tableView.sectionHeaderHeight = 50.0;
-
-      //  let saveItem = UIBarButtonItem()
-        
-//           let saveItem =  navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save))
-//        saveItem.title = "Save"
-//        saveItem.isEnabled = false
-//
-//
-//
-//
-//        navigationItem.rightBarButtonItem = saveItem
-//
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save))
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveContact))
     }
 
     
-    @objc func save(sender: UIButton!) {
-        print("Button tapped")
-        
-        
+    @objc func saveContact(sender: UIButton!) {
+
         let firstName = txtFirstName.text ?? ""
         let lastName = txtLastName.text ?? ""
         let email = txtEmail.text ?? ""

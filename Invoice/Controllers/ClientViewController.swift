@@ -1,14 +1,7 @@
-//
-//  
-//  tes
-//
-//  Created by Renan Aguiar on 2018-01-16.
-//  Copyright © 2018 Renan Aguiar. All rights reserved.
-//
 
 import UIKit
 
-class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ClientViewController: UITableViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
@@ -24,75 +17,31 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     var selectedProvince: String?
     var wasDeleted: Bool? = false
     
-    
-    @IBAction func deleteClientConfirm(_ sender: Any) {
-        showDelete()
-    }
-    
-    
-    func deleteClient() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.sectionHeaderHeight = 50.0;
         
-        let client_id : String! = "\(client!.client_id!)"
-        var endPoint: String
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveClient))
         
-        endPoint = "api/clients/"+client_id+"/delete"
+        provinceTextField.inputView = thePicker
+        thePicker.delegate = self
         
-        makeDelete(httpMethod: "DELETE",endpoint: endPoint,
-                    parameters: [:],
-            completionHandler: { (container : Meta?, error : BackendError?) in
-                if let error = error {
-                    print("error on /delete")
-                    let message: String
-                    switch error {
-                    case let .objectDeletion(reason):
-                        message = reason
-                    default:
-                       // message = error.localizeDescription
-                        message = "ERROR"
-                    }
-                    self.showAlert(title: "Error", message: message)
-                    return
-                }
-                self.wasDeleted = true
-
-                //change message and use the custom func like on error.
-                let alert = UIAlertController(title: "Success!", message: "Client Deleted.", preferredStyle: .alert)
-                let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
-                    (_)in
-                    self.performSegue(withIdentifier: "unwindToClients", sender: self)
-                })
-                alert.addAction(OKAction)
-                
-                DispatchQueue.main.async(execute: {
-                    self.present(alert, animated: true, completion: nil)
-                })
-                
-                }  )
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(ClientDetailViewController.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(ClientDetailViewController.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        provinceTextField.inputAccessoryView = toolBar
         
     }
-    
-    func showDelete() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let  deleteButton = UIAlertAction(title: "Delete Client", style: .destructive, handler: { (action) -> Void in
-            print("Delete button tapped")
-            self.deleteClient()
-        })
-        
-        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
-            print("Cancel button tapped")
-        })
-        
-        alertController.addAction(deleteButton)
-        alertController.addAction(cancelButton)
-        
-        self.navigationController!.present(alertController, animated: true, completion: nil)
-    }
-    
-    
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "New"
@@ -102,13 +51,86 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
             cityTextField.text = client?.city
             addressTextField.text = client?.address
             postalCodeTextField.text = client?.postal_code
-            
             selectPickerViewRow()
-
-            
-            
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Client"
+        navigationItem.backBarButtonItem = backItem
+        
+        if  segue.identifier == "unwindToClients",
+            let destination = segue.destination as? ClientsViewController
+        {
+            destination.client = client
+        }
+        
+        if  segue.identifier == "showContacts",
+            let destination = segue.destination as? ContactsViewController
+        {
+            destination.client = client
+        }
+        
+    }
+    
+    
+    
+    
+    @IBAction func deleteClientConfirm(_ sender: Any) {
+        showDeleteAlert()
+    }
+    
+    
+    func deleteClient() {
+        let client_id : String! = "\(client!.client_id!)"
+        var endPoint: String
+        endPoint = "api/clients/"+client_id+"/delete"
+        makeDelete(httpMethod: "DELETE",endpoint: endPoint,
+                   parameters: [:],
+                   completionHandler: { (container : Meta?, error : BackendError?) in
+                    if let error = error {
+                        print("error on /delete")
+                        let message: String
+                        switch error {
+                        case let .objectDeletion(reason):
+                            message = reason
+                        default:
+                            message = "ERROR"
+                        }
+                        self.showAlert(title: "Error", message: message)
+                        return
+                    }
+                    self.wasDeleted = true
+                    
+                    //change message and use the custom func like on error.
+                    let alert = UIAlertController(title: "Success!", message: "Client Deleted.", preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
+                        (_)in
+                        self.performSegue(withIdentifier: "unwindToClients", sender: self)
+                    })
+                    alert.addAction(OKAction)
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.present(alert, animated: true, completion: nil)
+                    })
+                    
+        }  )
+        
+    }
+    
+    func showDeleteAlert() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let  deleteButton = UIAlertAction(title: "Delete Client", style: .destructive, handler: { (action) -> Void in
+            self.deleteClient()
+        })
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in })
+        alertController.addAction(deleteButton)
+        alertController.addAction(cancelButton)
+        self.navigationController!.present(alertController, animated: true, completion: nil)
+    }
+    
+
     
     func selectPickerViewRow() {
         selectedProvince = client?.province
@@ -119,14 +141,14 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    @objc func save(sender: UIButton!) {
+    @objc func saveClient(sender: UIButton!) {
         let name = nameTextField.text ?? ""
         let address = addressTextField.text ?? ""
         let city = cityTextField.text ?? ""
         let province = selectedProvince ?? ""
         let postal_code = postalCodeTextField.text ?? ""
         var endPoint: String
-       
+        
         
         if (client?.client_id) != nil {
             endPoint = "api/clients/update"
@@ -135,8 +157,6 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         }
         
         client = Client(name:name, client_id: client?.client_id, postal_code: postal_code, province: province, city: city, address: address)
-        
-
         let requestBody = makeJSONData(client)
         
         makeRequestPost(endpoint: endPoint,
@@ -149,12 +169,12 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
                                 print(error)
                                 return
                             }
-                            let b = (response?.meta)!
-                            let a = (response?.result[0])
-                            let client_id = a?.client_id
+                            let responseMeta = (response?.meta)!
+                            let responseData = (response?.result[0])
+                            let client_id = responseData?.client_id
                             self.client?.client_id = client_id
                             
-                            if(b.sucess == "yes") {
+                            if(responseMeta.sucess == "yes") {
                                 
                                 //change message and use the custom func like on error.
                                 let alert = UIAlertController(title: "Success!", message: "All good", preferredStyle: .alert)
@@ -179,47 +199,13 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.sectionHeaderHeight = 50.0;
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save))
-        
-        provinceTextField.inputView = thePicker
-        thePicker.delegate = self
-        
-        // ToolBar
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
-        toolBar.sizeToFit()
-        
-        // Adding Button ToolBar
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(ClientDetailViewController.doneClick))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(ClientDetailViewController.cancelClick))
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        provinceTextField.inputAccessoryView = toolBar
 
-    }
     
-    @objc func doneClick() {
-        provinceTextField.resignFirstResponder()
-    }
-    @objc func cancelClick() {
-        selectPickerViewRow()
-        provinceTextField.resignFirstResponder()
-    }
+
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
     
-    // MARK: - Table view data source
-    
+    // MARK: - Table View
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -233,27 +219,10 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
     }
     
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let backItem = UIBarButtonItem()
-        backItem.title = "Client"
-        navigationItem.backBarButtonItem = backItem
-        
-        if  segue.identifier == "unwindToClients",
-            let destination = segue.destination as? ClientsViewController
-        {
-            destination.client = client
-        }
-        
-        if  segue.identifier == "showContacts",
-            let destination = segue.destination as? ContactsViewController
-        {
-            destination.client = client
-        }
-        
-    }
 
     
+}
+extension ClientViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     // MARK: - Picker view
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -272,6 +241,13 @@ class ClientViewController: UITableViewController, UIPickerViewDelegate, UIPicke
         selectedProvince = provinces[row].abbrev
     }
     
+    @objc func doneClick() {
+        provinceTextField.resignFirstResponder()
+    }
+    @objc func cancelClick() {
+        selectPickerViewRow()
+        provinceTextField.resignFirstResponder()
+    }
     
     
     
