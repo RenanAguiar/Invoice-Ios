@@ -32,8 +32,6 @@ class ClientsViewController:  UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // return sections.count
-        
         if sections.count == 0 {
             tableView.separatorStyle = .none
             tableView.backgroundView?.isHidden = false
@@ -41,7 +39,6 @@ class ClientsViewController:  UITableViewController {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView?.isHidden = true
         }
-        print(sections.count)
         return sections.count
     }
     
@@ -50,7 +47,8 @@ class ClientsViewController:  UITableViewController {
         let item = sections[indexPath.section][indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = item.city + " - " + item.province
+       // cell.detailTextLabel?.text = item.city + " - " + item.province
+        cell.detailTextLabel?.text = item.cityProvince
         return cell
     }
     

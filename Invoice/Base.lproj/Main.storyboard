@@ -543,11 +543,11 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ClientCell" textLabel="hhP-sS-NJN" detailTextLabel="GAL-Iy-5l7" style="IBUITableViewCellStyleSubtitle" id="QuN-Hg-9kP">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ClientCell" textLabel="hhP-sS-NJN" detailTextLabel="GAL-Iy-5l7" style="IBUITableViewCellStyleSubtitle" id="QuN-Hg-9kP">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QuN-Hg-9kP" id="4C5-Yz-orR">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hhP-sS-NJN">
@@ -875,7 +875,7 @@
         <scene sceneID="UCZ-oI-vRC">
             <objects>
                 <tableViewController id="rsT-Ry-azs" customClass="ContactsViewController" customModule="Invoice" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HXI-Zr-et4">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HXI-Zr-et4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -929,9 +929,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="lblEmail" destination="28N-DB-5al" id="fJt-WT-cDt"/>
-                                    <outlet property="lblName" destination="ZXT-mO-BXI" id="s2w-p5-L8k"/>
-                                    <outlet property="lblPhone" destination="wCt-10-fdG" id="T7y-f1-Ks8"/>
+                                    <outlet property="emailLabel" destination="28N-DB-5al" id="fJt-WT-cDt"/>
+                                    <outlet property="fullNameLabel" destination="ZXT-mO-BXI" id="s2w-p5-L8k"/>
+                                    <outlet property="phoneLabel" destination="wCt-10-fdG" id="T7y-f1-Ks8"/>
                                     <segue destination="aoI-Qs-boN" kind="show" identifier="showContactDetail" id="kWs-cG-35Z"/>
                                 </connections>
                             </tableViewCell>
@@ -1129,10 +1129,10 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="txtEmail" destination="iO6-MT-Q8E" id="YsU-rv-Zie"/>
-                        <outlet property="txtFirstName" destination="ISb-8t-rkN" id="edU-8v-Gdt"/>
-                        <outlet property="txtLastName" destination="ArS-3K-91P" id="t6t-RH-WLp"/>
-                        <outlet property="txtPhone" destination="LlD-oA-MwQ" id="hlC-jS-94n"/>
+                        <outlet property="emailTextField" destination="iO6-MT-Q8E" id="YsU-rv-Zie"/>
+                        <outlet property="firstNameTextField" destination="ISb-8t-rkN" id="edU-8v-Gdt"/>
+                        <outlet property="lastNameTextField" destination="ArS-3K-91P" id="t6t-RH-WLp"/>
+                        <outlet property="phoneTextField" destination="LlD-oA-MwQ" id="hlC-jS-94n"/>
                         <segue destination="x7j-OX-btD" kind="unwind" identifier="unwindToContacts" unwindAction="unwindToContactsWithSender:" id="1wy-HP-UNm"/>
                     </connections>
                 </tableViewController>

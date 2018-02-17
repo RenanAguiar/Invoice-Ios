@@ -88,53 +88,15 @@ struct Client: Codable {
         
     }
     
+    var cityProvince: String {
+        return [ city, province ].flatMap({$0}).joined(separator:" - ")
+    }
+    
     var nameFirstLetter: String {
         return String(self.name[self.name.startIndex]).uppercased()
     }
     
 }
-
-
-
-//class Client: Codable {
-//    var client_id: Int!
-//    let name: String!
-//    let postal_code: String!
-//    let province: String!
-//    let city: String!
-//    let address: String!
-//
-//    init(name: String, client_id: Int! = nil, postal_code: String, province: String, city: String, address: String) {
-//        self.client_id = client_id
-//        self.name = name
-//        self.postal_code = postal_code
-//        self.province = province
-//        self.city = city
-//        self.address = address
-//    }
-//
-//   static func getClients() -> [Client]  {
-//
-//    var clients: [Client]
-// makeRequest(endpoint: "http://blog.local:4711/api/clients/all",
-//                    parameters: [:],
-//            completionHandler: { (container : ApiContainer<Client>?, error : Error?) in
-//                if let error = error {
-//                    print("error calling POST on /getClients")
-//                    print(error)
-//                    return
-//                }
-//
-//                print(container!.result)
-//                clients = (container?.result)!
-//        } )
-//    return clients
-//       }
-//
-//}
-
-
-
 
 
 struct Contact: Codable {
@@ -152,6 +114,10 @@ struct Contact: Codable {
         self.last_name = last_name
         self.email = email
         self.phone = phone        
+    }
+    
+    var fullName: String {
+        return [ first_name, last_name ].flatMap({$0}).joined(separator:" ")
     }
 }
 
