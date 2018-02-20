@@ -21,10 +21,17 @@ class ContactsViewController: UITableViewController {
     }
     
     
-    @IBAction func unwindToContacts(sender: UIStoryboardSegue) {
+    @IBAction func unwindToContacts(sender: UIStoryboardSegue) {        
         
-        if let sourceViewController = sender.source as? ContactDetailViewController, let contact = sourceViewController.contact {
+        if let sourceViewController = sender.source as? ContactDetailViewController, let contact = sourceViewController.contact, let wasDeleted = sourceViewController.wasDeleted {
             
+            if(wasDeleted) {
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                self.contacts.remove(at: selectedIndexPath.row)
+                tableView.deleteRows(at: [selectedIndexPath], with: .none)
+                }
+            }
+            else {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 contacts[selectedIndexPath.row] = contact
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
@@ -34,7 +41,7 @@ class ContactsViewController: UITableViewController {
                 contacts.append(contact)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-            
+            }
         }
     }
     
