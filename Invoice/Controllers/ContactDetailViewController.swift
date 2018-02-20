@@ -4,7 +4,7 @@ import UIKit
 class ContactDetailViewController: UITableViewController {
 
     let numberOfRowsAtSection: [Int] = [4, 1]
-    var numberOfSections = 2
+    var numberOfSections = 1
     
     var contact: Contact?
     var client: Client?
@@ -43,6 +43,7 @@ class ContactDetailViewController: UITableViewController {
         var rows: Int = 0
         if section < numberOfRowsAtSection.count {
             rows = numberOfRowsAtSection[section]
+            print(rows)
         }
         return rows
     }
@@ -68,8 +69,8 @@ extension ContactDetailViewController {
         }
         
         contact = Contact(client_contact_id: contact?.client_contact_id, client_id: client_id,first_name: firstName, last_name: lastName, email: email, phone: phone)
-        let requestBody = makeJSONData(client)
-        
+        let requestBody = makeJSONData(contact)
+
         makeRequestPost(endpoint: endPoint,
                         requestType: "POST",
                         requestBody: requestBody,
@@ -86,7 +87,7 @@ extension ContactDetailViewController {
                             self.contact?.client_contact_id = client_contact_id
                             
                             if(responseMeta.sucess == "yes") {
-                                let alert = UIAlertController(title: "Order Placed!", message: "Thank you for your order.\nWe'll ship it to you soon!", preferredStyle: .alert)
+                                let alert = UIAlertController(title: "Success!", message: "Contact Saved!", preferredStyle: .alert)
                                 let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
                                     (_)in
                                     self.performSegue(withIdentifier: "unwindToContacts", sender: self)
@@ -101,7 +102,7 @@ extension ContactDetailViewController {
                             else
                             {
                                 DispatchQueue.main.async(execute: {
-                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Client", preferredStyle: .alert)
+                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Contact", preferredStyle: .alert)
                                     let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                                     myAlert.addAction(okAction)
                                     self.present(myAlert, animated: true, completion: nil)
@@ -112,14 +113,14 @@ extension ContactDetailViewController {
         
     }
     
-    @IBAction func btnDelete(_ sender: Any) {
-        showDelete()
+    @IBAction func deleteContactConfirm(_ sender: Any) {
+        showDeleteAlert()
     }
     
-    func showDelete() {
+    func showDeleteAlert() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let  deleteButton = UIAlertAction(title: "Delete Contact", style: .destructive, handler: { (action) -> Void in
+        let deleteButton = UIAlertAction(title: "Delete Contact", style: .destructive, handler: { (action) -> Void in
             self.deleteContact()
         })
         
