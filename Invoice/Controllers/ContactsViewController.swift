@@ -15,13 +15,12 @@ class ContactsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
-      //  tableView.estimatedRowHeight = 140
         tableView.rowHeight = 75
         getContacts()
     }
     
     
-    @IBAction func unwindToContacts(sender: UIStoryboardSegue) {        
+    @IBAction func unwindToContacts(sender: UIStoryboardSegue) {
         
         if let sourceViewController = sender.source as? ContactDetailViewController, let contact = sourceViewController.contact, let wasDeleted = sourceViewController.wasDeleted {
             

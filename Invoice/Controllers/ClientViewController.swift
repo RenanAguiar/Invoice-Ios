@@ -73,6 +73,12 @@ class ClientViewController: UITableViewController {
             destination.client = client
         }
         
+        if  segue.identifier == "showInvoices",
+            let destination = segue.destination as? InvoicesViewController
+        {
+            destination.client = client
+        }
+        
     }
     
     

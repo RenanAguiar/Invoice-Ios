@@ -348,4 +348,13 @@ func getRandomColor(view: UIView) {
 
 
 
-
+//
+//https://www.zoho.com/ca/subscriptions/kb/invoices/different-invoice-status.html
+//Sent
+//Paid
+//Overdue
+//Void
+//Write Off
+//Draft
+//
+//

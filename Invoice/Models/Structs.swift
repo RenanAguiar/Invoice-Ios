@@ -108,7 +108,7 @@ struct Contact: Codable {
     let phone: String!
     
     init(client_contact_id: Int! = nil, client_id: Int! = nil,first_name: String, last_name: String, email: String, phone: String) {
-       self.client_contact_id = client_contact_id
+        self.client_contact_id = client_contact_id
         self.client_id = client_id
         self.first_name = first_name
         self.last_name = last_name
@@ -121,6 +121,54 @@ struct Contact: Codable {
     }
 }
 
+struct InvoiceItem: Codable {
+    var invoice_detail_id: Int!
+    let description: String!
+    let unit_price: Decimal!
+    let quantity: Decimal!
+    
+    init(invoice_detail_id: Int! = nil, description: String, unit_price: Decimal, quantity: Decimal) {
+        self.invoice_detail_id = invoice_detail_id
+        self.description = description
+        self.unit_price = unit_price
+        self.quantity = quantity
+    }
+    
+}
+
+//let invoiceItems = [InvoiceItem(invoice_detail_id: 1, description: "AB", unit_price: 10.22, quantity: 2),
+//                    InvoiceItem(invoice_detail_id: 2, description: "fsdsdsdfsdf", unit_price: 44.35, quantity: 10)]
+
+struct Invoice: Codable {
+    var invoice_id: Int!
+    let client_id: Int!
+    let tax: Decimal!
+    let date_issue: String!
+    let due_date: String!
+    let amount_paid: Decimal!
+    let date_transaction: String!
+    let voided: Int!
+    let note: String!
+    let invoice_number: String!
+    let status: String!
+    let items: [InvoiceItem]!
+    
+    init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String, amount_paid: Decimal, date_transaction: String, voided: Int, note: String, invoice_number: String, status: String, items: InvoiceItem) {
+        self.invoice_id = invoice_id
+        self.client_id = client_id
+        self.tax = tax
+        self.date_issue = date_issue
+        self.due_date = due_date
+        self.amount_paid = amount_paid
+        self.date_transaction = date_transaction
+        self.voided = voided
+        self.note = note
+        self.invoice_number = invoice_number
+        self.status = status
+        self.items = [items]
+        
+    }
+}
 
 struct SignUp: Codable {
     let businessName: String
