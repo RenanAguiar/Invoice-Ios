@@ -17,8 +17,6 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     @IBOutlet weak var taxTotalInvoiceLabel: UILabel!
     @IBOutlet weak var totalInvoiceLabel: UILabel!
     
-    
-    
     var thePicker = UIDatePicker()
     var invoice: Invoice?
     var client: Client?
@@ -26,6 +24,96 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     var subTotalInvoice: Decimal = 0.00
     var taxTotalInvoice: Decimal = 0.00
     var totalInvoice: Decimal = 0.00
+    
+    var wasDeleted: Bool? = false
+    
+    
+    func dateToMySQL(_ date: String) -> String {
+        let dateFormatter = DateFormatter()
+        var convertedDate: String
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        if let fullDate = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let finalDate2: String = dateFormatter.string(from: fullDate)
+            convertedDate = finalDate2
+        } else {
+            convertedDate = "0000-00-00"
+        }
+        return convertedDate
+    }
+    
+    @IBAction func saveInvoice(_ sender: Any) {
+        let client_id = client?.client_id ?? nil
+        var endPoint: String
+        var dateIssue: String
+        var dueDate: String
+        
+        if (invoice?.invoice_id) != nil {
+            endPoint = "api/invoices/update"
+        } else {
+            endPoint = "api/invoices/add"
+        }
+        
+        
+        dueDate = dateToMySQL(dueDateTextField.text!)
+        dateIssue = dateToMySQL(dateIssueTextField.text!)
+        
+        
+        
+        invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: client_id, tax: 0.00, date_issue: dateIssue, due_date: dueDate,
+                          status: "",
+                          items: invoiceItems
+        )
+        
+        
+        
+        let requestBody = makeJSONData(invoice)
+        
+        makeRequestPost(endpoint: endPoint,
+                        requestType: "POST",
+                        requestBody: requestBody,
+                        view: view,
+                        completionHandler: { (response : ApiContainer<Invoice>?, error : Error?) in
+                            if let error = error {
+                                print("error calling POST on /todos")
+                                print(error)
+                                return
+                            }
+                            let responseMeta = (response?.meta)!
+                            let responseData = (response?.result[0])
+                            let invoice_id = responseData?.invoice_id
+                            self.invoice?.invoice_id = invoice_id
+                            
+                            if(responseMeta.sucess == "yes") {
+                                let alert = UIAlertController(title: "Success!", message: "Invoice Saved!", preferredStyle: .alert)
+                                let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
+                                    (_)in
+                                    self.performSegue(withIdentifier: "unwindToInvoices", sender: self)
+                                })
+                                
+                                alert.addAction(OKAction)
+                                DispatchQueue.main.async(execute: {
+                                    self.present(alert, animated: true, completion: nil)
+                                    
+                                })
+                            }
+                            else
+                            {
+                                DispatchQueue.main.async(execute: {
+                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Invoice", preferredStyle: .alert)
+                                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                                    myAlert.addAction(okAction)
+                                    self.present(myAlert, animated: true, completion: nil)
+                                })
+                                return
+                            }
+        } )
+        
+        
+    }
+    
+    
+    
     
     
     override func viewDidLoad() {
@@ -39,7 +127,6 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         self.thePicker.backgroundColor = UIColor.white
         self.thePicker.datePickerMode = UIDatePickerMode.date
         
-        //data will be loaded from an API to a server. Hard Coded now just for testing
         setUpTextFieldPicker(textField: dateIssueTextField)
         setUpTextFieldPicker(textField: dueDateTextField)
         
@@ -50,28 +137,23 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
         if (invoice?.invoice_id) != nil {
             self.title = "Edit"
-            //dueDateTextField.text = invoice?.due_date
-           // dateIssueTextField.text = invoice?.date_issue
             
             // TODO: redo this later (data convertion)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            let b = dateFormatter.date(from: (invoice?.due_date)!)
+            if let b = dateFormatter.date(from: (invoice?.due_date)!) {
+                dateFormatter.dateFormat = "dd MMM yyyy"
+                let finalDate: String = dateFormatter.string(from: b)
+                dueDateTextField.text = finalDate
+            }
             
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            let finalDate: String = dateFormatter.string(from: b!)
-            dueDateTextField.text = finalDate
             
-            
-           // let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            let bb = dateFormatter.date(from: (invoice?.date_issue)!)
-            
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            let finalDate2: String = dateFormatter.string(from: bb!)
-            dateIssueTextField.text = finalDate2
-            
-            
+            if let bb = dateFormatter.date(from: (invoice?.date_issue)!) {
+                dateFormatter.dateFormat = "dd MMM yyyy"
+                let finalDate2: String = dateFormatter.string(from: bb)
+                dateIssueTextField.text = finalDate2
+            }
             
             
             let taxDescription = invoice?.tax.description
@@ -82,7 +164,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             calculateSubTotalInvoice()
             calculateTaxTotalInvoice()
             calculateTotalInvoice()
-          
+            
             subTotalInvoiceLabel.text = subTotalInvoice.description
             taxTotalInvoiceLabel.text = taxTotalInvoice.description
             totalInvoiceLabel.text = totalInvoice.description
@@ -103,7 +185,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         if (indexPath.row == (invoiceItems.count)) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceAddCell", for: indexPath)
             return cell
@@ -159,9 +241,9 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         textField.text = dateFormatter.string(from: thePicker.date)
         
         //formated to store on mysql
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let finalDate: String = dateFormatter.string(from: thePicker.date)
-        print(finalDate)
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        let finalDate: String = dateFormatter.string(from: thePicker.date)
+//        print(finalDate)
         textField.resignFirstResponder()
     }
     

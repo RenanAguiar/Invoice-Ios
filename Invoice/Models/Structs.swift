@@ -133,27 +133,23 @@ struct InvoiceItem: Codable {
         self.unit_price = unit_price
         self.quantity = quantity
     }
-    
 }
-
-//let invoiceItems = [InvoiceItem(invoice_detail_id: 1, description: "AB", unit_price: 10.22, quantity: 2),
-//                    InvoiceItem(invoice_detail_id: 2, description: "fsdsdsdfsdf", unit_price: 44.35, quantity: 10)]
 
 struct Invoice: Codable {
     var invoice_id: Int!
     let client_id: Int!
     let tax: Decimal!
-    let date_issue: String!
+    var date_issue: String!
     let due_date: String!
-    let amount_paid: Decimal!
-    let date_transaction: String!
+    var amount_paid: Decimal!
+    var date_transaction: String!
     let voided: Int!
-    let note: String!
-    let invoice_number: String!
+    var note: String!
+    var invoice_number: String!
     let status: String!
     let items: [InvoiceItem]!
     
-    init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String, amount_paid: Decimal, date_transaction: String, voided: Int, note: String, invoice_number: String, status: String, items: InvoiceItem) {
+    init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String = "0000-00-00", amount_paid: Decimal, date_transaction: String, voided: Int, note: String, invoice_number: String, status: String, items: [InvoiceItem]) {
         self.invoice_id = invoice_id
         self.client_id = client_id
         self.tax = tax
@@ -165,9 +161,21 @@ struct Invoice: Codable {
         self.note = note
         self.invoice_number = invoice_number
         self.status = status
-        self.items = [items]
-        
+        self.items = items
     }
+    
+    init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String = "0000-00-00", status: String, items: [InvoiceItem]) {
+        self.invoice_id = invoice_id
+        self.client_id = client_id
+        self.tax = tax
+        self.date_issue = date_issue
+        self.due_date = due_date
+        self.voided = 0
+        self.status = status
+        self.items = items
+    }
+    
+
 }
 
 struct SignUp: Codable {

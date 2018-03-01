@@ -1139,7 +1139,11 @@
                         <viewLayoutGuide key="safeArea" id="BPu-uX-EsR"/>
                     </view>
                     <navigationItem key="navigationItem" title="Invoice" id="ebm-de-wxF">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="kpC-7c-kDR"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="kpC-7c-kDR">
+                            <connections>
+                                <action selector="saveInvoice:" destination="Kbq-K9-IMv" id="n2A-pI-1Ro"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="375" height="700"/>
                     <connections>
@@ -1150,9 +1154,11 @@
                         <outlet property="taxDescriptionLabel" destination="aXh-ES-qNN" id="Yyb-9e-z3s"/>
                         <outlet property="taxTotalInvoiceLabel" destination="K59-bL-0C8" id="Td1-yQ-id2"/>
                         <outlet property="totalInvoiceLabel" destination="bFr-XU-pbV" id="pvg-aJ-7Nj"/>
+                        <segue destination="Fkr-cp-MZp" kind="unwind" identifier="unwindToInvoices" unwindAction="unwindToInvoicesWithSender:" id="xZv-YI-Edp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veD-YI-DgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Fkr-cp-MZp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5809" y="-196"/>
         </scene>

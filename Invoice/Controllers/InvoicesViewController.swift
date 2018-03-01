@@ -28,29 +28,29 @@ class InvoicesViewController: UITableViewController {
     }
     
     
-//    @IBAction func unwindToContacts(sender: UIStoryboardSegue) {
-//        
-//        if let sourceViewController = sender.source as? ContactDetailViewController, let contact = sourceViewController.contact, let wasDeleted = sourceViewController.wasDeleted {
-//            
-//            if(wasDeleted) {
-//                if let selectedIndexPath = tableView.indexPathForSelectedRow {
-//                    self.invoices.remove(at: selectedIndexPath.row)
-//                    tableView.deleteRows(at: [selectedIndexPath], with: .none)
-//                }
-//            }
-//            else {
-//                if let selectedIndexPath = tableView.indexPathForSelectedRow {
-//                    invoices[selectedIndexPath.row] = contact
-//                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
-//                }
-//                else {
-//                    let newIndexPath = IndexPath(row: invoices.count, section: 0)
-//                    invoices.append(contact)
-//                    tableView.insertRows(at: [newIndexPath], with: .automatic)
-//                }
-//            }
-//        }
-//    }
+    @IBAction func unwindToInvoices(sender: UIStoryboardSegue) {
+        
+        if let sourceViewController = sender.source as? InvoiceViewController, let invoice = sourceViewController.invoice, let wasDeleted = sourceViewController.wasDeleted {
+            
+            if(wasDeleted) {
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                    self.invoices.remove(at: selectedIndexPath.row)
+                    tableView.deleteRows(at: [selectedIndexPath], with: .none)
+                }
+            }
+            else {
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                    invoices[selectedIndexPath.row] = invoice
+                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                }
+                else {
+                    let newIndexPath = IndexPath(row: invoices.count, section: 0)
+                    invoices.append(invoice)
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
+            }
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
