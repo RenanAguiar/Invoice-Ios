@@ -10,6 +10,7 @@
 		510877092005D2AF003F0E85 /* ViewControllerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510877082005D2AF003F0E85 /* ViewControllerUtils.swift */; };
 		513BA8C3203DCA70000F0115 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */; };
 		513BA8C5203DED6B000F0115 /* AccessoryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BA8C4203DED6B000F0115 /* AccessoryToolbar.swift */; };
+		513BA8C72048643C000F0115 /* InvoiceItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */; };
 		5189D660200E642A00568BE9 /* ClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D65F200E642A00568BE9 /* ClientViewController.swift */; };
 		5189D662200E738F00568BE9 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D661200E738F00568BE9 /* ContactsViewController.swift */; };
 		5189D6642010F96000568BE9 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189D6632010F96000568BE9 /* ContactDetailViewController.swift */; };
@@ -35,6 +36,7 @@
 		510877082005D2AF003F0E85 /* ViewControllerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerUtils.swift; sourceTree = "<group>"; };
 		513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		513BA8C4203DED6B000F0115 /* AccessoryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryToolbar.swift; sourceTree = "<group>"; };
+		513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceItemViewController.swift; sourceTree = "<group>"; };
 		5189D65F200E642A00568BE9 /* ClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewController.swift; sourceTree = "<group>"; };
 		5189D661200E738F00568BE9 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		5189D6632010F96000568BE9 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				5189D6632010F96000568BE9 /* ContactDetailViewController.swift */,
 				51FE7856203C98FE00E1FE9B /* InvoicesViewController.swift */,
 				513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */,
+				513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				51EDFC951FDDE4300026C910 /* ClientsViewController.swift in Sources */,
 				51D79C7E1FF779CF00F2CC4A /* DAKeychain.swift in Sources */,
 				513BA8C5203DED6B000F0115 /* AccessoryToolbar.swift in Sources */,
+				513BA8C72048643C000F0115 /* InvoiceItemViewController.swift in Sources */,
 				51EDFCA31FDE57AF0026C910 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

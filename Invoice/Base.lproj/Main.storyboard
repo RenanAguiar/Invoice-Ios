@@ -1061,6 +1061,7 @@
                                             <outlet property="descriptionLabel" destination="Pl4-1j-I7x" id="fu5-7D-dGT"/>
                                             <outlet property="lineTotalLabel" destination="KIz-QW-dDB" id="RHe-8C-7fa"/>
                                             <outlet property="unitPriceQuantityLabel" destination="m4v-5g-8AV" id="DmB-Gm-gXn"/>
+                                            <segue destination="FIE-67-zu8" kind="show" identifier="showItem" id="vKs-g5-8rb"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InvoiceAddCell" id="3nD-6l-ZkJ">
@@ -1084,6 +1085,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="FIE-67-zu8" kind="show" identifier="addItem" id="Naz-jl-uSV"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1161,6 +1165,79 @@
                 <exit id="Fkr-cp-MZp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5809" y="-196"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="eGg-VZ-Eah">
+            <objects>
+                <viewController id="FIE-67-zu8" customClass="InvoiceItemViewController" customModule="Invoice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3RV-g8-0bh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ru3-Hh-gaB">
+                                <rect key="frame" x="19" y="107" width="88" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Quantity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15a-NA-cmy">
+                                <rect key="frame" x="19" y="174" width="65" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MoX-8L-yhI">
+                                <rect key="frame" x="19" y="136" width="340" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Osp-Ke-6na">
+                                <rect key="frame" x="19" y="203" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unit Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0p4-Of-VFk">
+                                <rect key="frame" x="19" y="241" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="01p-W1-X15">
+                                <rect key="frame" x="19" y="270" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Hh8-xW-Njy"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Item" id="Phy-UV-R6z">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="8hm-LU-uWo">
+                            <connections>
+                                <action selector="save:" destination="FIE-67-zu8" id="M4G-qz-6cm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="descriptionTextField" destination="MoX-8L-yhI" id="foL-LZ-Jrj"/>
+                        <outlet property="quantityTextField" destination="Osp-Ke-6na" id="6Ai-Su-cWc"/>
+                        <outlet property="unitPriceTextField" destination="01p-W1-X15" id="fMK-tA-AwO"/>
+                        <segue destination="QCe-Px-eyw" kind="unwind" identifier="unwindToInvoice" unwindAction="unwindToInvoiceWithSender:" id="AUh-Lf-ibz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ile-fs-fhm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="QCe-Px-eyw" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6797.6000000000004" y="-199.25037481259372"/>
         </scene>
         <!--Contacts-->
         <scene sceneID="UCZ-oI-vRC">
@@ -1411,6 +1488,20 @@
             </objects>
             <point key="canvasLocation" x="1944" y="-195"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="k6Y-zl-Q8c">
+            <objects>
+                <viewController id="Ckc-My-Puw" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9BY-6V-2BY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="OXu-MH-sBn"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4bL-U9-5qb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="Logo" width="60" height="60"/>
@@ -1419,6 +1510,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="c1Y-dJ-4vX"/>
+        <segue reference="Naz-jl-uSV"/>
         <segue reference="k28-w5-Jzw"/>
         <segue reference="rI0-24-NRQ"/>
     </inferredMetricsTieBreakers>

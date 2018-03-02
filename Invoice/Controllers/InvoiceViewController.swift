@@ -239,11 +239,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         //show on text field
         dateFormatter.dateFormat = "dd MMM yyyy"
         textField.text = dateFormatter.string(from: thePicker.date)
-        
-        //formated to store on mysql
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        let finalDate: String = dateFormatter.string(from: thePicker.date)
-//        print(finalDate)
+
         textField.resignFirstResponder()
     }
     
@@ -270,5 +266,56 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     }
     
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Contacts"
+        navigationItem.backBarButtonItem = backItem
+        
+        if  segue.identifier == "showItem",
+            let destination = segue.destination as? InvoiceItemViewController,
+            let indexPath = tableView.indexPathForSelectedRow?.row
+        {
+            let item = invoiceItems[indexPath]
+            destination.client = client
+            destination.invoice = invoice
+            destination.invoiceItem = item
+        }
+            
+        else if segue.identifier == "addItem", let destination = segue.destination as? InvoiceItemViewController {
+            destination.client = client
+        }
+        else {
+            print("The selected cell is not being displayed by the table")
+        }
+    }
+    
+    
+    
+    @IBAction func unwindToInvoice(sender: UIStoryboardSegue) {
+        
+        if let sourceViewController = sender.source as? InvoiceItemViewController, let invoiceItem = sourceViewController.invoiceItem, let wasDeleted = sourceViewController.wasDeleted {
+            
+            if(wasDeleted) {
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                    self.invoiceItems.remove(at: selectedIndexPath.row)
+                    tableView.deleteRows(at: [selectedIndexPath], with: .none)
+                }
+            }
+            else {
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                 if (selectedIndexPath.row == (invoiceItems.count)) {
+                    let newIndexPath = IndexPath(row: invoiceItems.count, section: 0)
+                    invoiceItems.append(invoiceItem)
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                 } else {
+                    invoiceItems[selectedIndexPath.row] = invoiceItem
+                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                }
+                }
+
+            }
+        }
+    }
     
 }
