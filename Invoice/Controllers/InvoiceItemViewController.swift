@@ -8,7 +8,8 @@
 
 import UIKit
 
-class InvoiceItemViewController: UIViewController {
+
+class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
 
     var contact: Contact?
     var client: Client?
@@ -24,6 +25,9 @@ class InvoiceItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        quantityTextField.delegate = self
+        unitPriceTextField.delegate = self
+        
         self.title = "New"
         if (invoiceItem?.invoice_detail_id) != nil {
             self.title = "Edit"
@@ -34,6 +38,17 @@ class InvoiceItemViewController: UIViewController {
         }
     }
 
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard !string.isEmpty else {
+            return true
+        }
+        
+        let currentText = textField.text ?? ""
+        let replacementText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        return replacementText.isDecimal()
+    }
+    
 
     @IBAction func save(_ sender: Any) {
      //   let client_id = client?.client_id ?? nil

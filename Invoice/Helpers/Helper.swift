@@ -2,6 +2,18 @@
 import Foundation
 import UIKit
 
+
+
+extension String{
+    func isDecimal()->Bool{
+        let formatter = NumberFormatter()
+        formatter.allowsFloats = true
+        formatter.locale = Locale.current
+        return formatter.number(from: self) != nil
+    }
+}
+
+
 /**
  It converts a struct to JSON Data
  
