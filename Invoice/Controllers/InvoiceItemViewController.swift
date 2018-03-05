@@ -34,8 +34,13 @@ class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
             descriptionTextField.text = invoiceItem?.description
             quantityTextField.text = invoiceItem?.quantity.description
             unitPriceTextField.text = invoiceItem?.unit_price.description
+            
 
         }
+         if (invoice?.invoice_id) != nil {
+        self.navigationItem.rightBarButtonItem?.title = "Save"
+        }
+
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -50,12 +55,59 @@ class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
     }
     
 
+    func saveOnServer(invoiceItem: InvoiceItem) {
+        var endPoint: String
+        if (invoiceItem.invoice_detail_id) != nil {
+            endPoint = "api/invoices/update/item"
+        } else {
+            endPoint = "api/invoices/add/item"
+        }
+
+        let requestBody = makeJSONData(invoiceItem)
+        print(endPoint)
+        makeRequestPost(endpoint: endPoint,
+                        requestType: "POST",
+                        requestBody: requestBody,
+                        view: view,
+                        completionHandler: { (response : ApiContainer<InvoiceItem>?, error : Error?) in
+                            if let error = error {
+                                print("error calling POST on /todos")
+                                print(error)
+                                return
+                            }
+                            let responseMeta = (response?.meta)!
+
+                            
+                            if(responseMeta.sucess == "yes") {
+                                let responseData = (response?.result[0])
+                                let invoice_detail_id = responseData?.invoice_detail_id
+                                self.invoiceItem?.invoice_detail_id = invoice_detail_id
+                                let alert = UIAlertController(title: "Success!", message: "Invoice Item Saved!", preferredStyle: .alert)
+                                let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
+                                    (_)in
+                                    self.performSegue(withIdentifier: "unwindToInvoice", sender: self)
+                                })
+                                
+                                alert.addAction(OKAction)
+                                DispatchQueue.main.async(execute: {
+                                    self.present(alert, animated: true, completion: nil)
+                                    
+                                })
+                            }
+                            else
+                            {
+                                DispatchQueue.main.async(execute: {
+                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Item", preferredStyle: .alert)
+                                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                                    myAlert.addAction(okAction)
+                                    self.present(myAlert, animated: true, completion: nil)
+                                })
+                                return
+                            }
+        } )
+    }
     @IBAction func save(_ sender: Any) {
-     //   let client_id = client?.client_id ?? nil
-       // var endPoint: String
-//        var quantity: Decimal
-//        var unitPrice: Decimal
-//        var description: String
+
         
         let quantity = quantityTextField.text ?? ""
         let unitPrice = unitPriceTextField.text ?? ""
@@ -63,6 +115,18 @@ class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
         
         let result = Decimal(string: unitPrice)
         let result2 = Decimal(string: quantity)
+
+        invoiceItem = InvoiceItem(invoice_detail_id: invoiceItem?.invoice_detail_id, invoice_id: invoice?.invoice_id, description: description, unit_price: result!, quantity: result2!)
+
+
+        if (invoice?.invoice_id) != nil {
+            saveOnServer(invoiceItem: invoiceItem!)
+        return
+        }
+        
+        
+        
+        
         
         
         let alert = UIAlertController(title: "Success!", message: "Invoice Saved!", preferredStyle: .alert)
@@ -76,64 +140,70 @@ class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
 
         })
-        
-        
-        
-        
-//        if (invoice?.invoice_id) != nil {
-//            endPoint = "api/invoices/update"
-//        } else {
-//            endPoint = "api/invoices/add"
-//        }
+
         
 
-        invoiceItem = InvoiceItem(invoice_detail_id: invoiceItem?.invoice_detail_id, description: description, unit_price: result!, quantity: result2!)
+
         
-//
-//
-//        let requestBody = makeJSONData(invoiceItem)
-//
-//        makeRequestPost(endpoint: endPoint,
-//                        requestType: "POST",
-//                        requestBody: requestBody,
-//                        view: view,
-//                        completionHandler: { (response : ApiContainer<Invoice>?, error : Error?) in
-//                            if let error = error {
-//                                print("error calling POST on /todos")
-//                                print(error)
-//                                return
-//                            }
-//                            let responseMeta = (response?.meta)!
-//                            let responseData = (response?.result[0])
-//                            let invoice_id = responseData?.invoice_id
-//                            self.invoice?.invoice_id = invoice_id
-//
-//                            if(responseMeta.sucess == "yes") {
-//                                let alert = UIAlertController(title: "Success!", message: "Invoice Saved!", preferredStyle: .alert)
-//                                let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
-//                                    (_)in
-//                                    self.performSegue(withIdentifier: "unwindToInvoices", sender: self)
-//                                })
-//
-//                                alert.addAction(OKAction)
-//                                DispatchQueue.main.async(execute: {
-//                                    self.present(alert, animated: true, completion: nil)
-//
-//                                })
-//                            }
-//                            else
-//                            {
-//                                DispatchQueue.main.async(execute: {
-//                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Invoice", preferredStyle: .alert)
-//                                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-//                                    myAlert.addAction(okAction)
-//                                    self.present(myAlert, animated: true, completion: nil)
-//                                })
-//                                return
-//                            }
-//        } )
+
+    }
+   
+    
+    
+    @IBAction func deleteItemConfirm(_ sender: Any) {
+        showDeleteAlert()
     }
     
+    func showDeleteAlert() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteButton = UIAlertAction(title: "Delete Item", style: .destructive, handler: { (action) -> Void in
+            self.deleteItem()
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in })
+        alertController.addAction(deleteButton)
+        alertController.addAction(cancelButton)
+        self.navigationController!.present(alertController, animated: true, completion: nil)
+    }
+    
+    func deleteItem() {
+        let invoice_detail_id : String! = "\(invoiceItem!.invoice_detail_id!)"
+        var endPoint: String
+        endPoint = "api/invoices/items/"+invoice_detail_id+"/delete"
+        print(endPoint)
+        makeDelete(httpMethod: "DELETE",endpoint: endPoint,
+                   parameters: [:],
+                   completionHandler: { (container : Meta?, error : BackendError?) in
+                    if let error = error {
+                        print("error on /delete")
+                        let message: String
+                        switch error {
+                        case let .objectDeletion(reason):
+                            message = reason
+                        default:
+                            message = "ERROR"
+                        }
+                        self.showAlert(title: "Error", message: message)
+                        return
+                    }
+                    self.wasDeleted = true
+                    
+                    //change message and use the custom func like on error.
+                    let alert = UIAlertController(title: "Success!", message: "Item Deleted.", preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
+                        (_)in
+                        self.performSegue(withIdentifier: "unwindToInvoice", sender: self)
+                    })
+                    alert.addAction(OKAction)
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.present(alert, animated: true, completion: nil)
+                    })
+                    
+        }  )
+        
+    }
 
 
 }

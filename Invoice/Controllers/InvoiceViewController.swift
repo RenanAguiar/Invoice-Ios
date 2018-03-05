@@ -82,7 +82,9 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
                             let responseMeta = (response?.meta)!
                             let responseData = (response?.result[0])
                             let invoice_id = responseData?.invoice_id
+                            let invoice_number = responseData?.invoice_number
                             self.invoice?.invoice_id = invoice_id
+                            self.invoice?.invoice_number = invoice_number
                             
                             if(responseMeta.sucess == "yes") {
                                 let alert = UIAlertController(title: "Success!", message: "Invoice Saved!", preferredStyle: .alert)
@@ -269,7 +271,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
-        backItem.title = "Contacts"
+        backItem.title = "Items"
         navigationItem.backBarButtonItem = backItem
         
         if  segue.identifier == "showItem",
@@ -284,6 +286,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             
         else if segue.identifier == "addItem", let destination = segue.destination as? InvoiceItemViewController {
             destination.client = client
+            destination.invoice = invoice
         }
         else {
             print("The selected cell is not being displayed by the table")
@@ -316,6 +319,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
 
             }
         }
+        print(invoiceItems)
     }
     
 }

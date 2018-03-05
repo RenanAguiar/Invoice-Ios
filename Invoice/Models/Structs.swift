@@ -123,12 +123,14 @@ struct Contact: Codable {
 
 struct InvoiceItem: Codable {
     var invoice_detail_id: Int!
+    let invoice_id: Int!
     let description: String!
     let unit_price: Decimal!
     let quantity: Decimal!
     
-    init(invoice_detail_id: Int! = nil, description: String, unit_price: Decimal, quantity: Decimal) {
+    init(invoice_detail_id: Int! = nil, invoice_id: Int! = nil, description: String, unit_price: Decimal, quantity: Decimal) {
         self.invoice_detail_id = invoice_detail_id
+        self.invoice_id = invoice_id
         self.description = description
         self.unit_price = unit_price
         self.quantity = quantity
