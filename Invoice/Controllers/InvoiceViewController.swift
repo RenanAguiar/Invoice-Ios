@@ -196,12 +196,15 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             
             cell.descriptionLabel.text = item.description
             
-            let partial = (item.unit_price?.description)!+" X "+(item.quantity?.description)!
+            let unitPrice = formatCurrency(value: item.unit_price)
+            
+            let partial = (unitPrice)!+" X "+(item.quantity?.description)!
             cell.unitPriceQuantityLabel.text = partial
             
             let lineTotal = item.unit_price * item.quantity
-            cell.lineTotalLabel.text = lineTotal.description
+            cell.lineTotalLabel.text = formatCurrency(value: lineTotal)
             
+          
             
             
             return cell
@@ -210,7 +213,8 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
         
     }
-    
+    // MARK: REDO
+    // TODO: make 1 function for both views to calculate values
     func calculateSubTotalInvoice() {
         var subTotal: Decimal = 0.00
         for item in invoiceItems {
@@ -219,12 +223,14 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         subTotalInvoice = subTotal
     }
     
+    // TODO: make 1 function for both views to calculate values
     func calculateTaxTotalInvoice() {
         var taxTotal: Decimal = 0.00
         taxTotal = subTotalInvoice * 0.05
         taxTotalInvoice = taxTotal
     }
     
+    // TODO: make 1 function for both views to calculate values
     func calculateTotalInvoice() {
         var total: Decimal = 0.00
         calculateSubTotalInvoice()
@@ -232,9 +238,9 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         total = subTotalInvoice + taxTotalInvoice
         totalInvoice = total
         
-        subTotalInvoiceLabel.text = subTotalInvoice.description
-        taxTotalInvoiceLabel.text = taxTotalInvoice.description
-        totalInvoiceLabel.text = totalInvoice.description
+        subTotalInvoiceLabel.text = formatCurrency(value: subTotalInvoice)
+        taxTotalInvoiceLabel.text = formatCurrency(value: taxTotalInvoice)
+        totalInvoiceLabel.text = formatCurrency(value: totalInvoice)
         
     }
     

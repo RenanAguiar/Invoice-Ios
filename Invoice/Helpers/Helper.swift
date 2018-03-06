@@ -357,7 +357,17 @@ func getRandomColor(view: UIView) {
 }
 
 
-
+func formatCurrency(value: Decimal) -> String? {
+    let formatter = NumberFormatter()
+    //has default, but just in case need to do anything with that.
+   // formatter.locale = Locale.current
+    formatter.numberStyle = .currency
+    if let formattedValue = formatter.string(from: value as NSNumber) {
+        return "\(formattedValue)"
+    } else {
+        return formatCurrency(value: 0.00)
+    }
+}
 
 
 //
