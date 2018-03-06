@@ -163,16 +163,15 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             
             invoiceItems = (invoice?.items)!
             
-            calculateSubTotalInvoice()
-            calculateTaxTotalInvoice()
+
             calculateTotalInvoice()
-            
-            subTotalInvoiceLabel.text = subTotalInvoice.description
-            taxTotalInvoiceLabel.text = taxTotalInvoice.description
-            totalInvoiceLabel.text = totalInvoice.description
+            print("did load")
+           
         }
         
     }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invoiceItems.count + 1
@@ -215,9 +214,9 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     func calculateSubTotalInvoice() {
         var subTotal: Decimal = 0.00
         for item in invoiceItems {
-            subTotal = item.unit_price * item.quantity
-            subTotalInvoice += subTotal
+            subTotal += item.unit_price * item.quantity
         }
+        subTotalInvoice = subTotal
     }
     
     func calculateTaxTotalInvoice() {
@@ -228,8 +227,15 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     func calculateTotalInvoice() {
         var total: Decimal = 0.00
+        calculateSubTotalInvoice()
+        calculateTaxTotalInvoice()
         total = subTotalInvoice + taxTotalInvoice
         totalInvoice = total
+        
+        subTotalInvoiceLabel.text = subTotalInvoice.description
+        taxTotalInvoiceLabel.text = taxTotalInvoice.description
+        totalInvoiceLabel.text = totalInvoice.description
+        
     }
     
     
@@ -319,7 +325,8 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
 
             }
         }
-        print(invoiceItems)
+        calculateTotalInvoice()
+        print("unwiond")
     }
     
 }
