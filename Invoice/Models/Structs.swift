@@ -148,7 +148,7 @@ struct Invoice: Codable {
     let voided: Int!
     var note: String!
     var invoice_number: String!
-    let status: String!
+    var status: String!
     let items: [InvoiceItem]!
     
     init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String = "0000-00-00", amount_paid: Decimal, date_transaction: String, voided: Int, note: String, invoice_number: String, status: String, items: [InvoiceItem]) {

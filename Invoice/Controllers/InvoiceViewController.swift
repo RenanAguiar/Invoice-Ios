@@ -83,8 +83,10 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
                             let responseData = (response?.result[0])
                             let invoice_id = responseData?.invoice_id
                             let invoice_number = responseData?.invoice_number
+                            let status = responseData?.status
                             self.invoice?.invoice_id = invoice_id
                             self.invoice?.invoice_number = invoice_number
+                            self.invoice?.status = status
                             
                             if(responseMeta.sucess == "yes") {
                                 let alert = UIAlertController(title: "Success!", message: "Invoice Saved!", preferredStyle: .alert)
@@ -137,18 +139,25 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         self.title = "New"
         taxDescriptionLabel.text = "Tax @ 0%"
         
+        // TODO: redo this later (data convertion)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        let vv = dateFormatter.string(from: Date())
+        dateIssueTextField.text = vv
+        
+        
+        
+        
         if (invoice?.invoice_id) != nil {
             self.title = "Edit"
-            
             // TODO: redo this later (data convertion)
-            let dateFormatter = DateFormatter()
+           
             dateFormatter.dateFormat = "yyyy-MM-dd"
             if let b = dateFormatter.date(from: (invoice?.due_date)!) {
                 dateFormatter.dateFormat = "dd MMM yyyy"
                 let finalDate: String = dateFormatter.string(from: b)
                 dueDateTextField.text = finalDate
             }
-            
             
             dateFormatter.dateFormat = "yyyy-MM-dd"
             if let bb = dateFormatter.date(from: (invoice?.date_issue)!) {
@@ -157,16 +166,10 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
                 dateIssueTextField.text = finalDate2
             }
             
-            
             let taxDescription = invoice?.tax.description
             taxDescriptionLabel.text = "Tax @ \(taxDescription ?? "0")%"
-            
             invoiceItems = (invoice?.items)!
-            
-
             calculateTotalInvoice()
-            print("did load")
-           
         }
         
     }

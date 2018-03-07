@@ -7,6 +7,6 @@ https://medium.com/@paul.allies/ios-swift4-login-logout-branching-4cdbc1f51e2c
 
 https://cocoacasts.com/five-simple-tips-to-make-user-friendly-forms-on-ios
 
-
+https://stackoverflow.com/questions/41558832/how-to-format-a-double-into-currency-swift-3
 
 
