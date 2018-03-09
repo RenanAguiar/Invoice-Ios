@@ -5,28 +5,80 @@ class InvoiceCell: UITableViewCell {
     @IBOutlet weak var invoiceIdLabel: UILabel!
     @IBOutlet weak var dueDataLabel: UILabel!
     @IBOutlet weak var dateIssueLabel: UILabel!    
-    @IBOutlet weak var statusLabel: UILabel!
-    
+    @IBOutlet weak var statusLabel: UILabel!    
     @IBOutlet weak var amountLabel: UILabel!
     
 }
 
 
+
 class InvoicesViewController: UITableViewController {
+    
+    
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    
     
     var invoices = [Invoice]()
     var client: Client?
     var invoice: Invoice?
+    var filteredInvoices = [Invoice]()
+    
+    func setupSearchController() {
+        
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Invoices"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    func setupScopeBar() {
+        
+        // Setup the Scope Bar
+        searchController.searchBar.scopeButtonTitles = ["All", "Paid", "Voided", "Draft", "Sent"]
+        searchController.searchBar.delegate = self
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = 150
-        
-        
         getInvoices()
+        
+        setupSearchController()
+        setupScopeBar()
+        
+        
+        
+        
     }
     
+    func isFiltering() -> Bool {
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+    }
+    
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredInvoices = invoices.filter({( invoice : Invoice) -> Bool in
+            let doesCategoryMatch = (scope == "All") || (invoice.status == scope)
+            
+            if searchBarIsEmpty() {
+                return doesCategoryMatch
+            } else {
+                return doesCategoryMatch && invoice.invoice_number.lowercased().contains(searchText.lowercased())
+            }
+        })
+        tableView.reloadData()
+    }
     
     @IBAction func unwindToInvoices(sender: UIStoryboardSegue) {
         
@@ -61,7 +113,18 @@ class InvoicesViewController: UITableViewController {
             let destination = segue.destination as? InvoiceViewController,
             let indexPath = tableView.indexPathForSelectedRow?.row
         {
-            let invoice = invoices[indexPath]
+            
+            
+            //
+            
+            let invoice: Invoice
+            if isFiltering() {
+                invoice = filteredInvoices[indexPath]
+            } else {
+                invoice = invoices[indexPath]
+            }
+            //
+            //let invoice = invoices[indexPath]
             destination.client = client
             destination.invoice = invoice
         }
@@ -79,8 +142,34 @@ class InvoicesViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceCell", for: indexPath) as! InvoiceCell
+        //        let item = invoices[indexPath.row]
+        //        var total: Decimal
+        //        total = calculateSubTotalInvoice(invoiceItems: item.items)
+        //
+        //        cell.invoiceIdLabel.text = item.invoice_number
+        //        cell.dateIssueLabel.text = convertDate(date: item.date_issue)
+        //        cell.dueDataLabel.text = convertDate(date: item.due_date)
+        //        cell.statusLabel.text = item.status
+        //        cell.amountLabel.text = formatCurrency(value: total)
+        //        return cell
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceCell", for: indexPath) as! InvoiceCell
-        let item = invoices[indexPath.row]
+        let item: Invoice
+        if isFiltering() {
+            item = filteredInvoices[indexPath.row]
+        } else {
+            item = invoices[indexPath.row]
+        }
         var total: Decimal
         total = calculateSubTotalInvoice(invoiceItems: item.items)
         
@@ -90,6 +179,15 @@ class InvoicesViewController: UITableViewController {
         cell.statusLabel.text = item.status
         cell.amountLabel.text = formatCurrency(value: total)
         return cell
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     }
     
@@ -143,6 +241,12 @@ class InvoicesViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        
+        if isFiltering() {
+            return filteredInvoices.count
+        }
+        
         return self.invoices.count
     }
     
@@ -150,7 +254,6 @@ class InvoicesViewController: UITableViewController {
 
 
 extension InvoicesViewController {
-    
     func getInvoices() {
         let client_id : String! = "\(client!.client_id!)"
         makeRequest(endpoint: "api/invoices/all",
@@ -167,6 +270,22 @@ extension InvoicesViewController {
                             self.tableView.reloadData()
                         }
         } )
+    }
+}
+
+extension InvoicesViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
+    }
+}
+
+extension InvoicesViewController: UISearchBarDelegate {
+    // MARK: - UISearchBar Delegate
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
 

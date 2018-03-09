@@ -887,7 +887,6 @@
                         <view key="tableFooterView" contentMode="scaleToFill" id="RHA-Io-j5N">
                             <rect key="frame" x="0.0" y="178" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="InvoiceCell" rowHeight="150" id="0XX-FO-VXW" customClass="InvoiceCell" customModule="Invoice" customModuleProvider="target">
