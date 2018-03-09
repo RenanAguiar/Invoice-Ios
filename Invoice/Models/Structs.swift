@@ -140,16 +140,16 @@ struct InvoiceItem: Codable {
 struct Invoice: Codable {
     var invoice_id: Int!
     let client_id: Int!
-    let tax: Decimal!
+    var tax: Decimal!
     var date_issue: String!
-    let due_date: String!
+    var due_date: String!
     var amount_paid: Decimal!
     var date_transaction: String!
-    let voided: Int!
+    var voided: Int!
     var note: String!
     var invoice_number: String!
     var status: String!
-    let items: [InvoiceItem]!
+    var items: [InvoiceItem]!
     
     init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String = "0000-00-00", amount_paid: Decimal, date_transaction: String, voided: Int, note: String, invoice_number: String, status: String, items: [InvoiceItem]) {
         self.invoice_id = invoice_id
@@ -175,6 +175,14 @@ struct Invoice: Codable {
         self.voided = 0
         self.status = status
         self.items = items
+    }
+    
+    
+    init(invoice_id: Int! = nil, client_id: Int! = nil,amount_paid: Decimal, date_transaction: String) {
+        self.invoice_id = invoice_id
+        self.client_id = client_id
+        self.amount_paid = amount_paid
+        self.date_transaction = date_transaction
     }
     
 

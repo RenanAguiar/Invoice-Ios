@@ -1184,6 +1184,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJA-Fy-xMN">
                                 <rect key="frame" x="161" y="621" width="52" height="30"/>
                                 <state key="normal" title="Actions"/>
+                                <connections>
+                                    <action selector="showActionAlert:" destination="Kbq-K9-IMv" eventType="touchUpInside" id="k0N-bw-FyR"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFr-XU-pbV">
                                 <rect key="frame" x="321" y="568" width="38" height="21"/>
@@ -1251,12 +1254,99 @@
                         <outlet property="taxTotalInvoiceLabel" destination="K59-bL-0C8" id="Td1-yQ-id2"/>
                         <outlet property="totalInvoiceLabel" destination="bFr-XU-pbV" id="pvg-aJ-7Nj"/>
                         <segue destination="Fkr-cp-MZp" kind="unwind" identifier="unwindToInvoices" unwindAction="unwindToInvoicesWithSender:" id="xZv-YI-Edp"/>
+                        <segue destination="kVd-qi-yM6" kind="presentation" identifier="makePayment" modalPresentationStyle="overCurrentContext" id="Dny-0k-ynI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veD-YI-DgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Fkr-cp-MZp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5808.8000000000002" y="-196.10194902548727"/>
+        </scene>
+        <!--Make Payment View Controller-->
+        <scene sceneID="5Wr-qT-f8x">
+            <objects>
+                <viewController storyboardIdentifier="MakePaymentViewController" modalPresentationStyle="overCurrentContext" id="kVd-qi-yM6" customClass="MakePaymentViewController" customModule="Invoice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="uPo-ok-ITs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oS2-Kb-Qse">
+                                <rect key="frame" x="16" y="178" width="344" height="268"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Make Payment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ApX-Ie-zWd">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nqg-3t-ABK">
+                                        <rect key="frame" x="8" y="82" width="163" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zZ-GZ-5ee">
+                                        <rect key="frame" x="147" y="230" width="48" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButton:" destination="kVd-qi-yM6" eventType="touchUpInside" id="lYX-oV-g26"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amout Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlh-Cz-kYt">
+                                        <rect key="frame" x="8" y="53" width="88" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oND-5U-7SN">
+                                        <rect key="frame" x="213" y="82" width="122" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flh-3J-vs3">
+                                        <rect key="frame" x="261" y="53" width="74" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1d-dX-DP0">
+                                        <rect key="frame" x="122" y="166" width="101" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Make Payment"/>
+                                        <connections>
+                                            <action selector="makePaymentButton:" destination="kVd-qi-yM6" eventType="touchUpInside" id="OMv-TX-FG4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.69812178938356162" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="AHc-zV-pkr"/>
+                    </view>
+                    <connections>
+                        <outlet property="amountPaidTextField" destination="Nqg-3t-ABK" id="aop-L7-kHB"/>
+                        <outlet property="contentView" destination="oS2-Kb-Qse" id="vZA-ME-RnA"/>
+                        <outlet property="dateTransactionTextField" destination="oND-5U-7SN" id="uEI-Cp-irD"/>
+                        <outlet property="totalInvoiceTextField" destination="Nqg-3t-ABK" id="XZ3-2q-aHS"/>
+                        <segue destination="LxX-Nb-FRJ" kind="unwind" identifier="unwindToInvoice" unwindAction="unwindToInvoiceWithSender:" id="l4h-xG-qHc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7ZQ-lh-OFD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="LxX-Nb-FRJ" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="5808.8000000000002" y="552.77361319340332"/>
         </scene>
         <!--Item-->
         <scene sceneID="eGg-VZ-Eah">

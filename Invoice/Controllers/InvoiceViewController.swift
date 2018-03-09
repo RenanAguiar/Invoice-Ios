@@ -28,19 +28,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     var wasDeleted: Bool? = false
     
     
-    func dateToMySQL(_ date: String) -> String {
-        let dateFormatter = DateFormatter()
-        var convertedDate: String
-        dateFormatter.dateFormat = "dd MMM yyyy"
-        if let fullDate = dateFormatter.date(from: date) {
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let finalDate2: String = dateFormatter.string(from: fullDate)
-            convertedDate = finalDate2
-        } else {
-            convertedDate = "0000-00-00"
-        }
-        return convertedDate
-    }
+
     
     @IBAction func saveInvoice(_ sender: Any) {
         let client_id = client?.client_id ?? nil
@@ -151,7 +139,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         if (invoice?.invoice_id) != nil {
             self.title = "Edit"
             // TODO: redo this later (data convertion)
-           
+            
             dateFormatter.dateFormat = "yyyy-MM-dd"
             if let b = dateFormatter.date(from: (invoice?.due_date)!) {
                 dateFormatter.dateFormat = "dd MMM yyyy"
@@ -174,7 +162,8 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
     }
     
-    
+  
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invoiceItems.count + 1
@@ -207,7 +196,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             let lineTotal = item.unit_price * item.quantity
             cell.lineTotalLabel.text = formatCurrency(value: lineTotal)
             
-          
+            
             
             
             return cell
@@ -256,7 +245,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         //show on text field
         dateFormatter.dateFormat = "dd MMM yyyy"
         textField.text = dateFormatter.string(from: thePicker.date)
-
+        
         textField.resignFirstResponder()
     }
     
@@ -303,6 +292,10 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             destination.client = client
             destination.invoice = invoice
         }
+        else if segue.identifier == "makePayment", let destination = segue.destination as? MakePaymentViewController {
+            destination.totalInvoice = totalInvoice
+            destination.invoice = invoice
+        }
         else {
             print("The selected cell is not being displayed by the table")
         }
@@ -312,7 +305,10 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     @IBAction func unwindToInvoice(sender: UIStoryboardSegue) {
         
-        if let sourceViewController = sender.source as? InvoiceItemViewController, let invoiceItem = sourceViewController.invoiceItem, let wasDeleted = sourceViewController.wasDeleted {
+        
+        if let sourceViewController = sender.source as? InvoiceItemViewController,
+            let invoiceItem = sourceViewController.invoiceItem,
+            let wasDeleted = sourceViewController.wasDeleted {
             
             if(wasDeleted) {
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
@@ -322,20 +318,66 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             }
             else {
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                 if (selectedIndexPath.row == (invoiceItems.count)) {
-                    let newIndexPath = IndexPath(row: invoiceItems.count, section: 0)
-                    invoiceItems.append(invoiceItem)
-                    tableView.insertRows(at: [newIndexPath], with: .automatic)
-                 } else {
-                    invoiceItems[selectedIndexPath.row] = invoiceItem
-                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                    if (selectedIndexPath.row == (invoiceItems.count)) {
+                        let newIndexPath = IndexPath(row: invoiceItems.count, section: 0)
+                        invoiceItems.append(invoiceItem)
+                        tableView.insertRows(at: [newIndexPath], with: .automatic)
+                    } else {
+                        invoiceItems[selectedIndexPath.row] = invoiceItem
+                        tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                    }
                 }
-                }
-
+                
             }
+            calculateTotalInvoice()
+            
+        } else if let sourceViewController = sender.source as? MakePaymentViewController {
+            let paid = sourceViewController.paid
+            let amountPaid = sourceViewController.amountPaid
+            let dateTransaction = sourceViewController.dateTransaction
+            if(paid) {
+                invoice?.amount_paid = amountPaid
+                invoice?.date_transaction = dateTransaction
+            }
+            self.enableNavigationBar()
+            print(paid)
         }
-        calculateTotalInvoice()
-        print("unwiond")
+
     }
+    
+    
+    
+    
+    
+    @IBAction func showActionAlert(_ sender: Any) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+      
+       
+        self.disableNavigationBar()
+ 
+        
+
+        let payButton = UIAlertAction(title: "Make Payment", style: .default, handler: { action in self.performSegue(withIdentifier: "makePayment", sender: self)})
+        
+       
+        
+        let voidButton = UIAlertAction(title: "Void", style: .destructive, handler: { (action) -> Void in        })
+        
+        let deleteButton = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in })
+
+        alertController.addAction(payButton)
+        alertController.addAction(voidButton)
+        alertController.addAction(deleteButton)
+        alertController.addAction(cancelButton)
+        self.present(alertController, animated: true, completion: nil)
+
+    }
+    
+    
+    
+    
+    
     
 }

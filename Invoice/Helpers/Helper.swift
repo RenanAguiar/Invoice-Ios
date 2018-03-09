@@ -62,16 +62,22 @@ extension UIViewController {
 extension UIViewController {
     func hideNavigationBar(){
         // Hide the navigation bar on the this view controller
-        // self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.tabBarController?.tabBar.isHidden = true
-        
-        
     }
     
     func showNavigationBar() {
         // Show the navigation bar on other view controllers
         self.tabBarController?.tabBar.isHidden = false
     }
+    
+    func disableNavigationBar() {
+       self.tabBarController?.tabBar.items?.forEach { $0.isEnabled = false }
+    }
+    
+    func enableNavigationBar() {
+      DispatchQueue.main.async {
+        self.tabBarController?.tabBar.items?.forEach { $0.isEnabled = true }
+        }}
     
 }
 
@@ -357,14 +363,32 @@ func getRandomColor(view: UIView) {
 }
 
 
-func formatCurrency(value: Decimal) -> String? {
+func formatCurrency(value: Decimal, hideSymbol: Bool = false) -> String? {
     let formatter = NumberFormatter()
     formatter.numberStyle = .currency
+    if(hideSymbol) {
+        formatter.currencySymbol = ""
+    }
     if let formattedValue = formatter.string(from: value as NSNumber) {
         return "\(formattedValue)"
     } else {
         return formatCurrency(value: 0.00)
     }
+}
+
+
+func dateToMySQL(_ date: String) -> String {
+    let dateFormatter = DateFormatter()
+    var convertedDate: String
+    dateFormatter.dateFormat = "dd MMM yyyy"
+    if let fullDate = dateFormatter.date(from: date) {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let finalDate2: String = dateFormatter.string(from: fullDate)
+        convertedDate = finalDate2
+    } else {
+        convertedDate = "0000-00-00"
+    }
+    return convertedDate
 }
 
 
