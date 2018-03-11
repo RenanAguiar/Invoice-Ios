@@ -192,8 +192,8 @@ class InvoicesViewController: UITableViewController {
             item = invoices[indexPath.row]
         }
         var total: Decimal
-        total = calculateSubTotalInvoice(invoiceItems: item.items)
-        
+        total = calculateTotalInvoice(invoiceItems: item.items)
+        print(total)
         cell.invoiceIdLabel.text = item.invoice_number
         cell.dateIssueLabel.text = convertDate(date: item.date_issue)
         cell.dueDataLabel.text = convertDate(date: item.due_date)
@@ -234,7 +234,7 @@ class InvoicesViewController: UITableViewController {
     func calculateSubTotalInvoice(invoiceItems: [InvoiceItem]) -> Decimal {
         var subTotal: Decimal = 0.00
         for item in invoiceItems {
-            subTotal += item.unit_price * item.quantity
+            subTotal += (item.unit_price * item.quantity)
         }
         return subTotal
     }
@@ -242,7 +242,7 @@ class InvoicesViewController: UITableViewController {
     // TODO: make 1 function for both views to calculate values
     func calculateTaxTotalInvoice(subTotalInvoice: Decimal) -> Decimal {
         var taxTotal: Decimal = 0.00
-        taxTotal = subTotalInvoice * 0.05
+        taxTotal = (subTotalInvoice * 0.05)
         return taxTotal
     }
     
@@ -253,7 +253,7 @@ class InvoicesViewController: UITableViewController {
         var taxTotalInvoice: Decimal = 0.00
         subTotalInvoice = calculateSubTotalInvoice(invoiceItems: invoiceItems)
         taxTotalInvoice = calculateTaxTotalInvoice(subTotalInvoice: subTotalInvoice)
-        total = subTotalInvoice + taxTotalInvoice
+        total = (subTotalInvoice + taxTotalInvoice)
         return total
         
         
