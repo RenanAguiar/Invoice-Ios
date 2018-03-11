@@ -185,6 +185,12 @@ struct Invoice: Codable {
         self.date_transaction = date_transaction
     }
     
+    
+    init(invoice_id: Int! = nil, client_id: Int! = nil, note: String) {
+        self.invoice_id = invoice_id
+        self.client_id = client_id
+        self.note = note
+    }
 
 }
 

@@ -19,16 +19,13 @@ extension Float {
 
 class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UITextFieldDelegate {
     
-    
 
     @IBOutlet weak var titleLabel: UILabel!
-    
-    
-    //@IBOutlet weak var amountPaidTextField: UITextField!
     @IBOutlet weak var textTextField: UITextField!
     @IBOutlet weak var dateTextField: UITextField!
+    @IBOutlet weak var rightHandLabel: UILabel!
     
-   // var paid: Bool = false
+
     var isSuccess = false
     var text: Decimal = 0.00
     var totalInvoice: Decimal = 0.00
@@ -36,14 +33,19 @@ class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UI
     var invoice: Invoice?
     var thePicker = UIDatePicker()
     var modalType: String? = "Void"
+
     
     func prepareView() {
         if modalType == "void" {
             titleLabel.text = "Void Invoice"
+            rightHandLabel.text = "Notes"
+            textTextField.keyboardType = .asciiCapable
         } else {
             titleLabel.text = "Make Payment"
+            rightHandLabel.text = "Amount"
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,11 +125,19 @@ class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UI
         var date: String
         let amountPaid = Decimal(string: textTextField.text!)
 
-        endPoint = "api/invoices/make_payment"
-        date = dateToMySQL(dateTextField.text!)
+        if(modalType == "void") {
+            let note: String = textTextField.text!
+            endPoint = "api/invoices/void_invoice"
+            invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,note: note)
+        } else {
+            date = dateToMySQL(dateTextField.text!)
+            endPoint = "api/invoices/make_payment"
+            invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,amount_paid: amountPaid!, date_transaction: date)
+        }
+        
+        
 
-        invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,amount_paid: amountPaid!, date_transaction: date
-        )
+        
 
         let requestBody = makeJSONData(invoice)
         makeRequestPost(endpoint: endPoint,
@@ -163,7 +173,7 @@ class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UI
                             else
                             {
                                 DispatchQueue.main.async(execute: {
-                                    let myAlert = UIAlertController(title: "Error", message: "Error creating Invoice", preferredStyle: .alert)
+                                    let myAlert = UIAlertController(title: "Error", message: "Error", preferredStyle: .alert)
                                     let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
                                     myAlert.addAction(okAction)
                                     self.present(myAlert, animated: true, completion: nil)
