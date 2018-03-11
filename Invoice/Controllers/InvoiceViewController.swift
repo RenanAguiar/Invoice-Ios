@@ -25,6 +25,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     var subTotalInvoice: Decimal = 0.00
     var taxTotalInvoice: Decimal = 0.00
     var totalInvoice: Decimal = 0.00
+    var modalType: String?
     
     var wasDeleted: Bool? = false
     
@@ -165,6 +166,10 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.enableNavigationBar()
+    }
   
 
     
@@ -295,9 +300,11 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             destination.client = client
             destination.invoice = invoice
         }
-        else if segue.identifier == "makePayment", let destination = segue.destination as? MakePaymentViewController {
+        else if segue.identifier == "showModalInvoice", let destination = segue.destination as? ModalInvoiceViewController {
             destination.totalInvoice = totalInvoice
             destination.invoice = invoice
+            destination.modalType = modalType
+            self.disableNavigationBar()
         }
         else {
             print("The selected cell is not being displayed by the table")
@@ -334,17 +341,17 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             }
             calculateTotalInvoice()
             
-        } else if let sourceViewController = sender.source as? MakePaymentViewController {
-            let paid = sourceViewController.paid
-            let amountPaid = sourceViewController.amountPaid
-            let dateTransaction = sourceViewController.dateTransaction
+        } else if let sourceViewController = sender.source as? ModalInvoiceViewController {
+            let isSuccess = sourceViewController.isSuccess
+            let amountPaid = sourceViewController.text
+            let dateTransaction = sourceViewController.date
             invoice = sourceViewController.invoice
-            if(paid) {
+            self.enableNavigationBar()
+            if(isSuccess) {
                 invoice?.amount_paid = amountPaid
                 invoice?.date_transaction = dateTransaction
-                print(invoice!)
             }
-            self.enableNavigationBar()
+  
         }
 
     }
@@ -355,17 +362,16 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     @IBAction func showActionAlert(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-      
-       
-        self.disableNavigationBar()
- 
-        
 
-        let payButton = UIAlertAction(title: "Make Payment", style: .default, handler: { action in self.performSegue(withIdentifier: "makePayment", sender: self)})
+        let payButton = UIAlertAction(title: "Make Payment", style: .default, handler: { action in
+            self.modalType = "makePayment"
+            self.performSegue(withIdentifier: "showModalInvoice", sender: self)
+            
+        })
         
-       
-        
-        let voidButton = UIAlertAction(title: "Void", style: .destructive, handler: { (action) -> Void in        })
+        let voidButton = UIAlertAction(title: "Void", style: .destructive, handler: { action in
+             self.modalType = "void"
+            self.performSegue(withIdentifier: "showModalInvoice", sender: self)})
         
         let deleteButton = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in        })
         
@@ -381,14 +387,4 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     
 }
-
-
-
-//extension InvoiceViewController: UINavigationControllerDelegate {
-//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-//        print("nav deleg")
-//        print(invoice ?? "mm")
-//        (viewController as? InvoicesViewController)?.invoice2 = invoice 
-//    }
-//}
 

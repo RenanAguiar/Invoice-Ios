@@ -17,44 +17,55 @@ extension Float {
     }
 }
 
-class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UITextFieldDelegate {
+class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UITextFieldDelegate {
     
     
 
+    @IBOutlet weak var titleLabel: UILabel!
     
     
-    @IBOutlet weak var amountPaidTextField: UITextField!
-    @IBOutlet weak var totalInvoiceTextField: UITextField!
-    var thePicker = UIDatePicker()
-    @IBOutlet weak var dateTransactionTextField: UITextField!
-    var paid: Bool = false
-    var amountPaid: Decimal = 0.00
+    //@IBOutlet weak var amountPaidTextField: UITextField!
+    @IBOutlet weak var textTextField: UITextField!
+    @IBOutlet weak var dateTextField: UITextField!
+    
+   // var paid: Bool = false
+    var isSuccess = false
+    var text: Decimal = 0.00
     var totalInvoice: Decimal = 0.00
-    var dateTransaction: String? = nil
+    var date: String? = nil
     var invoice: Invoice?
+    var thePicker = UIDatePicker()
+    var modalType: String? = "Void"
     
+    func prepareView() {
+        if modalType == "void" {
+            titleLabel.text = "Void Invoice"
+        } else {
+            titleLabel.text = "Make Payment"
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.contentView.layer.cornerRadius = 10.0
         self.contentView.layer.borderWidth = 1.5
-        totalInvoiceTextField.text = formatCurrency(value: totalInvoice, hideSymbol: true)
+        textTextField.text = formatCurrency(value: totalInvoice, hideSymbol: true)
         
-        dateTransactionTextField.delegate = self
+        dateTextField.delegate = self
         self.thePicker = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
         self.thePicker.backgroundColor = UIColor.white
         self.thePicker.datePickerMode = UIDatePickerMode.date
         
-        setUpTextFieldPicker(textField: dateTransactionTextField)
+        setUpTextFieldPicker(textField: dateTextField)
         
         // TODO: redo this later (data convertion)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
         let vv = dateFormatter.string(from: Date())
-        dateTransactionTextField.text = vv
+        dateTextField.text = vv
         
         
-        
+        prepareView()
         
         
     }
@@ -97,12 +108,12 @@ class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UIT
     @IBOutlet weak var contentView: UIView!
     
     @IBAction func cancelButton(_ sender: Any) {
-        self.enableNavigationBar()
+      //  parent?.enableNavigationBar()
         self.performSegue(withIdentifier: "unwindToInvoice", sender: self)
     }
     
     
-    
+
     
     
     
@@ -110,10 +121,10 @@ class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UIT
 
         var endPoint: String
         var date: String
-        let amountPaid = Decimal(string: amountPaidTextField.text!)
+        let amountPaid = Decimal(string: textTextField.text!)
 
         endPoint = "api/invoices/make_payment"
-        date = dateToMySQL(dateTransactionTextField.text!)
+        date = dateToMySQL(dateTextField.text!)
 
         invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,amount_paid: amountPaid!, date_transaction: date
         )
@@ -136,11 +147,11 @@ class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UIT
                             self.invoice?.status = status
                             
                             if(responseMeta.sucess == "yes") {
-                                self.paid = true
+                                self.isSuccess = true
                                 let alert = UIAlertController(title: "Success!", message: "Payment Saved!", preferredStyle: .alert)
                                 let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
                                     (_)in
-                                    self.performSegue(withIdentifier: "unwindToInvoice", sender: self)
+                                    self.performSegue(withIdentifier: "unwindToInvoices", sender: self)
                                 })
                                 
                                 alert.addAction(OKAction)

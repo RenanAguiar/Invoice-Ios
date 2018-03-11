@@ -1253,7 +1253,7 @@
                         <outlet property="taxTotalInvoiceLabel" destination="K59-bL-0C8" id="Td1-yQ-id2"/>
                         <outlet property="totalInvoiceLabel" destination="bFr-XU-pbV" id="pvg-aJ-7Nj"/>
                         <segue destination="Fkr-cp-MZp" kind="unwind" identifier="unwindToInvoices" unwindAction="unwindToInvoicesWithSender:" id="xZv-YI-Edp"/>
-                        <segue destination="kVd-qi-yM6" kind="presentation" identifier="makePayment" modalPresentationStyle="overCurrentContext" id="Dny-0k-ynI"/>
+                        <segue destination="kVd-qi-yM6" kind="presentation" identifier="showModalInvoice" modalPresentationStyle="overCurrentContext" id="O3b-aA-AA3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veD-YI-DgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1261,10 +1261,10 @@
             </objects>
             <point key="canvasLocation" x="6391" y="-196"/>
         </scene>
-        <!--Make Payment View Controller-->
+        <!--Modal Invoice View Controller-->
         <scene sceneID="5Wr-qT-f8x">
             <objects>
-                <viewController storyboardIdentifier="MakePaymentViewController" modalPresentationStyle="overCurrentContext" id="kVd-qi-yM6" customClass="MakePaymentViewController" customModule="Invoice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MakePaymentViewController" modalPresentationStyle="overCurrentContext" id="kVd-qi-yM6" customClass="ModalInvoiceViewController" customModule="Invoice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="uPo-ok-ITs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1282,7 +1282,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nqg-3t-ABK">
-                                        <rect key="frame" x="8" y="82" width="163" height="30"/>
+                                        <rect key="frame" x="173" y="73" width="163" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1298,27 +1298,6 @@
                                             <action selector="cancelButton:" destination="kVd-qi-yM6" eventType="touchUpInside" id="lYX-oV-g26"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amout Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlh-Cz-kYt">
-                                        <rect key="frame" x="8" y="53" width="88" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oND-5U-7SN">
-                                        <rect key="frame" x="213" y="82" width="122" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flh-3J-vs3">
-                                        <rect key="frame" x="261" y="53" width="74" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1d-dX-DP0">
                                         <rect key="frame" x="122" y="166" width="101" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1327,6 +1306,27 @@
                                             <action selector="makePaymentButton:" destination="kVd-qi-yM6" eventType="touchUpInside" id="OMv-TX-FG4"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oND-5U-7SN">
+                                        <rect key="frame" x="8" y="74" width="122" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flh-3J-vs3">
+                                        <rect key="frame" x="8" y="45" width="74" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amout Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlh-Cz-kYt">
+                                        <rect key="frame" x="173" y="45" width="88" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -1335,17 +1335,18 @@
                         <viewLayoutGuide key="safeArea" id="AHc-zV-pkr"/>
                     </view>
                     <connections>
-                        <outlet property="amountPaidTextField" destination="Nqg-3t-ABK" id="aop-L7-kHB"/>
                         <outlet property="contentView" destination="oS2-Kb-Qse" id="vZA-ME-RnA"/>
-                        <outlet property="dateTransactionTextField" destination="oND-5U-7SN" id="uEI-Cp-irD"/>
-                        <outlet property="totalInvoiceTextField" destination="Nqg-3t-ABK" id="XZ3-2q-aHS"/>
-                        <segue destination="LxX-Nb-FRJ" kind="unwind" identifier="unwindToInvoice" unwindAction="unwindToInvoicesWithSender:" id="l4h-xG-qHc"/>
+                        <outlet property="dateTextField" destination="oND-5U-7SN" id="uEI-Cp-irD"/>
+                        <outlet property="textTextField" destination="Nqg-3t-ABK" id="XZ3-2q-aHS"/>
+                        <outlet property="titleLabel" destination="ApX-Ie-zWd" id="Yt1-iD-wJX"/>
+                        <segue destination="LxX-Nb-FRJ" kind="unwind" identifier="unwindToInvoices" unwindAction="unwindToInvoicesWithSender:" id="l4h-xG-qHc"/>
+                        <segue destination="LxX-Nb-FRJ" kind="unwind" identifier="unwindToInvoice" unwindAction="unwindToInvoiceWithSender:" id="8Ps-Hg-zKf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZQ-lh-OFD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="LxX-Nb-FRJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7361" y="-199"/>
+            <point key="canvasLocation" x="7441" y="-521"/>
         </scene>
         <!--Item-->
         <scene sceneID="eGg-VZ-Eah">
@@ -1707,7 +1708,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="c1Y-dJ-4vX"/>
-        <segue reference="vKs-g5-8rb"/>
+        <segue reference="Naz-jl-uSV"/>
         <segue reference="k28-w5-Jzw"/>
         <segue reference="rI0-24-NRQ"/>
     </inferredMetricsTieBreakers>

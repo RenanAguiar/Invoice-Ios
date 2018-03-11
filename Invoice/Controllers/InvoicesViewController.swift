@@ -113,11 +113,13 @@ class InvoicesViewController: UITableViewController {
         }
         else {
             
-            if let sourceViewController = sender.source as? MakePaymentViewController, let invoice = sourceViewController.invoice {
+            if let sourceViewController = sender.source as? ModalInvoiceViewController, let invoice = sourceViewController.invoice {
                     if let selectedIndexPath = tableView.indexPathForSelectedRow {
                         invoices[selectedIndexPath.row].status = invoice.status
                         tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
                     }
+                self.enableNavigationBar()
+                print("kk")
             }
         }
     }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		510877092005D2AF003F0E85 /* ViewControllerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510877082005D2AF003F0E85 /* ViewControllerUtils.swift */; };
-		511396EF20506C4100DF273E /* MakePaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511396EE20506C4100DF273E /* MakePaymentViewController.swift */; };
+		511396EF20506C4100DF273E /* ModalInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511396EE20506C4100DF273E /* ModalInvoiceViewController.swift */; };
 		513BA8C3203DCA70000F0115 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */; };
 		513BA8C5203DED6B000F0115 /* AccessoryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BA8C4203DED6B000F0115 /* AccessoryToolbar.swift */; };
 		513BA8C72048643C000F0115 /* InvoiceItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		510877082005D2AF003F0E85 /* ViewControllerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerUtils.swift; sourceTree = "<group>"; };
-		511396EE20506C4100DF273E /* MakePaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePaymentViewController.swift; sourceTree = "<group>"; };
+		511396EE20506C4100DF273E /* ModalInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalInvoiceViewController.swift; sourceTree = "<group>"; };
 		513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		513BA8C4203DED6B000F0115 /* AccessoryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryToolbar.swift; sourceTree = "<group>"; };
 		513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceItemViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 				5189D6632010F96000568BE9 /* ContactDetailViewController.swift */,
 				51FE7856203C98FE00E1FE9B /* InvoicesViewController.swift */,
 				513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */,
-				511396EE20506C4100DF273E /* MakePaymentViewController.swift */,
+				511396EE20506C4100DF273E /* ModalInvoiceViewController.swift */,
 				513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */,
 			);
 			path = Controllers;
@@ -219,7 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51EDFCC31FE19B030026C910 /* Structs.swift in Sources */,
-				511396EF20506C4100DF273E /* MakePaymentViewController.swift in Sources */,
+				511396EF20506C4100DF273E /* ModalInvoiceViewController.swift in Sources */,
 				5189D662200E738F00568BE9 /* ContactsViewController.swift in Sources */,
 				51EDFCC51FE1EA670026C910 /* _ClientDetailViewController.swift in Sources */,
 				5189D660200E642A00568BE9 /* ClientViewController.swift in Sources */,
