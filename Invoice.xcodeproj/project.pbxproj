@@ -85,8 +85,8 @@
 				5189D6632010F96000568BE9 /* ContactDetailViewController.swift */,
 				51FE7856203C98FE00E1FE9B /* InvoicesViewController.swift */,
 				513BA8C2203DCA70000F0115 /* InvoiceViewController.swift */,
-				513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */,
 				511396EE20506C4100DF273E /* MakePaymentViewController.swift */,
+				513BA8C62048643C000F0115 /* InvoiceItemViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

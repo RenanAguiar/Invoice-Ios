@@ -18,11 +18,12 @@ class InvoicesViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    
+
     
     var invoices = [Invoice]()
     var client: Client?
     var invoice: Invoice?
+    var invoice2: Invoice?
     var filteredInvoices = [Invoice]()
     
     func setupSearchController() {
@@ -42,24 +43,32 @@ class InvoicesViewController: UITableViewController {
         searchController.searchBar.delegate = self
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = 150
         getInvoices()
-        
         setupSearchController()
         setupScopeBar()
-        
-        
-        
-        
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+//        print(selectedIndexPath)
+//            //invoices[selectedIndexPath.row] = invoice2!
+//            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+//        }
+//        tableView.reloadData()
+//    }
     func isFiltering() -> Bool {
         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
         return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
     }
+    
+    
     
     
     func searchBarIsEmpty() -> Bool {
@@ -80,20 +89,20 @@ class InvoicesViewController: UITableViewController {
         tableView.reloadData()
     }
     
+
+    
     @IBAction func unwindToInvoices(sender: UIStoryboardSegue) {
-        
         if let sourceViewController = sender.source as? InvoiceViewController, let invoice = sourceViewController.invoice, let wasDeleted = sourceViewController.wasDeleted {
-            
             if(wasDeleted) {
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
                     self.invoices.remove(at: selectedIndexPath.row)
-                    tableView.deleteRows(at: [selectedIndexPath], with: .none)
+                    tableView.deleteRows(at: [selectedIndexPath], with: .automatic)
                 }
             }
             else {
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
                     invoices[selectedIndexPath.row] = invoice
-                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                    tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
                 }
                 else {
                     let newIndexPath = IndexPath(row: invoices.count, section: 0)
@@ -102,13 +111,23 @@ class InvoicesViewController: UITableViewController {
                 }
             }
         }
+        else {
+            
+            if let sourceViewController = sender.source as? MakePaymentViewController, let invoice = sourceViewController.invoice {
+                    if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                        invoices[selectedIndexPath.row].status = invoice.status
+                        tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+                    }
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
         backItem.title = "Invoices"
-        navigationItem.backBarButtonItem = backItem
         
+        navigationItem.backBarButtonItem = backItem
+        self.navigationController?.delegate = self as? UINavigationControllerDelegate
         if  segue.identifier == "showInvoiceDetail",
             let destination = segue.destination as? InvoiceViewController,
             let indexPath = tableView.indexPathForSelectedRow?.row
@@ -288,4 +307,7 @@ extension InvoicesViewController: UISearchBarDelegate {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
+
+
+
 

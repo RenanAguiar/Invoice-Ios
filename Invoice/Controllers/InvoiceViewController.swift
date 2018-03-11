@@ -7,6 +7,7 @@ class InvoiceItemCell: UITableViewCell {
     
 }
 
+
 class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var dateIssueTextField: UITextField!
@@ -27,7 +28,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     var wasDeleted: Bool? = false
     
-    
+
 
     
     @IBAction func saveInvoice(_ sender: Any) {
@@ -104,12 +105,14 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
     }
     
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+
+        
+        
         tableView.delegate = self
         tableView.dataSource = self
         dateIssueTextField.delegate = self
@@ -133,7 +136,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         let vv = dateFormatter.string(from: Date())
         dateIssueTextField.text = vv
         
-        
+        //self.navigationController?.delegate = self
         
         
         if (invoice?.invoice_id) != nil {
@@ -335,12 +338,13 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             let paid = sourceViewController.paid
             let amountPaid = sourceViewController.amountPaid
             let dateTransaction = sourceViewController.dateTransaction
+            invoice = sourceViewController.invoice
             if(paid) {
                 invoice?.amount_paid = amountPaid
                 invoice?.date_transaction = dateTransaction
+                print(invoice!)
             }
             self.enableNavigationBar()
-            print(paid)
         }
 
     }
@@ -376,8 +380,15 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     }
     
     
-    
-    
-    
-    
 }
+
+
+
+//extension InvoiceViewController: UINavigationControllerDelegate {
+//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//        print("nav deleg")
+//        print(invoice ?? "mm")
+//        (viewController as? InvoicesViewController)?.invoice2 = invoice 
+//    }
+//}
+

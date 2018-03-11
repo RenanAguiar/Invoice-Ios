@@ -31,7 +31,7 @@ class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UIT
     var amountPaid: Decimal = 0.00
     var totalInvoice: Decimal = 0.00
     var dateTransaction: String? = nil
-     var invoice: Invoice?
+    var invoice: Invoice?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,34 +107,18 @@ class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UIT
     
     
     @IBAction func makePaymentButton(_ sender: Any) {
-        
 
         var endPoint: String
         var date: String
-       // var amountPaid: String
-
         let amountPaid = Decimal(string: amountPaidTextField.text!)
-        
-       // amountPaid = formatCurrency(value: result!, hideSymbol: true)!
-    
-        
+
         endPoint = "api/invoices/make_payment"
-
-
-        
-        
         date = dateToMySQL(dateTransactionTextField.text!)
 
-        
-        
-        
         invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,amount_paid: amountPaid!, date_transaction: date
         )
 
-        
-        print(invoice!)
         let requestBody = makeJSONData(invoice)
-        print("f")
         makeRequestPost(endpoint: endPoint,
                         requestType: "POST",
                         requestBody: requestBody,
@@ -147,17 +131,13 @@ class MakePaymentViewController: UIViewController, AccessoryToolbarDelegate, UIT
                             }
                         
                             let responseMeta = (response?.meta)!
-                           // let responseData = (response?.result[0])
-                           // let invoice_id = responseData?.invoice_id
-                           // let invoice_number = responseData?.invoice_number
-                           // let status = responseData?.status
-                           // self.invoice?.invoice_id = invoice_id
-                           // self.invoice?.invoice_number = invoice_number
-                           // self.invoice?.status = status
+                            let responseData = (response?.result[0])
+                            let status = responseData?.status
+                            self.invoice?.status = status
                             
                             if(responseMeta.sucess == "yes") {
-                                
-                                let alert = UIAlertController(title: "Success!", message: "Invoice Saved!", preferredStyle: .alert)
+                                self.paid = true
+                                let alert = UIAlertController(title: "Success!", message: "Payment Saved!", preferredStyle: .alert)
                                 let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
                                     (_)in
                                     self.performSegue(withIdentifier: "unwindToInvoice", sender: self)
