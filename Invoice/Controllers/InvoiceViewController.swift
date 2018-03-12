@@ -12,6 +12,8 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     
     @IBOutlet weak var dateIssueTextField: UITextField!
     @IBOutlet weak var dueDateTextField: UITextField!
+    @IBOutlet weak var taxTextField: UITextField!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var taxDescriptionLabel: UILabel!
     @IBOutlet weak var subTotalInvoiceLabel: UILabel!
@@ -37,6 +39,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         var endPoint: String
         var dateIssue: String
         var dueDate: String
+      //  var tax: Decimal
         
         if (invoice?.invoice_id) != nil {
             endPoint = "api/invoices/update"
@@ -48,9 +51,17 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         dueDate = dateToMySQL(dueDateTextField.text!)
         dateIssue = dateToMySQL(dateIssueTextField.text!)
         
+  
+        
+    
+        let unitPrice = taxTextField.text ?? ""
+  
+        
+        let tax = Decimal(string: unitPrice)
         
         
-        invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: client_id, tax: 0.00, date_issue: dateIssue, due_date: dueDate,
+        
+        invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: client_id, tax: tax!, date_issue: dateIssue, due_date: dueDate,
                           status: "",
                           items: invoiceItems
         )
@@ -129,7 +140,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = 75
         self.title = "New"
-        taxDescriptionLabel.text = "Tax @ 0%"
+        //taxDescriptionLabel.text = "Tax @ 0%"
         
         // TODO: redo this later (data convertion)
         let dateFormatter = DateFormatter()
@@ -158,8 +169,9 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
                 dateIssueTextField.text = finalDate2
             }
             
-            let taxDescription = invoice?.tax.description
-            taxDescriptionLabel.text = "Tax @ \(taxDescription ?? "0")%"
+           // let taxDescription = invoice?.tax
+            taxTextField.text =  invoice?.tax.description
+           // taxDescriptionLabel.text = "Tax @ \(taxDescription ?? "0")%"
             invoiceItems = (invoice?.items)!
             calculateTotalInvoice()
         }
@@ -226,7 +238,8 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     // TODO: make 1 function for both views to calculate values
     func calculateTaxTotalInvoice() {
         var taxTotal: Decimal = 0.00
-        taxTotal = subTotalInvoice * 0.05
+        let tax = Decimal(string: taxTextField.text!)!/100
+        taxTotal = subTotalInvoice * tax
         taxTotalInvoice = taxTotal
     }
     

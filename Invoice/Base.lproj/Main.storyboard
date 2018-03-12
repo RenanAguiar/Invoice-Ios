@@ -1150,7 +1150,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax @ 0.05%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXh-ES-qNN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax @ " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXh-ES-qNN">
                                 <rect key="frame" x="16" y="539" width="82" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Vtj-L3-f2O"/>
@@ -1193,6 +1193,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rem-vQ-aOp">
+                                <rect key="frame" x="58" y="534" width="40" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Chv-d6-E4b">
+                                <rect key="frame" x="111" y="539" width="13" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1206,6 +1218,8 @@
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OPV-jd-SY5" secondAttribute="trailing" constant="20" symbolic="YES" id="FsZ-Lk-2Ek"/>
                             <constraint firstAttribute="trailing" secondItem="aXh-ES-qNN" secondAttribute="trailing" constant="277" id="Fsl-kO-wB9"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fmM-5I-G9h" secondAttribute="trailing" id="GF8-mm-70z"/>
+                            <constraint firstItem="Chv-d6-E4b" firstAttribute="leading" secondItem="aXh-ES-qNN" secondAttribute="trailing" constant="13" id="GVt-Wu-QRz"/>
+                            <constraint firstItem="Rem-vQ-aOp" firstAttribute="centerY" secondItem="Chv-d6-E4b" secondAttribute="centerY" id="HiA-gd-Ftr"/>
                             <constraint firstItem="fmM-5I-G9h" firstAttribute="baseline" secondItem="bFr-XU-pbV" secondAttribute="baseline" id="I2Y-sd-e12"/>
                             <constraint firstItem="6aP-9q-e8a" firstAttribute="trailing" secondItem="Puz-CC-YX0" secondAttribute="trailingMargin" id="IF5-O7-G05"/>
                             <constraint firstItem="xZk-Sc-Ekf" firstAttribute="leading" secondItem="Puz-CC-YX0" secondAttribute="leading" id="MSd-Nt-uO5"/>
@@ -1221,6 +1235,7 @@
                             <constraint firstItem="fmM-5I-G9h" firstAttribute="leading" secondItem="aXh-ES-qNN" secondAttribute="leading" id="ZqD-YK-nEU"/>
                             <constraint firstItem="aXh-ES-qNN" firstAttribute="top" secondItem="bTB-tG-6p5" secondAttribute="bottom" constant="8" symbolic="YES" id="ckC-AS-ekH"/>
                             <constraint firstItem="MSd-bM-eCC" firstAttribute="baseline" secondItem="01J-y7-OBt" secondAttribute="baseline" id="e45-UW-s1Y"/>
+                            <constraint firstItem="Rem-vQ-aOp" firstAttribute="leading" secondItem="BPu-uX-EsR" secondAttribute="leading" constant="58" id="eem-YE-dxI"/>
                             <constraint firstItem="MSd-bM-eCC" firstAttribute="leading" secondItem="bTB-tG-6p5" secondAttribute="leading" id="f5V-aL-aCr"/>
                             <constraint firstItem="fmM-5I-G9h" firstAttribute="firstBaseline" secondItem="bFr-XU-pbV" secondAttribute="firstBaseline" id="gQO-MT-nx0"/>
                             <constraint firstItem="aXh-ES-qNN" firstAttribute="firstBaseline" secondItem="K59-bL-0C8" secondAttribute="firstBaseline" id="ldm-Zq-jKV"/>
@@ -1228,10 +1243,12 @@
                             <constraint firstItem="6aP-9q-e8a" firstAttribute="trailing" secondItem="01J-y7-OBt" secondAttribute="trailing" id="oXU-WG-fII"/>
                             <constraint firstItem="MSd-bM-eCC" firstAttribute="top" secondItem="OPV-jd-SY5" secondAttribute="bottom" constant="8" symbolic="YES" id="ocd-bU-JmJ"/>
                             <constraint firstItem="OPV-jd-SY5" firstAttribute="baseline" secondItem="6aP-9q-e8a" secondAttribute="baseline" id="p5z-i5-EBT"/>
+                            <constraint firstItem="Rem-vQ-aOp" firstAttribute="trailing" secondItem="aXh-ES-qNN" secondAttribute="trailing" id="pL1-ZF-xBk"/>
                             <constraint firstItem="fmM-5I-G9h" firstAttribute="top" secondItem="aXh-ES-qNN" secondAttribute="bottom" constant="8" symbolic="YES" id="pm6-5A-ltv"/>
                             <constraint firstItem="aXh-ES-qNN" firstAttribute="baseline" secondItem="K59-bL-0C8" secondAttribute="baseline" id="qBF-5P-FSt"/>
                             <constraint firstItem="ZOn-Fi-Lgc" firstAttribute="leading" secondItem="K59-bL-0C8" secondAttribute="leading" id="r6V-Ud-8Nc"/>
                             <constraint firstAttribute="trailing" secondItem="bFr-XU-pbV" secondAttribute="trailing" constant="16" id="rVx-Ti-kgd"/>
+                            <constraint firstItem="Chv-d6-E4b" firstAttribute="top" secondItem="aXh-ES-qNN" secondAttribute="top" id="tim-1t-2zC"/>
                             <constraint firstItem="bTB-tG-6p5" firstAttribute="top" secondItem="xZk-Sc-Ekf" secondAttribute="bottom" constant="16" id="xa3-eL-CyJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BPu-uX-EsR"/>
@@ -1250,6 +1267,7 @@
                         <outlet property="subTotalInvoiceLabel" destination="ZOn-Fi-Lgc" id="LYO-Cn-Hz8"/>
                         <outlet property="tableView" destination="xZk-Sc-Ekf" id="Wb9-Vt-yXI"/>
                         <outlet property="taxDescriptionLabel" destination="aXh-ES-qNN" id="Yyb-9e-z3s"/>
+                        <outlet property="taxTextField" destination="Rem-vQ-aOp" id="xNr-js-ej3"/>
                         <outlet property="taxTotalInvoiceLabel" destination="K59-bL-0C8" id="Td1-yQ-id2"/>
                         <outlet property="totalInvoiceLabel" destination="bFr-XU-pbV" id="pvg-aJ-7Nj"/>
                         <segue destination="Fkr-cp-MZp" kind="unwind" identifier="unwindToInvoices" unwindAction="unwindToInvoicesWithSender:" id="xZv-YI-Edp"/>
@@ -1259,7 +1277,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veD-YI-DgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Fkr-cp-MZp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6391" y="-196"/>
+            <point key="canvasLocation" x="6389.6000000000004" y="-196.10194902548727"/>
         </scene>
         <!--Modal Invoice View Controller-->
         <scene sceneID="5Wr-qT-f8x">
