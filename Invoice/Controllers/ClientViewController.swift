@@ -10,8 +10,11 @@ class ClientViewController: UITableViewController {
     @IBOutlet weak var postalCodeTextField: UITextField!
     @IBOutlet weak var contactsLabel: UILabel!
     
+    @IBOutlet weak var deleteClientConfirmOutlet: UIButton!
+    
     var thePicker = UIPickerView()
     let numberOfRowsAtSection: [Int] = [4, 2]
+    var numberOfSections: Int = 2
     
     var client: Client?
     var selectedProvince: String?
@@ -45,14 +48,21 @@ class ClientViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "New"
+       
         if (client?.client_id) != nil {
+            numberOfSections = 2
             self.title = "Edit"
             nameTextField.text = client?.name
             cityTextField.text = client?.city
             addressTextField.text = client?.address
             postalCodeTextField.text = client?.postal_code
             selectPickerViewRow()
+            deleteClientConfirmOutlet.isHidden = false
+        } else {
+            self.title = "New"
+            numberOfSections = 1
+            deleteClientConfirmOutlet.isHidden = true
+            
         }
     }
     
@@ -214,7 +224,7 @@ class ClientViewController: UITableViewController {
     
     // MARK: - Table View
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return numberOfSections
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

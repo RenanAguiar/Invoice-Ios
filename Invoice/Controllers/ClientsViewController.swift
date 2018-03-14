@@ -99,7 +99,6 @@ class ClientsViewController:  UITableViewController {
             clientViewController.client = selectedClient
         }
         else if segue.identifier == "ShowAddClientViewController" {
-            print("add")
         }
         else {
             fatalError("The selected cell is not being displayed by the table")

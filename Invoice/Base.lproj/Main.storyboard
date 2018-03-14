@@ -883,6 +883,7 @@
                         <outlet property="addressTextField" destination="0gF-Cv-CHp" id="t6v-MY-gpu"/>
                         <outlet property="cityTextField" destination="Vvd-uY-CZH" id="2Ex-kF-7fV"/>
                         <outlet property="contactsLabel" destination="6m8-OD-eDo" id="XQr-wL-WGW"/>
+                        <outlet property="deleteClientConfirmOutlet" destination="tTm-ir-L4G" id="Wab-E2-Trk"/>
                         <outlet property="nameTextField" destination="dp3-5F-i22" id="QaF-3x-p5w"/>
                         <outlet property="postalCodeTextField" destination="0gn-lA-fQE" id="0Of-ro-Nd2"/>
                         <outlet property="provinceTextField" destination="4fL-fg-OCf" id="wHN-K2-MaB"/>
