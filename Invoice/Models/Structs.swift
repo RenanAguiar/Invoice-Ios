@@ -166,7 +166,7 @@ struct Invoice: Codable {
         self.items = items
     }
     
-    init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal, date_issue: String, due_date: String = "0000-00-00", status: String, items: [InvoiceItem]) {
+    init(invoice_id: Int! = nil, client_id: Int! = nil,tax: Decimal = 0.00, date_issue: String, due_date: String = "0000-00-00", status: String, items: [InvoiceItem]?) {
         self.invoice_id = invoice_id
         self.client_id = client_id
         self.tax = tax
@@ -191,7 +191,7 @@ struct Invoice: Codable {
         self.client_id = client_id
         self.note = note
     }
-
+    
 }
 
 struct SignUp: Codable {
@@ -208,3 +208,50 @@ struct SignUp: Codable {
         
     }
 }
+
+
+
+struct Profile: Codable {
+    //let user_id: Int!
+    let name: String
+    let phone: String
+    let postal_code: String
+    let province: String
+    let city: String
+    let address: String
+    let tax: Decimal!
+    
+    init(name: String, phone: String, postal_code: String, province: String, city: String, address: String, tax: Decimal) {
+       // self.user_id = user_id
+        self.name = name
+        self.phone = phone
+        self.postal_code = postal_code
+        self.province = province
+        self.city = city
+        self.address = address
+        self.tax = tax
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

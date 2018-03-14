@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let email = DAKeychain.shared["email"]
         emailTextField.text = email
     }    

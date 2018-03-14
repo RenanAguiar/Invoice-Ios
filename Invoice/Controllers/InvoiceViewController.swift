@@ -54,15 +54,15 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
   
         
     
-        let unitPrice = taxTextField.text ?? ""
+        let unitPrice = taxTextField.text ?? "0.00"
   
         
-        let tax = Decimal(string: unitPrice)
+        let tax = Decimal(string: unitPrice) ?? 0.00
         
         
         
-        invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: client_id, tax: tax!, date_issue: dateIssue, due_date: dueDate,
-                          status: "",
+        invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: client_id, tax: tax, date_issue: dateIssue, due_date: dueDate,
+                          status: "Draft",
                           items: invoiceItems
         )
         

@@ -11,3 +11,6 @@ https://stackoverflow.com/questions/41558832/how-to-format-a-double-into-currenc
 
 
 https://www.raywenderlich.com/157864/uisearchcontroller-tutorial-getting-started
+
+
+https://blog.apoorvmote.com/remove-cursor-and-disable-copypaste-for-uitextfield/

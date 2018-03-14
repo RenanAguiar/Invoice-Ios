@@ -81,8 +81,8 @@ extension UIViewController {
     
 }
 
-//let baseEndPoint = "https://rca.pro.br/"
-let baseEndPoint = "http://blog.local:4711/"
+let baseEndPoint = "https://rca.pro.br/"
+//let baseEndPoint = "http://blog.local:4711/"
 
 func makeRequest<T>(httpMethod: String = "GET",
                     endpoint: String,
@@ -104,7 +104,7 @@ func makeRequest<T>(httpMethod: String = "GET",
     if !queryItems.contains(where: { $0.name == "token" }) {
         queryItems.append(URLQueryItem(name: "token", value: token))
     }
-    
+    print(queryItems)
     // Add these parameters to the URLComponents
     urlComponents.queryItems = queryItems
     
