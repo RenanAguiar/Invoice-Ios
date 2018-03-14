@@ -773,8 +773,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fL-fg-OCf" customClass="TextField" customModule="Invoice" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="38" width="165" height="30"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Province" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwB-6o-Fep">
+                                                    <rect key="frame" x="16" y="7" width="67" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Postal Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jgL-t6-OKC">
-                                                    <rect key="frame" x="16" y="9" width="93" height="21"/>
+                                                    <rect key="frame" x="252" y="10" width="93" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="agt-wh-veX"/>
                                                     </constraints>
@@ -783,37 +795,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0gn-lA-fQE">
-                                                    <rect key="frame" x="16" y="40" width="107" height="30"/>
+                                                    <rect key="frame" x="252" y="41" width="107" height="30"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fL-fg-OCf" customClass="TextField" customModule="Invoice" customModuleProvider="target">
-                                                    <rect key="frame" x="194" y="39" width="165" height="30"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Province" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwB-6o-Fep">
-                                                    <rect key="frame" x="194" y="8" width="67" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="4fL-fg-OCf" firstAttribute="top" secondItem="gwB-6o-Fep" secondAttribute="bottom" constant="10" id="B5g-Fe-hIi"/>
                                                 <constraint firstItem="0gn-lA-fQE" firstAttribute="top" secondItem="jgL-t6-OKC" secondAttribute="bottom" constant="10" id="EPF-Rg-XpC"/>
-                                                <constraint firstItem="4fL-fg-OCf" firstAttribute="bottom" secondItem="LnI-E7-6QY" secondAttribute="bottomMargin" id="KpA-fl-PRk"/>
-                                                <constraint firstItem="jgL-t6-OKC" firstAttribute="top" secondItem="LnI-E7-6QY" secondAttribute="topMargin" constant="-2" id="PGo-uF-enP"/>
-                                                <constraint firstItem="jgL-t6-OKC" firstAttribute="baseline" secondItem="gwB-6o-Fep" secondAttribute="baseline" constant="1" id="Phn-m1-OjY"/>
+                                                <constraint firstItem="4fL-fg-OCf" firstAttribute="bottom" secondItem="LnI-E7-6QY" secondAttribute="bottomMargin" constant="-1" id="KpA-fl-PRk"/>
+                                                <constraint firstItem="jgL-t6-OKC" firstAttribute="top" secondItem="LnI-E7-6QY" secondAttribute="topMargin" constant="-1" id="PGo-uF-enP"/>
+                                                <constraint firstItem="jgL-t6-OKC" firstAttribute="baseline" secondItem="gwB-6o-Fep" secondAttribute="baseline" constant="3" id="Phn-m1-OjY"/>
                                                 <constraint firstItem="jgL-t6-OKC" firstAttribute="trailing" secondItem="0gn-lA-fQE" secondAttribute="trailing" constant="-14" id="UF8-3J-9QP"/>
-                                                <constraint firstItem="4fL-fg-OCf" firstAttribute="trailing" secondItem="LnI-E7-6QY" secondAttribute="trailingMargin" id="Wo6-4d-j2v"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="gwB-6o-Fep" secondAttribute="trailing" constant="98" id="Zxp-CL-IpQ"/>
+                                                <constraint firstItem="4fL-fg-OCf" firstAttribute="trailing" secondItem="LnI-E7-6QY" secondAttribute="trailingMargin" constant="-178" id="Wo6-4d-j2v"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gwB-6o-Fep" secondAttribute="trailing" constant="276" id="Zxp-CL-IpQ"/>
                                                 <constraint firstItem="jgL-t6-OKC" firstAttribute="leading" secondItem="0gn-lA-fQE" secondAttribute="leading" id="b7t-8v-Czm"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="0gn-lA-fQE" secondAttribute="bottom" constant="-1" id="b9P-dL-56U"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="0gn-lA-fQE" secondAttribute="bottom" constant="-2" id="b9P-dL-56U"/>
                                                 <constraint firstItem="gwB-6o-Fep" firstAttribute="leading" secondItem="4fL-fg-OCf" secondAttribute="leading" id="dgS-dZ-kJY"/>
-                                                <constraint firstItem="jgL-t6-OKC" firstAttribute="leading" secondItem="LnI-E7-6QY" secondAttribute="leadingMargin" id="pBf-2W-27G"/>
+                                                <constraint firstItem="jgL-t6-OKC" firstAttribute="leading" secondItem="LnI-E7-6QY" secondAttribute="leadingMargin" constant="236" id="pBf-2W-27G"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

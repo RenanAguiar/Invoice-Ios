@@ -64,6 +64,7 @@ extension LoginViewController {
                                 DAKeychain.shared["email"] = (user.email)
                                 DAKeychain.shared["token"] = (responseData.message)
                                 DispatchQueue.main.async(execute: {
+                                    self.passwordTextField.text = ""
                                     let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabBarClients") as UIViewController
                                     self.present(viewController, animated: true, completion: nil)
                                 })

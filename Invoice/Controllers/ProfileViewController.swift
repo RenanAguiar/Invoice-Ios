@@ -145,7 +145,7 @@ self.dismiss(animated: true, completion: nil)
         if let province = selectedProvince,
             let index = provinces.index(where: { $0.abbrev == province }) {
             thePicker.selectRow(index, inComponent: 0, animated: false)
-            provinceTextField.text = provinces[index].name
+            provinceTextField.text = provinces[index].abbrev
         }
     }
     
@@ -167,7 +167,7 @@ extension ProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        provinceTextField.text = provinces[row].name
+        provinceTextField.text = provinces[row].abbrev
         selectedProvince = provinces[row].abbrev
     }
     
