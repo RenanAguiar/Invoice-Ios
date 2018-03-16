@@ -297,7 +297,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
         backItem.title = "Items"
-        navigationItem.backBarButtonItem = backItem
+       
         
         if  segue.identifier == "showItem",
             let destination = segue.destination as? InvoiceItemViewController,
@@ -319,9 +319,16 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             destination.modalType = modalType
             self.disableNavigationBar()
         }
+        else if segue.identifier == "showPreview", let destination = segue.destination as? InvoicePreviewViewController {
+            destination.invoice = invoice
+            backItem.title = "Invoice"
+           
+        }
         else {
             print("The selected cell is not being displayed by the table")
         }
+        
+         navigationItem.backBarButtonItem = backItem
     }
     
     
@@ -376,6 +383,12 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     @IBAction func showActionAlert(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
+        
+        let previewButton = UIAlertAction(title: "Preview", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "showPreview", sender: self)
+            
+        })
+        
         let payButton = UIAlertAction(title: "Make Payment", style: .default, handler: { action in
             self.modalType = "makePayment"
             self.performSegue(withIdentifier: "showModalInvoice", sender: self)
@@ -390,6 +403,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in })
 
+        alertController.addAction(previewButton)
         alertController.addAction(payButton)
         alertController.addAction(voidButton)
         alertController.addAction(deleteButton)

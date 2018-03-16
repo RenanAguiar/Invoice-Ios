@@ -1031,6 +1031,41 @@
             </objects>
             <point key="canvasLocation" x="5386" y="-196"/>
         </scene>
+        <!--Invoice Preview View Controller-->
+        <scene sceneID="Qyd-ao-YUZ">
+            <objects>
+                <viewController id="6KV-fb-HTz" customClass="InvoicePreviewViewController" customModule="Invoice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P8E-I5-ff4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6p3-RT-sSe">
+                                <rect key="frame" x="16" y="76" width="343" height="529"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences" javaScriptEnabled="NO"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fkv-rs-P1b" firstAttribute="bottom" secondItem="6p3-RT-sSe" secondAttribute="bottom" constant="13" id="0em-gv-fOo"/>
+                            <constraint firstItem="6p3-RT-sSe" firstAttribute="leading" secondItem="P8E-I5-ff4" secondAttribute="leadingMargin" id="9gj-b1-37w"/>
+                            <constraint firstItem="6p3-RT-sSe" firstAttribute="trailing" secondItem="P8E-I5-ff4" secondAttribute="trailingMargin" id="DF3-pr-HOA"/>
+                            <constraint firstItem="6p3-RT-sSe" firstAttribute="top" secondItem="fkv-rs-P1b" secondAttribute="top" constant="12" id="eTY-ta-qIb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fkv-rs-P1b"/>
+                    </view>
+                    <connections>
+                        <outlet property="preview" destination="6p3-RT-sSe" id="B9v-z4-nGN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vxx-A7-Dvg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7446" y="-523"/>
+        </scene>
         <!--Invoice-->
         <scene sceneID="FHU-ep-XNT">
             <objects>
@@ -1291,6 +1326,7 @@
                         <outlet property="totalInvoiceLabel" destination="bFr-XU-pbV" id="pvg-aJ-7Nj"/>
                         <segue destination="Fkr-cp-MZp" kind="unwind" identifier="unwindToInvoices" unwindAction="unwindToInvoicesWithSender:" id="xZv-YI-Edp"/>
                         <segue destination="kVd-qi-yM6" kind="presentation" identifier="showModalInvoice" modalPresentationStyle="overCurrentContext" id="O3b-aA-AA3"/>
+                        <segue destination="6KV-fb-HTz" kind="show" identifier="showPreview" id="WeM-at-XZI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veD-YI-DgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1384,7 +1420,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZQ-lh-OFD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="LxX-Nb-FRJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7440.8000000000002" y="-521.28935532233891"/>
+            <point key="canvasLocation" x="7446" y="232"/>
         </scene>
         <!--Item-->
         <scene sceneID="eGg-VZ-Eah">
