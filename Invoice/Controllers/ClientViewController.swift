@@ -102,7 +102,7 @@ class ClientViewController: UITableViewController {
     func deleteClient() {
         let client_id : String! = "\(client!.client_id!)"
         var endPoint: String
-        endPoint = "api/clients/"+client_id+"/delete"
+        endPoint = "clients/"+client_id+"/delete"
         makeDelete(httpMethod: "DELETE",endpoint: endPoint,
                    parameters: [:],
                    completionHandler: { (container : Meta?, error : BackendError?) in
@@ -168,9 +168,9 @@ class ClientViewController: UITableViewController {
         
         
         if (client?.client_id) != nil {
-            endPoint = "api/clients/update"
+            endPoint = "clients/update"
         } else {
-            endPoint = "api/clients/add"
+            endPoint = "clients/add"
         }
         
         client = Client(name:name, client_id: client?.client_id, postal_code: postal_code, province: province, city: city, address: address)

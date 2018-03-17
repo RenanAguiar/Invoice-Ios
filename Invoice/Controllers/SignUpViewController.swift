@@ -50,7 +50,7 @@ extension SignUpViewController {
         
         let requestBody = makeJSONData(signUp)
         
-        makeRequestPost(endpoint: "api/sign_up",
+        makeRequestPost(endpoint: "sign_up",
                         requestType: "POST",
                         requestBody: requestBody,
                         view: view,

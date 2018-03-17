@@ -45,7 +45,7 @@ extension LoginViewController {
         let requestBody = makeJSONData(user)
         self.view.endEditing(true)
         
-        makeRequestPost(endpoint: "api/login",
+        makeRequestPost(endpoint: "login",
                         requestType: "POST",
                         requestBody: requestBody,
                         view: view,
@@ -58,11 +58,12 @@ extension LoginViewController {
                             }
                             
                             let responseMeta = (response?.meta)!
-                            let responseData = (response?.result[0])!
-                            
+                            let responseDataToken = (response?.result[0])!
+                            let responseDataTax = (response?.result[1])!
                             if(responseMeta.sucess == "yes") {
                                 DAKeychain.shared["email"] = (user.email)
-                                DAKeychain.shared["token"] = (responseData.message)
+                                DAKeychain.shared["token"] = (responseDataToken.message)
+                                DAKeychain.shared["tax"] = (responseDataTax.message)
                                 DispatchQueue.main.async(execute: {
                                     self.passwordTextField.text = ""
                                     let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabBarClients") as UIViewController

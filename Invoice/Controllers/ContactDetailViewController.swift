@@ -65,9 +65,9 @@ extension ContactDetailViewController {
         var endPoint: String
         
         if (contact?.client_contact_id) != nil {
-            endPoint = "api/contacts/update"
+            endPoint = "contacts/update"
         } else {
-            endPoint = "api/contacts/add"
+            endPoint = "contacts/add"
         }
         
         contact = Contact(client_contact_id: contact?.client_contact_id, client_id: client_id,first_name: firstName, last_name: lastName, email: email, phone: phone)
@@ -135,7 +135,7 @@ extension ContactDetailViewController {
     func deleteContact() {
         let client_id : String! = "\(contact!.client_contact_id!)"
         var endPoint: String
-        endPoint = "api/contacts/"+client_id+"/delete"
+        endPoint = "contacts/"+client_id+"/delete"
         makeDelete(httpMethod: "DELETE",endpoint: endPoint,
                    parameters: [:],
                    completionHandler: { (container : Meta?, error : BackendError?) in

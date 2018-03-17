@@ -21,9 +21,9 @@ class InvoicePreviewViewController: UIViewController {
         super.viewWillAppear(animated)
         print(invoice!)
         let invoiceId : String! = "\(invoice!.invoice_id!)"
-        let endpoint = "api/invoices/"+invoiceId+"/download"
+        let endpoint = "invoices/"+invoiceId+"/download"
         // let endpoint = URL(string: "api/invoices/"+invoiceId+"/download")
-        let fullEndPoint = baseEndPoint + endpoint
+        let fullEndPoint = BASE_URL + endpoint
         
         let url = URL(string: fullEndPoint)
         // let url = URL(string: "api/invoices/"+invoiceId+"/download")

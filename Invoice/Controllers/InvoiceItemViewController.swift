@@ -58,9 +58,9 @@ class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
     func saveOnServer(invoiceItem: InvoiceItem) {
         var endPoint: String
         if (invoiceItem.invoice_detail_id) != nil {
-            endPoint = "api/invoices/update/item"
+            endPoint = "invoices/update/item"
         } else {
-            endPoint = "api/invoices/add/item"
+            endPoint = "invoices/add/item"
         }
 
         let requestBody = makeJSONData(invoiceItem)
@@ -170,7 +170,7 @@ class InvoiceItemViewController: UIViewController, UITextFieldDelegate {
     func deleteItem() {
         let invoice_detail_id : String! = "\(invoiceItem!.invoice_detail_id!)"
         var endPoint: String
-        endPoint = "api/invoices/items/"+invoice_detail_id+"/delete"
+        endPoint = "invoices/items/"+invoice_detail_id+"/delete"
         print(endPoint)
         makeDelete(httpMethod: "DELETE",endpoint: endPoint,
                    parameters: [:],

@@ -127,11 +127,11 @@ class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UI
 
         if(modalType == "void") {
             let note: String = textTextField.text!
-            endPoint = "api/invoices/void_invoice"
+            endPoint = "invoices/void_invoice"
             invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,note: note)
         } else {
             date = dateToMySQL(dateTextField.text!)
-            endPoint = "api/invoices/make_payment"
+            endPoint = "invoices/make_payment"
             invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: invoice?.client_id,amount_paid: amountPaid!, date_transaction: date)
         }
         

@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
         
         
        // let client_id = client?.client_id ?? nil
-        let endPoint: String = "api/profile/update"
+        let endPoint: String = "profile/update"
    
         
         profile = Profile(name: name, phone: phone, postal_code: postalCode, province: province, city: city, address: address, tax: tax!)
@@ -194,7 +194,7 @@ extension ProfileViewController {
     
     func getProfile() {
         //let client_id : String! = "\(client!.client_id!)"
-        makeRequest(endpoint: "api/profile/get",
+        makeRequest(endpoint: "profile/get",
                     parameters: [:],
                     completionHandler: { (container : ApiContainer<Profile>?, error : Error?) in
                         if let error = error {
@@ -213,6 +213,7 @@ extension ProfileViewController {
                             self.phoneTextField.text = self.profile?.phone
                             self.taxTextField.text = self.profile?.tax.description
                             self.selectPickerViewRow()
+                             DAKeychain.shared["tax"] = (self.profile?.tax.description)
                         })
 
         } )

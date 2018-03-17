@@ -89,7 +89,7 @@ extension ContactsViewController {
     
     func getContacts() {
         let client_id : String! = "\(client!.client_id!)"
-        makeRequest(endpoint: "api/contacts/all",
+        makeRequest(endpoint: "contacts/all",
                     parameters: ["client_id": client_id],
                     completionHandler: { (container : ApiContainer<Contact>?, error : Error?) in
                         if let error = error {

@@ -279,7 +279,7 @@ class InvoicesViewController: UITableViewController {
 extension InvoicesViewController {
     func getInvoices() {
         let client_id : String! = "\(client!.client_id!)"
-        makeRequest(endpoint: "api/invoices/all",
+        makeRequest(endpoint: "invoices/all",
                     parameters: ["client_id": client_id],
                     completionHandler: { (container : ApiContainer<Invoice>?, error : Error?) in
                         if let error = error {

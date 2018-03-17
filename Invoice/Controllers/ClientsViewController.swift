@@ -120,7 +120,7 @@ extension ClientsViewController {
         self.refreshControl?.beginRefreshing()
         self.tableView.setContentOffset(CGPoint(x:0, y:-100), animated: true)
         
-        makeRequest(endpoint: "api/clients/all",
+        makeRequest(endpoint: "clients/all",
                     parameters: [:],
                     completionHandler: { (container : ApiContainer<Client>?, error : Error?) in
                         if let error = error {

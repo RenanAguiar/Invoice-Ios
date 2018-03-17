@@ -39,12 +39,11 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         var endPoint: String
         var dateIssue: String
         var dueDate: String
-      //  var tax: Decimal
         
         if (invoice?.invoice_id) != nil {
-            endPoint = "api/invoices/update"
+            endPoint = "invoices/update"
         } else {
-            endPoint = "api/invoices/add"
+            endPoint = "invoices/add"
         }
         
         
@@ -121,10 +120,6 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-
-        
-        
         tableView.delegate = self
         tableView.dataSource = self
         dateIssueTextField.delegate = self
@@ -150,6 +145,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
         //self.navigationController?.delegate = self
         
+        taxTextField.text =  DAKeychain.shared["tax"]
         
         if (invoice?.invoice_id) != nil {
             self.title = "Edit"

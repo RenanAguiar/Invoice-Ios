@@ -81,8 +81,11 @@ extension UIViewController {
     
 }
 
+//let BASE_URL = "https://rca.pro.br/api/"
+let BASE_URL = "http://blog.local:4711/api/"
+
 //let baseEndPoint = "https://rca.pro.br/"
-let baseEndPoint = "http://blog.local:4711/"
+//let BASE_URL = "http://blog.local:4711/"
 
 func makeRequest<T>(httpMethod: String = "GET",
                     endpoint: String,
@@ -90,7 +93,7 @@ func makeRequest<T>(httpMethod: String = "GET",
                     completionHandler: @escaping (ApiContainer<T>?, Error?) -> ()) {
    
     let token = DAKeychain.shared["token"]
-    let fullEndPoint = baseEndPoint + endpoint
+    let fullEndPoint = BASE_URL + endpoint
     
     guard var urlComponents = URLComponents(string: fullEndPoint) else {
         print("Invalid endpoint")
@@ -178,7 +181,7 @@ func makeRequestPost<T>(endpoint: String,
                         view: UIView,
                         completionHandler: @escaping (ApiContainer<T>?, Error?) -> ()) {
     
-    let fullEndPoint = baseEndPoint + endpoint
+    let fullEndPoint = BASE_URL + endpoint
     let token = DAKeychain.shared["token"]
     
 
@@ -248,7 +251,7 @@ func makeDelete(httpMethod: String = "DELETE",
                     completionHandler: @escaping (Meta?, BackendError?) -> ()) {
     
     let token = DAKeychain.shared["token"]
-    let fullEndPoint = baseEndPoint + endpoint
+    let fullEndPoint = BASE_URL + endpoint
     
     guard var urlComponents = URLComponents(string: fullEndPoint) else {
         print("Invalid endpoint")
