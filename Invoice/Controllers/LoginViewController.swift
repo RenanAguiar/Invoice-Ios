@@ -9,23 +9,8 @@ class LoginViewController: UIViewController {
     
     
     func setupTextFields() {
-        
-//        let svFrame = CGRect(x: 0, y: 0, width: 40, height: emailTextField.bounds.height/2)
-//        let usernameUserIconView = SidesView.init(frame: svFrame)
-//        usernameUserIconView.icon = #imageLiteral(resourceName: "email")
-//        emailTextField.leftView = usernameUserIconView
-//        emailTextField.leftViewMode = .always
-        
-
-//        let svFrame2 = CGRect(x: 0, y: 0, width: 40, height: passwordTextField.bounds.height/2)
-//        let passwordIconView = SidesView.init(frame: svFrame2)
-//        passwordIconView.icon = #imageLiteral(resourceName: "password")
-//        passwordTextField.leftView = passwordIconView
-//        passwordTextField.leftViewMode = .always
-        
         addImageToTextField(textField: emailTextField, icon: #imageLiteral(resourceName: "email"))
         addImageToTextField(textField: passwordTextField, icon: #imageLiteral(resourceName: "password"))
-        
     }
     
     func addImageToTextField(textField: UITextField, icon: UIImage) {
