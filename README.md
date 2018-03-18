@@ -14,3 +14,6 @@ https://www.raywenderlich.com/157864/uisearchcontroller-tutorial-getting-started
 
 
 https://blog.apoorvmote.com/remove-cursor-and-disable-copypaste-for-uitextfield/
+
+
+https://www.swiftyninja.com/customising-text-fields-with-swift-3/
