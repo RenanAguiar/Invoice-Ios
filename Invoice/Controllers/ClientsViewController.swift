@@ -21,39 +21,17 @@ class ClientsViewController:  UITableViewController {
         getClients()
     }
     
-
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.clients.count > 0 ? sortedFirstLetters[section] : "";
-    }
-    
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return sortedFirstLetters
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        if sections.count == 0 {
-            tableView.separatorStyle = .none
-            tableView.backgroundView?.isHidden = false
-        } else {
-            tableView.separatorStyle = .singleLine
-            tableView.backgroundView?.isHidden = true
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let clientViewController = segue.destination as! ClientViewController
+        if segue.identifier == "ShowDetailClientViewController", let indexPath = self.tableView.indexPathForSelectedRow {
+            let selectedClient = sections[indexPath.section][indexPath.row]
+            clientViewController.client = selectedClient
         }
-        return sections.count
-    }
-    
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = sections[indexPath.section][indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
-        cell.textLabel?.text = item.name
-       // cell.detailTextLabel?.text = item.city + " - " + item.province
-        cell.detailTextLabel?.text = item.cityProvince
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].count
+        else if segue.identifier == "ShowAddClientViewController" {
+        }
+        else {
+            fatalError("The selected cell is not being displayed by the table")
+        }
     }
     
     @IBAction func unwindToClients(sender: UIStoryboardSegue) {
@@ -92,29 +70,51 @@ class ClientsViewController:  UITableViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let clientViewController = segue.destination as! ClientViewController
-        if segue.identifier == "ShowDetailClientViewController", let indexPath = self.tableView.indexPathForSelectedRow {
-            let selectedClient = sections[indexPath.section][indexPath.row]
-            clientViewController.client = selectedClient
-        }
-        else if segue.identifier == "ShowAddClientViewController" {
-        }
-        else {
-            fatalError("The selected cell is not being displayed by the table")
-        }
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        getClients()
     }
+        
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.clients.count > 0 ? sortedFirstLetters[section] : "";
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return sortedFirstLetters
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        if sections.count == 0 {
+            tableView.separatorStyle = .none
+            tableView.backgroundView?.isHidden = false
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
+        }
+        return sections.count
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = sections[indexPath.section][indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
+        cell.textLabel?.text = item.name
+        cell.detailTextLabel?.text = item.cityProvince
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sections[section].count
+    }
+    
+
+    
+
 
     
 }
 
+// MARK: - Control Functions
 extension ClientsViewController {
-    
-
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        getClients()
-    }
-    
     
     func getClients() {
         self.refreshControl?.beginRefreshing()

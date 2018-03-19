@@ -17,16 +17,14 @@ class InvoicePreviewViewController: UIViewController {
         super.viewDidLoad()
     }
 
+    // MARK: - View
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(invoice!)
         let invoiceId : String! = "\(invoice!.invoice_id!)"
         let endpoint = "invoices/"+invoiceId+"/download"
-        // let endpoint = URL(string: "api/invoices/"+invoiceId+"/download")
         let fullEndPoint = BASE_URL + endpoint
-        
         let url = URL(string: fullEndPoint)
-        // let url = URL(string: "api/invoices/"+invoiceId+"/download")
         
         if let unwrappedURL = url {
             let request = URLRequest(url: unwrappedURL)

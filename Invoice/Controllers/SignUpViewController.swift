@@ -9,7 +9,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet var validationLabel: [UILabel]!
     
-    
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         clearValidationLabels()
@@ -18,12 +18,6 @@ class SignUpViewController: UIViewController {
         }
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
-    
-}
-
-
-extension SignUpViewController {
-    
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -80,7 +74,7 @@ extension SignUpViewController {
     }
     
     
-    
+    // MARK: - Validation
     
     func checkValidation(_ fields:[formValidation]) -> Bool {
         var hasError = false
@@ -95,7 +89,7 @@ extension SignUpViewController {
         }
         return !hasError
     }
-       
+    
     func validate(_ textField: UITextField) -> (Bool, String?) {
         guard let text = textField.text else {
             return (false, nil)
@@ -118,5 +112,5 @@ extension SignUpViewController {
             label.isHidden = true
         }
     }
-    
 }
+

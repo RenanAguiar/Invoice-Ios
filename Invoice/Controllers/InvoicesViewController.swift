@@ -14,18 +14,13 @@ class InvoiceCell: UITableViewCell {
 
 class InvoicesViewController: UITableViewController {
     
-    
-    
-    let searchController = UISearchController(searchResultsController: nil)
-    
-
-    
     var invoices = [Invoice]()
     var client: Client?
     var invoice: Invoice?
     var invoice2: Invoice?
     var filteredInvoices = [Invoice]()
     
+    let searchController = UISearchController(searchResultsController: nil)
     func setupSearchController() {
         
         // Setup the Search Controller
@@ -37,13 +32,12 @@ class InvoicesViewController: UITableViewController {
     }
     
     func setupScopeBar() {
-        
         // Setup the Scope Bar
         searchController.searchBar.scopeButtonTitles = ["All", "Paid", "Voided", "Draft", "Sent"]
         searchController.searchBar.delegate = self
     }
     
-
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -53,16 +47,16 @@ class InvoicesViewController: UITableViewController {
         setupScopeBar()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        if let selectedIndexPath = tableView.indexPathForSelectedRow {
-//        print(selectedIndexPath)
-//            //invoices[selectedIndexPath.row] = invoice2!
-//            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
-//        }
-//        tableView.reloadData()
-//    }
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //
+    //        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+    //        print(selectedIndexPath)
+    //            //invoices[selectedIndexPath.row] = invoice2!
+    //            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+    //        }
+    //        tableView.reloadData()
+    //    }
     func isFiltering() -> Bool {
         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
         return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
@@ -89,7 +83,7 @@ class InvoicesViewController: UITableViewController {
         tableView.reloadData()
     }
     
-
+    
     
     @IBAction func unwindToInvoices(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? InvoiceViewController, let invoice = sourceViewController.invoice, let wasDeleted = sourceViewController.wasDeleted {
@@ -114,10 +108,10 @@ class InvoicesViewController: UITableViewController {
         else {
             
             if let sourceViewController = sender.source as? ModalInvoiceViewController, let invoice = sourceViewController.invoice {
-                    if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                        invoices[selectedIndexPath.row].status = invoice.status
-                        tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
-                    }
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                    invoices[selectedIndexPath.row].status = invoice.status
+                    tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+                }
                 self.enableNavigationBar()
                 print("kk")
             }
@@ -163,26 +157,6 @@ class InvoicesViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceCell", for: indexPath) as! InvoiceCell
-        //        let item = invoices[indexPath.row]
-        //        var total: Decimal
-        //        total = calculateSubTotalInvoice(invoiceItems: item.items)
-        //
-        //        cell.invoiceIdLabel.text = item.invoice_number
-        //        cell.dateIssueLabel.text = convertDate(date: item.date_issue)
-        //        cell.dueDataLabel.text = convertDate(date: item.due_date)
-        //        cell.statusLabel.text = item.status
-        //        cell.amountLabel.text = formatCurrency(value: total)
-        //        return cell
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceCell", for: indexPath) as! InvoiceCell
         let item: Invoice
@@ -200,15 +174,6 @@ class InvoicesViewController: UITableViewController {
         cell.statusLabel.text = item.status
         cell.amountLabel.text = formatCurrency(value: total)
         return cell
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
     }
     
@@ -264,12 +229,9 @@ class InvoicesViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         if isFiltering() {
             return filteredInvoices.count
         }
-        
         return self.invoices.count
     }
     
@@ -311,7 +273,3 @@ extension InvoicesViewController: UISearchBarDelegate {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
-
-
-
-

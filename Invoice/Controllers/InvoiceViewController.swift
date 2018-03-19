@@ -46,26 +46,15 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
             endPoint = "invoices/add"
         }
         
-        
         dueDate = dateToMySQL(dueDateTextField.text!)
         dateIssue = dateToMySQL(dateIssueTextField.text!)
-        
-  
-        
-    
         let unitPrice = taxTextField.text ?? "0.00"
-  
-        
         let tax = Decimal(string: unitPrice) ?? 0.00
-        
-        
         
         invoice = Invoice(invoice_id: invoice?.invoice_id, client_id: client_id, tax: tax, date_issue: dateIssue, due_date: dueDate,
                           status: "Draft",
                           items: invoiceItems
         )
-        
-        
         
         let requestBody = makeJSONData(invoice)
         
@@ -116,7 +105,7 @@ class InvoiceViewController: UIViewController, AccessoryToolbarDelegate,UITextFi
         
     }
     
-
+// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         

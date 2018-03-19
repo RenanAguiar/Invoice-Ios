@@ -16,7 +16,7 @@ class ContactDetailViewController: UITableViewController {
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
-
+// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.sectionHeaderHeight = 50.0;

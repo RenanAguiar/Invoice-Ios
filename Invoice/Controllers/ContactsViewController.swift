@@ -12,6 +12,7 @@ class ContactsViewController: UITableViewController {
     var client: Client?
     var contact: Contact?
     
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -26,20 +27,20 @@ class ContactsViewController: UITableViewController {
             
             if(wasDeleted) {
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                self.contacts.remove(at: selectedIndexPath.row)
-                tableView.deleteRows(at: [selectedIndexPath], with: .none)
+                    self.contacts.remove(at: selectedIndexPath.row)
+                    tableView.deleteRows(at: [selectedIndexPath], with: .none)
                 }
             }
             else {
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                contacts[selectedIndexPath.row] = contact
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            }
-            else {
-                let newIndexPath = IndexPath(row: contacts.count, section: 0)
-                contacts.append(contact)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                    contacts[selectedIndexPath.row] = contact
+                    tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                }
+                else {
+                    let newIndexPath = IndexPath(row: contacts.count, section: 0)
+                    contacts.append(contact)
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
             }
         }
     }
@@ -84,16 +85,15 @@ class ContactsViewController: UITableViewController {
     
 }
 
-
+// MARK: - Control Functions
 extension ContactsViewController {
-    
     func getContacts() {
         let client_id : String! = "\(client!.client_id!)"
         makeRequest(endpoint: "contacts/all",
                     parameters: ["client_id": client_id],
                     completionHandler: { (container : ApiContainer<Contact>?, error : Error?) in
                         if let error = error {
-                            print("error calling POST on /getClients")
+                            print("error calling POST on /getContacts")
                             print(error)
                             return
                         }

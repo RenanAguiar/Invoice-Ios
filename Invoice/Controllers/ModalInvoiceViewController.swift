@@ -45,7 +45,7 @@ class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UI
             rightHandLabel.text = "Amount"
         }
     }
-    
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -182,23 +182,5 @@ class ModalInvoiceViewController: UIViewController, AccessoryToolbarDelegate, UI
                             }
         } )
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }

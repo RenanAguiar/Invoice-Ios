@@ -2,7 +2,13 @@
 import Foundation
 import UIKit
 
-
+func addImageToTextField(textField: UITextField, icon: UIImage) {
+    let svFrame = CGRect(x: 0, y: 0, width: 40, height: textField.bounds.height/2)
+    let image = SidesView.init(frame: svFrame)
+    image.icon = icon
+    textField.leftView = image
+    textField.leftViewMode = .always
+}
 
 extension String{
     func isDecimal()->Bool{

@@ -3,24 +3,11 @@ import UIKit
 import WebKit
 
 class LoginViewController: UIViewController {
-    
+
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    
-    func setupTextFields() {
-        addImageToTextField(textField: emailTextField, icon: #imageLiteral(resourceName: "email"))
-        addImageToTextField(textField: passwordTextField, icon: #imageLiteral(resourceName: "password"))
-    }
-    
-    func addImageToTextField(textField: UITextField, icon: UIImage) {
-        let svFrame = CGRect(x: 0, y: 0, width: 40, height: textField.bounds.height/2)
-        let image = SidesView.init(frame: svFrame)
-        image.icon = icon
-        textField.leftView = image
-        textField.leftViewMode = .always
-    }
-    
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
@@ -31,7 +18,18 @@ class LoginViewController: UIViewController {
         super.viewWillAppear(animated)
         let email = DAKeychain.shared["email"]
         emailTextField.text = email
-    }    
+    }  
+    
+    
+    
+    func setupTextFields() {
+        addImageToTextField(textField: emailTextField, icon: #imageLiteral(resourceName: "email"))
+        addImageToTextField(textField: passwordTextField, icon: #imageLiteral(resourceName: "password"))
+    }
+    
+    
+    
+    
     
 }
 
@@ -52,9 +50,9 @@ extension LoginViewController:  UITextFieldDelegate {
     }
 }
 
-
+// MARK: - Control Functions
 extension LoginViewController {
-    
+
     @IBAction func doLogin(_ sender: Any?) {
         let user = User(email: emailTextField.text!, password : passwordTextField.text!)
         let requestBody = makeJSONData(user)
