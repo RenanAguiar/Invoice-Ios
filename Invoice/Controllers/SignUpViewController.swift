@@ -1,6 +1,6 @@
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -9,9 +9,28 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet var validationLabel: [UILabel]!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     // MARK: - View
+    
+    // MARK: - Testing - possibility to scroll the view when in text field
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let y = 100
+        let x = 0
+        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: true)
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let y = 0
+        let x = 0
+        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        passwordConfirmationTextField.delegate = self
+        
         clearValidationLabels()
         for label in self.validationLabel {
             label.textColor = UIColor.red

@@ -327,6 +327,7 @@
                         <outlet property="navigationBar" destination="S0e-6I-3Fg" id="Dff-pO-GeH"/>
                         <outlet property="passwordConfirmationTextField" destination="HYX-kH-tQT" id="h8A-6p-knR"/>
                         <outlet property="passwordTextField" destination="sua-Ls-fka" id="yS4-zx-Y8K"/>
+                        <outlet property="scrollView" destination="PPa-Ve-759" id="LVH-0R-pq5"/>
                         <outletCollection property="validationLabel" destination="oyJ-yA-9Fw" collectionClass="NSMutableArray" id="6Qa-zG-R5f"/>
                         <outletCollection property="validationLabel" destination="pPv-ot-5VQ" collectionClass="NSMutableArray" id="LXd-UA-aim"/>
                         <outletCollection property="validationLabel" destination="ouf-9q-Emc" collectionClass="NSMutableArray" id="HH7-6R-HRQ"/>
@@ -1043,7 +1044,7 @@
                                 <rect key="frame" x="16" y="76" width="343" height="529"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
-                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences" javaScriptEnabled="NO"/>
                                 </wkWebViewConfiguration>
